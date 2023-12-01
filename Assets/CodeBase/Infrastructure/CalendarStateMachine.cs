@@ -25,5 +25,7 @@ namespace CodeBase.Infrastructure
       IState state = _states[typeof(TState)];
       state.Enter();
     }
+    
+    
   }
 }
