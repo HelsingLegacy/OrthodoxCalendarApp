@@ -1,42 +1,57 @@
 ﻿using System;
+using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.States;
+using CodeBase.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace CodeBase.Infrastructure
 {
-  public class BootstrapInstaller : MonoInstaller, ICoroutineRunner, IInitializable
+  public class BootstrapInstaller : MonoInstaller, ICoroutineRunner, IInitializable, IStateMover
   {
     [SerializeField] private GameObject Curtain;
     
     private CalendarStateMachine _stateMachine;
-
+    
     public override void InstallBindings()
     {
-      Container.BindInterfacesTo<BootstrapInstaller>().FromInstance(this).AsSingle();
-      Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
-      
-      LoadingCurtain curtain = Container
-        .InstantiatePrefabForComponent<LoadingCurtain>(Curtain);
-
-      Container.Bind<LoadingCurtain>().FromInstance(curtain).AsSingle();
-      
-      curtain.Show();
-      curtain.Hide();
-
-      Container.Bind<CalendarUOC>().AsSingle();
-      
-      Container.Bind<CalendarStateMachine>().AsSingle();
-      
-      Container.Bind<BootstrapState>().AsSingle();
-      
-      Container.Bind<LoadCalendarState>().AsSingle();
+      BindBootstrapInstallerInterfaces();
+      BindSceneLoader();
+      BindLoadingCurtain(from: CurtainInstance());
+      BindFactory();
+      BindCalendarStateMachine();
     }
-
 
     public void Initialize()
     {
-      Container.Resolve<ISceneLoader>().LoadScene("Main");
+      MoveTo<WarmUpState>();
+    }
+
+    public void MoveTo<TState>() where TState : IState => 
+      Container.Resolve<CalendarStateMachine>().Enter<TState>();
+
+    private void BindBootstrapInstallerInterfaces() => 
+      Container.BindInterfacesTo<BootstrapInstaller>().FromInstance(this).AsSingle();
+
+    private void BindSceneLoader() => 
+      Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
+
+    private LoadingCurtain CurtainInstance() =>
+      Container
+        .InstantiatePrefabForComponent<LoadingCurtain>(Curtain);
+
+    private void BindLoadingCurtain(LoadingCurtain from) => 
+      Container.Bind<LoadingCurtain>().FromInstance(from).AsSingle();
+
+    private void BindFactory() => 
+      Container.Bind<CalendarFactory>().AsSingle();
+
+    private void BindCalendarStateMachine()
+    {
+      Container.Bind<UserObservationState>().AsSingle();
+      Container.Bind<LoadCalendarState>().AsSingle();
+      Container.Bind<WarmUpState>().AsSingle();
+      Container.Bind<CalendarStateMachine>().AsSingle();
     }
   }
 }

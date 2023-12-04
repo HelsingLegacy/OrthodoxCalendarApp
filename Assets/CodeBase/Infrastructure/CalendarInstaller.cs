@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using CodeBase.Infrastructure.States;
+using Zenject;
 
 namespace CodeBase.Infrastructure
 {

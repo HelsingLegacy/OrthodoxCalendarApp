@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CodeBase
+namespace CodeBase.UI.Infrastructure
 {
   public class ScreenChecker : MonoBehaviour
   {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CodeBase.UI
+namespace CodeBase.UI.ContentFiller.DaysContainers
 {
   public abstract class DayDataTitleSetup : MonoBehaviour
   {
