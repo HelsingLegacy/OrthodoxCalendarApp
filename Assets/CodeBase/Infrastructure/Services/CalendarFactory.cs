@@ -27,7 +27,7 @@ namespace CodeBase.Infrastructure.Services
 
     public GameObject CreateMonthContainer(Transform under)
     {
-      GameObject prefab = Resources.Load<GameObject>("Prefabs/MonthContainer");
+      GameObject prefab = Resources.Load<GameObject>("Prefabs/ParticularMonthContainer");
       return _instantiator.InstantiatePrefab(prefab, under.transform);
     }
   }
