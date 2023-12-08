@@ -1,4 +1,3 @@
-using System;
 using CodeBase.Infrastructure.Services;
 using CodeBase.UI;
 using CodeBase.UI.ContentFiller;
