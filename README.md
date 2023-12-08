@@ -1,2 +1,2 @@
-# PrayApp
+# Orthodox Calendar Application
  
