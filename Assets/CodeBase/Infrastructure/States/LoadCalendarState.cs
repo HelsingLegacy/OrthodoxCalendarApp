@@ -24,21 +24,27 @@ namespace CodeBase.Infrastructure.States
       _curtain.Hide();
     }
 
-    private void InitCalendar()
-    {
-      GameObject hud = _factory.CreateHud().GetComponent<MonthParent>().ParentObject();
-      GameObject monthParent = _factory.CreateMonthContainer(under: hud.transform).GetComponent<DaysParent>().ParentObject();
-      _factory.CreateDayData(under: monthParent.transform);
-      _factory.CreateDayData(under: monthParent.transform);
-      _factory.CreateDayData(under: monthParent.transform);
-      _factory.CreateDayData(under: monthParent.transform);
-      
-      _resolver.MoveTo<UserObservationState>();
-    }
-
     public void Exit()
     {
       
+    }
+
+    private void InitCalendar()
+    {
+      TestUIElementsCreation();
+
+      _resolver.MoveTo<UserObservationState>();
+    }
+
+    private void TestUIElementsCreation()
+    {
+      GameObject hud = _factory.CreateHud().GetComponent<MonthParent>().ParentObject();
+      GameObject monthParent =
+        _factory.CreateMonthContainer(under: hud.transform).GetComponent<DaysParent>().ParentObject();
+      _factory.CreateDayData(under: monthParent.transform);
+      _factory.CreateDayData(under: monthParent.transform);
+      _factory.CreateDayData(under: monthParent.transform);
+      _factory.CreateDayData(under: monthParent.transform);
     }
   }
 }

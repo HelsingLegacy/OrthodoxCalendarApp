@@ -25,11 +25,11 @@ namespace CodeBase.Infrastructure.States
       _sceneLoader.LoadScene(Main, EnterLoadCalendar);
     }
 
-    private void EnterLoadCalendar() => 
-      _resolver.MoveTo<LoadCalendarState>();
-
     public void Exit()
     {
     }
+
+    private void EnterLoadCalendar() => 
+      _resolver.MoveTo<LoadCalendarState>();
   }
 }

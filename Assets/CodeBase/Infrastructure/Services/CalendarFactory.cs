@@ -7,10 +7,10 @@ namespace CodeBase.Infrastructure.Services
   public class CalendarFactory
   {
     private readonly IInstantiator _instantiator;
-    private readonly AssetProvider _provider;
+    private readonly IAssetProvider _provider;
 
 
-    public CalendarFactory(IInstantiator instantiator, AssetProvider provider)
+    public CalendarFactory(IInstantiator instantiator, IAssetProvider provider)
     {
       _instantiator = instantiator;
       _provider = provider;

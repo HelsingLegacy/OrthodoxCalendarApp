@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.States;
 using CodeBase.UI;
 using UnityEngine;
@@ -43,8 +44,11 @@ namespace CodeBase.Infrastructure
     private void BindLoadingCurtain(LoadingCurtain from) => 
       Container.Bind<LoadingCurtain>().FromInstance(from).AsSingle();
 
-    private void BindFactory() => 
+    private void BindFactory()
+    {
+      Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
       Container.Bind<CalendarFactory>().AsSingle();
+    }
 
     private void BindCalendarStateMachine()
     {
