@@ -1,5 +1,4 @@
-﻿using System;
-using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.States;
 using CodeBase.UI;
@@ -18,6 +17,7 @@ namespace CodeBase.Infrastructure
     {
       BindBootstrapInstallerInterfaces();
       BindSceneLoader();
+      Container.Bind<JsonSaver>().AsSingle();
       BindLoadingCurtain(from: CurtainInstance());
       BindFactory();
       BindCalendarStateMachine();
