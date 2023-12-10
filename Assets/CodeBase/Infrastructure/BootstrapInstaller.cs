@@ -1,5 +1,6 @@
 ﻿using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
+using CodeBase.Infrastructure.Services.JsonLoader;
 using CodeBase.Infrastructure.States;
 using CodeBase.UI;
 using UnityEngine;
