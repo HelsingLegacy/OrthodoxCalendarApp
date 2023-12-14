@@ -1,5 +1,5 @@
+using CodeBase.Data.Services;
 using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.JsonLoader;
 using CodeBase.UI;
 
 namespace CodeBase.Infrastructure.States
@@ -24,7 +24,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       _curtain.Show();
-      _jsonSaver.LoadJsonFromServer();
+      _jsonSaver.LoadJsonForToday();
       _sceneLoader.LoadScene(Main, EnterLoadCalendar);
     }
 

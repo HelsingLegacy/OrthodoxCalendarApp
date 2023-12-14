@@ -1,6 +1,6 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Data.Services;
+using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
-using CodeBase.Infrastructure.Services.JsonLoader;
 using CodeBase.Infrastructure.States;
 using CodeBase.UI;
 using UnityEngine;
@@ -18,8 +18,8 @@ namespace CodeBase.Infrastructure
     {
       BindBootstrapInstallerInterfaces();
       BindSceneLoader();
-      Container.Bind<JsonSaver>().AsSingle();
       BindLoadingCurtain(from: CurtainInstance());
+      Container.Bind<JsonSaver>().AsSingle();
       BindFactory();
       BindCalendarStateMachine();
     }

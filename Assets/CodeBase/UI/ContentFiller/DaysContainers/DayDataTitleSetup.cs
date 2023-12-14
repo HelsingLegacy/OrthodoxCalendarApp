@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace CodeBase.UI.ContentFiller.DaysContainers
 {
-  public abstract class DayDataTitleSetup : MonoBehaviour
+  public class DayDataTitleSetup : MonoBehaviour
   {
     [SerializeField] protected Image Background;
     [SerializeField] protected TextMeshProUGUI WeekDay;
@@ -20,7 +20,7 @@ namespace CodeBase.UI.ContentFiller.DaysContainers
     public virtual void FillWeekDay(string weekDay) => WeekDay.text = weekDay;
     public virtual void FillDateAndMonth(string dateAndMonth) => DateAndMonth.text = dateAndMonth;
     public virtual void FillColorBackground(DayDenotation dayDenotation)
-    {
+    { 
       var color = Background.color;
       switch (dayDenotation)
       {
