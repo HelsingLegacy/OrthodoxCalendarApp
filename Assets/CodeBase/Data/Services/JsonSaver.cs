@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using CodeBase.Infrastructure.Services;
@@ -14,16 +13,17 @@ namespace CodeBase.Data.Services
     private const string FolderJsonData = "JsonData";
     private const string ReadingPrefix = "-reading";
     private const string JsonExtension = ".json";
-    private const string DateFormat = "dd-MM-yyyy";
 
     private readonly ICoroutineRunner _coroutineRunner;
+    private readonly ITimeCorrection _timeCorrection;
 
-    private string DataPath =>
+    private string AppropriateDataPath =>
       Application.isMobilePlatform ? MobileDataPath() : EditorDataPath();
 
-    public JsonSaver(ICoroutineRunner coroutineRunner)
+    public JsonSaver(ICoroutineRunner coroutineRunner, ITimeCorrection timeCorrection)
     {
       _coroutineRunner = coroutineRunner;
+      _timeCorrection = timeCorrection;
     }
 
     public void LoadJsonForToday()
@@ -48,7 +48,7 @@ namespace CodeBase.Data.Services
           string jsonText = www.downloadHandler.text;
 
 
-          Task writeText = File.WriteAllTextAsync(ReadingsSaved(to: DataPath, at: FolderJsonData), jsonText);
+          Task writeText = File.WriteAllTextAsync(ReadingsSaved(to: AppropriateDataPath, at: FolderJsonData), jsonText);
 
           while (!writeText.IsCompleted)
             yield return null;
@@ -62,24 +62,9 @@ namespace CodeBase.Data.Services
       }
     }
 
-    // Shift this method to separated service DataCorrectionService
-    private string KyivCurrentDate()
-    {
-      DateTime utcTime = DateTime.UtcNow;
-
-      int timeOffsetHours = 2;
-
-      if (utcTime.Date >= new DateTime(2024, 3, 31))
-        timeOffsetHours = 3;
-
-      DateTime currentLocalTime = utcTime.AddHours(timeOffsetHours);
-
-      return currentLocalTime.ToString(DateFormat);
-    }
-
     private bool RequestedFileExist()
     {
-      return File.Exists(ReadingsSaved(DataPath, FolderJsonData));
+      return File.Exists(ReadingsSaved(AppropriateDataPath, FolderJsonData));
     }
 
     private string ReadingsSaved(string to, string at) =>
@@ -87,7 +72,7 @@ namespace CodeBase.Data.Services
 
     private string KyivDateReadingJson()
     {
-      return KyivCurrentDate() + ReadingPrefix + JsonExtension;
+      return _timeCorrection.KyivCurrentDate() + ReadingPrefix + JsonExtension;
     }
 
     private static string MobileDataPath() => Application.persistentDataPath;

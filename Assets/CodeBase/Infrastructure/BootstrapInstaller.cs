@@ -19,7 +19,10 @@ namespace CodeBase.Infrastructure
       BindBootstrapInstallerInterfaces();
       BindSceneLoader();
       BindLoadingCurtain(from: CurtainInstance());
+      
+      Container.Bind<ITimeCorrection>().To<TimeCorrection>().AsTransient();
       Container.Bind<JsonSaver>().AsSingle();
+      
       BindFactory();
       BindCalendarStateMachine();
     }
