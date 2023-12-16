@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using CodeBase.Extensions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ namespace CodeBase.UI.ContentFiller.DaysContainers
       Background.color = new Color(0.4078432f, 0.4470589f, 0.3490196f, 1);
     }
 
-    public virtual void FillWeekDay(string weekDay) => WeekDay.text = weekDay;
+    public virtual void FillWeekDay(string weekDay) => WeekDay.text = weekDay.RemoveNewLineInBeginning();
     public virtual void FillDateAndMonth(string dateAndMonth) => DateAndMonth.text = dateAndMonth;
     public virtual void FillColorBackground(DayDenotation dayDenotation)
     { 

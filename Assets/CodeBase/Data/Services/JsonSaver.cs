@@ -40,7 +40,9 @@ namespace CodeBase.Data.Services
         if (www.result == UnityWebRequest.Result.Success)
         {
           string jsonText = www.downloadHandler.text;
-          jsonText = jsonText.RemoveUnnecessaryEscape();
+          jsonText = jsonText
+            .RemoveUnnecessaryEscape()
+            .RemoveHtmlTags();
           
           File.WriteAllTextAsync(_holidayDataPath.TodayReadingsLocation(), 
             jsonText);
