@@ -20,7 +20,8 @@ namespace CodeBase.Infrastructure
       BindSceneLoader();
       BindLoadingCurtain(from: CurtainInstance());
       
-      Container.Bind<ITimeCorrection>().To<TimeCorrection>().AsTransient();
+      Container.Bind<IKyivToday>().To<KyivToday>().AsTransient();
+      Container.Bind<IHolidayDataPath>().To<HolidayDataPath>().AsTransient();
       Container.Bind<JsonSaver>().AsSingle();
       
       BindFactory();

@@ -2,11 +2,13 @@
 
 namespace CodeBase.Data.Services
 {
-  public class TimeCorrection : ITimeCorrection
+  public class KyivToday : IKyivToday
   {
     private const string DateFormat = "dd-MM-yyyy";
-
-    public string KyivCurrentDate()
+    
+    public string Date => KyivCurrentDate();
+    
+    private string KyivCurrentDate()
     {
       DateTime utcNow = DateTime.UtcNow;
 

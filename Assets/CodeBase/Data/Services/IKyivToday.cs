@@ -2,8 +2,8 @@
 
 namespace CodeBase.Data.Services
 {
-  public interface ITimeCorrection : IService
+  public interface IKyivToday : IService
   {
-    string KyivCurrentDate();
+    string Date { get;}
   }
 }
