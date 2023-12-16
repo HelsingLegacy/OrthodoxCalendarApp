@@ -3,7 +3,7 @@
   public enum DayDenotation
   {
     Undefined = 0,
-    Summary = 1,
-    Prayer = 2,
+    Black = 1,
+    Red = 2,
   }
 }
