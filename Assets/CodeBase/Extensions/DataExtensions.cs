@@ -6,5 +6,8 @@ namespace CodeBase.Extensions
   {
     public static T ToDeserialize<T>(this string json) => 
       JsonUtility.FromJson<T>(json);
+
+    public static string RemoveUnnecessaryEscape(this string json) => 
+      json.Replace(@"\/", "/");
   }
 }

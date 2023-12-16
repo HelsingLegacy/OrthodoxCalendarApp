@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
+using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -39,6 +40,7 @@ namespace CodeBase.Data.Services
         if (www.result == UnityWebRequest.Result.Success)
         {
           string jsonText = www.downloadHandler.text;
+          jsonText = jsonText.RemoveUnnecessaryEscape();
           
           File.WriteAllTextAsync(_holidayDataPath.TodayReadingsLocation(), 
             jsonText);
