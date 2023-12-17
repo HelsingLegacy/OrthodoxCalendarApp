@@ -2,6 +2,6 @@
 {
   public interface IHolidayDataPath
   {
-    string TodayReadingsLocation();
+    string ReadingsFor(string date);
   }
 }

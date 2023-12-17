@@ -2,8 +2,8 @@
 
 namespace CodeBase.Data.Services
 {
-  public interface IKyivToday : IService
+  public interface IKyivDate : IService
   {
-    string Date { get;}
+    string Today { get;}
   }
 }

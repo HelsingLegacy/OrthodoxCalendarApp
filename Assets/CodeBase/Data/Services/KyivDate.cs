@@ -2,11 +2,11 @@
 
 namespace CodeBase.Data.Services
 {
-  public class KyivToday : IKyivToday
+  public class KyivDate : IKyivDate
   {
-    private const string DateFormat = "dd-MM-yyyy";
+    private const string DateFormat = "yyyy-MM-dd";
     
-    public string Date => KyivCurrentDate();
+    public string Today => KyivCurrentDate();
     
     private string KyivCurrentDate()
     {

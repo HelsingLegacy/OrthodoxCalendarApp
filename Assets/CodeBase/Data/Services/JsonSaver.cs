@@ -7,9 +7,11 @@ using UnityEngine.Networking;
 
 namespace CodeBase.Data.Services
 {
-  public class JsonSaver
+  public class JsonSaver : IJsonSaver
   {
-    private const string TodayHolidayLink = "https://orthodox-calendar.com.ua/wp-json/calendar/v1/today/?reading=true";
+    private const string HolidayLink = "https://orthodox-calendar.com.ua/wp-json/calendar/v1/";
+    public const string TodayParameter = "today";
+    private const string ReadingParameter = "/?reading=true";
 
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly IHolidayDataPath _holidayDataPath;
@@ -20,14 +22,14 @@ namespace CodeBase.Data.Services
       _holidayDataPath = holidayDataPath;
     }
 
-    public void LoadJsonForToday()
-    {
-      _coroutineRunner.StartCoroutine(LoadJsonFrom(TodayHolidayLink));
-    }
+    public void LoadJsonFor(string dateParameter = TodayParameter) => 
+      _coroutineRunner.StartCoroutine(LoadJson(dateParameter));
 
-    private IEnumerator LoadJsonFrom(string webLink)
+    private IEnumerator LoadJson(string date)
     {
-      if (RequestedFileExist())
+      string webLink = HolidayLink + date + ReadingParameter;
+      
+      if (RequestedFileExist(date))
       {
         Debug.Log("File Exist");
         yield break;
@@ -44,18 +46,17 @@ namespace CodeBase.Data.Services
             .RemoveUnnecessaryEscape()
             .RemoveHtmlTags();
           
-          File.WriteAllTextAsync(_holidayDataPath.TodayReadingsLocation(), 
+          File.WriteAllTextAsync(_holidayDataPath.ReadingsFor(date), 
             jsonText);
 
-          Debug.Log("JSON saved to " + _holidayDataPath.TodayReadingsLocation());
+          Debug.Log("JSON saved to " + _holidayDataPath.ReadingsFor(date));
         }
         else
           Debug.LogError("Error for loading JSON from server: " + www.error);
       }
     }
 
-    private bool RequestedFileExist() => 
-      File.Exists(_holidayDataPath.TodayReadingsLocation());
-
+    private bool RequestedFileExist(string date) => 
+      File.Exists(_holidayDataPath.ReadingsFor(date));
   }
 }
