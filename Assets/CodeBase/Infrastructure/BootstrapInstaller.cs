@@ -19,11 +19,7 @@ namespace CodeBase.Infrastructure
       BindBootstrapInstallerInterfaces();
       BindSceneLoader();
       BindLoadingCurtain(from: CurtainInstance());
-      
-      Container.Bind<IKyivToday>().To<KyivToday>().AsTransient();
-      Container.Bind<IHolidayDataPath>().To<HolidayDataPath>().AsTransient();
-      Container.Bind<JsonSaver>().AsSingle();
-      
+      BindDataLoadingServices();
       BindFactory();
       BindCalendarStateMachine();
     }
@@ -48,6 +44,14 @@ namespace CodeBase.Infrastructure
 
     private void BindLoadingCurtain(LoadingCurtain from) => 
       Container.Bind<LoadingCurtain>().FromInstance(from).AsSingle();
+
+    private void BindDataLoadingServices()
+    {
+      Container.Bind<IKyivDate>().To<KyivDate>().AsTransient();
+      Container.Bind<IHolidayDataPath>().To<HolidayDataPath>().AsTransient();
+      Container.Bind<IJsonSaver>().To<JsonSaver>().AsTransient();
+      Container.Bind<IDownloadingService>().To<DownloadingService>().AsTransient();
+    }
 
     private void BindFactory()
     {

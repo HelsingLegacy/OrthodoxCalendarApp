@@ -11,20 +11,20 @@ namespace CodeBase.Infrastructure.States
     private readonly ISceneLoader _sceneLoader;
     private readonly LoadingCurtain _curtain;
     private readonly IStateMover _resolver;
-    private readonly JsonSaver _jsonSaver;
+    private readonly IDownloadingService _downloadingService;
 
-    public WarmUpState(ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, JsonSaver jsonSaver)
+    public WarmUpState(ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, IDownloadingService downloadingService)
     {
       _sceneLoader = sceneLoader;
       _curtain = curtain;
       _resolver = resolver;
-      _jsonSaver = jsonSaver;
+      _downloadingService = downloadingService;
     }
 
     public void Enter()
     {
       _curtain.Show();
-      _jsonSaver.LoadJsonForToday();
+      _downloadingService.LoadYearOrToday();
       _sceneLoader.LoadScene(Main, EnterLoadCalendar);
     }
 

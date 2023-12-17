@@ -4,18 +4,18 @@ namespace CodeBase.Data.Services
 {
   public class KyivDate : IKyivDate
   {
-    private const string DateFormat = "yyyy-MM-dd";
-    
-    public string Today => KyivCurrentDate();
-    
-    private string KyivCurrentDate()
+    public bool TodayIs(DateTime currentDate)
     {
-      DateTime utcNow = DateTime.UtcNow;
+      int today = DateTime.Compare(currentDate, TodayKyivMidnightPassed().Date);
+      int tomorrow = DateTime.Compare(currentDate, TodayKyivMidnightPassed().AddDays(1).Date);
 
-      DateTime currentLocalTime = utcNow.AddHours(SummerTimeOffsetAdjustment(accordingTo: utcNow));
-
-      return currentLocalTime.ToString(DateFormat);
+      if (today >= 0 && tomorrow < 0)
+        return true;
+      return false;
     }
+
+    private DateTime TodayKyivMidnightPassed() => 
+      DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(DateTime.UtcNow));
 
     private int SummerTimeOffsetAdjustment(DateTime accordingTo)
     {

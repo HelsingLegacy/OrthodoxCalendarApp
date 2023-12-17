@@ -8,18 +8,12 @@ namespace CodeBase.UI
     public CanvasGroup curtain;
     
     private readonly float _hideSpeed = .0015f;
-    private IEnumerator _fading;
-    
-    public void Show()
-    {
-      gameObject.SetActive(true);
-    }
 
-    public void Hide()
-    {
-      _fading = Fading();
-      StartCoroutine(_fading);
-    }
+    public void Show() => 
+      gameObject.SetActive(true);
+
+    public void Hide() => 
+      StartCoroutine(Fading());
 
     private IEnumerator Fading()
     {
