@@ -26,7 +26,6 @@ namespace CodeBase.Infrastructure.States
 
     public void Exit()
     {
-      
     }
 
     private void InitCalendar()
@@ -38,13 +37,22 @@ namespace CodeBase.Infrastructure.States
 
     private void TestUIElementsCreation()
     {
-      GameObject hud = _factory.CreateHud().GetComponent<MonthParent>().ParentObject();
+      GameObject hud =
+        _factory
+          .CreateHud()
+          .GetComponent<MonthParent>()
+          .ParentObject();
+
       GameObject monthParent =
-        _factory.CreateMonthContainer(under: hud.transform).GetComponent<DaysParent>().ParentObject();
-      _factory.CreateDayData(under: monthParent.transform);
-      _factory.CreateDayData(under: monthParent.transform);
-      _factory.CreateDayData(under: monthParent.transform);
-      _factory.CreateDayData(under: monthParent.transform);
+        _factory
+          .CreateMonthContainer(under: hud.transform)
+          .GetComponent<DaysParent>()
+          .ParentObject();
+
+      _factory.CreateHolidayDataRed(under: monthParent.transform);
+      _factory.CreateHolidayDataBlack(under: monthParent.transform);
+      _factory.CreateHolidayDataBlack(under: monthParent.transform);
+      _factory.CreateHolidayDataRed(under: monthParent.transform);
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿namespace CodeBase.UI.ContentFiller.DaysContainers
+﻿namespace CodeBase.UI.ContentFiller.HolidayComponents
 {
   public enum DayDenotation
   {

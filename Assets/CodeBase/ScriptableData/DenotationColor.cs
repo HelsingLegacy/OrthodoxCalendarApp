@@ -1,5 +1,5 @@
 ﻿using CodeBase.UI;
-using CodeBase.UI.ContentFiller.DaysContainers;
+using CodeBase.UI.ContentFiller.HolidayComponents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
