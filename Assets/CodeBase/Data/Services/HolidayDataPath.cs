@@ -20,10 +20,10 @@ namespace CodeBase.Data.Services
 
     private void CreateDataFolder()
     {
-      string path = Path.Combine(AppropriateDataPath, FolderJsonData);
+      string folderJsonData = Path.Combine(AppropriateDataPath, FolderJsonData);
       
-      if (!Directory.Exists(path)) 
-        Directory.CreateDirectory(path);
+      if (!Directory.Exists(folderJsonData)) 
+        Directory.CreateDirectory(folderJsonData);
     }
 
     private string ReadingsSaved(string to, string at, string withFileName) =>

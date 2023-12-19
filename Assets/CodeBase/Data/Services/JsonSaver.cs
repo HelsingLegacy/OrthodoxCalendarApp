@@ -10,9 +10,9 @@ namespace CodeBase.Data.Services
 {
   public class JsonSaver : IJsonSaver
   {
-    private const string HolidayLink = "https://orthodox-calendar.com.ua/wp-json/calendar/v1/";
+    private const string HolidayLink = "https://orthodox-calendar.com.ua/wp-json/calendar/v1/holiday/";
     private const string TodayParameter = "today";
-    private const string ReadingParameter = "/?reading=true";
+    private const string ReadingParameter = "/?recommendations=true&reading=true";
 
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly IHolidayDataPath _holidayDataPath;
@@ -30,7 +30,7 @@ namespace CodeBase.Data.Services
 
     private IEnumerator LoadJson(DateTime date)
     {
-      string webLink = HolidayLink + ParameterFor(date) + ReadingParameter;
+      string webLink = HolidayLink + date.ToDateFormat() + ReadingParameter;
       
       if (RequestedFileExist(forThis: date.ToDateFormat()))
       {

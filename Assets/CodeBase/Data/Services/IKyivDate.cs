@@ -6,5 +6,7 @@ namespace CodeBase.Data.Services
   public interface IKyivDate : IService
   {
     bool TodayIs(DateTime currentDate);
+    DateTime StartDate();
+    DateTime EndDate();
   }
 }
