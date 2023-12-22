@@ -6,16 +6,24 @@ namespace CodeBase.Data.Services
   {
     public bool TodayIs(DateTime currentDate)
     {
-      int today = DateTime.Compare(currentDate, TodayKyivMidnightPassed().Date);
-      int tomorrow = DateTime.Compare(currentDate, TodayKyivMidnightPassed().AddDays(1).Date);
-
-      if (today >= 0 && tomorrow < 0)
-        return true;
-      return false;
+      int today = DateTime.Compare(currentDate, TodayKyiv().Date);
+      int tomorrow = DateTime.Compare(currentDate, TodayKyiv().AddDays(1).Date);
+      
+      return NowIs(today) && NowIsNot(tomorrow);
     }
 
-    private DateTime TodayKyivMidnightPassed() => 
-      DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(DateTime.UtcNow));
+    public DateTime StartDate() => 
+      new(TodayKyiv().Year, 12, 12);
+
+    public DateTime EndDate() => 
+      new(TodayKyiv().Year, 12, 31);
+
+    private static bool NowIs(int today) => today >= 0;
+
+    private static bool NowIsNot(int tomorrow) => tomorrow < 0;
+
+    private DateTime TodayKyiv() => 
+      DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(accordingTo: DateTime.UtcNow));
 
     private int SummerTimeOffsetAdjustment(DateTime accordingTo)
     {

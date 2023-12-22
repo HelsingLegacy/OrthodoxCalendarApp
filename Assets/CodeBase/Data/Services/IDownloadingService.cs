@@ -2,6 +2,6 @@
 {
   public interface IDownloadingService
   {
-    void LoadYearOrToday();
+    void LoadCurrentYear();
   }
 }

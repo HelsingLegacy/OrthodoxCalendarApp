@@ -20,17 +20,15 @@ namespace CodeBase.UI.ContentFiller.DaysContainers
 
     public virtual void FillWeekDay(string weekDay) => WeekDay.text = weekDay.RemoveNewLineInBeginning();
     public virtual void FillDateAndMonth(string dateAndMonth) => DateAndMonth.text = dateAndMonth;
-    public virtual void FillColorBackground(DayDenotation dayDenotation)
+    public virtual void FillColorBackground(string dayDenotation)
     { 
-      var color = Background.color;
       switch (dayDenotation)
       {
-        case DayDenotation.Summary:
-          color = new Color(0.4078432f, 0.4470589f, 0.3490196f, 1); 
-          // ScriptableObject with COLOR scheme for every DataDenotation Cases.
+        case "Black":
+          Background.color = new Color(0.4078432f, 0.4470589f, 0.3490196f, 1); 
           break;
-        case DayDenotation.Prayer:
-          color = new Color(0.6039216f, 0.2039216f, 0.1058824f, 1);
+        case "Red":
+          Background.color = new Color(0.6039216f, 0.2039216f, 0.1058824f, 1);
           break;
       }
     }

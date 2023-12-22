@@ -24,7 +24,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       _curtain.Show();
-      _downloadingService.LoadYearOrToday();
+      _downloadingService.LoadCurrentYear();
       _sceneLoader.LoadScene(Main, EnterLoadCalendar);
     }
 

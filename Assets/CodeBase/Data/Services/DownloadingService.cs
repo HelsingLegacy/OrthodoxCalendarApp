@@ -4,23 +4,21 @@ namespace CodeBase.Data.Services
 {
   public class DownloadingService : IDownloadingService
   {
-    private IJsonSaver _jsonSaver;
+    private readonly IJsonSaver _jsonSaver;
+    private readonly IKyivDate _kyivDate;
 
-    public DownloadingService(IJsonSaver jsonSaver)
+    public DownloadingService(IJsonSaver jsonSaver, IKyivDate kyivDate)
     {
       _jsonSaver = jsonSaver;
+      _kyivDate = kyivDate;
     }
 
-    public void LoadYearOrToday()
+    public void LoadCurrentYear()
     {
-      DateTime startDate = new DateTime(2023, 12, 16);
-
-      DateTime endDate = new DateTime(2023, 12, 31);
-      
-      for(DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
-      {
+      for (DateTime currentDate = _kyivDate.StartDate();
+           currentDate <= _kyivDate.EndDate();
+           currentDate = currentDate.AddDays(1))
         _jsonSaver.LoadJsonFor(currentDate);
-      }    
     }
   }
 }
