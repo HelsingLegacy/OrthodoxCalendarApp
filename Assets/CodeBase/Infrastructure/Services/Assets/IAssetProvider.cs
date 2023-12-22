@@ -4,8 +4,10 @@ namespace CodeBase.Infrastructure.Services.Assets
 {
   public interface IAssetProvider
   {
-    GameObject DayData();
     GameObject HudPrefab();
     GameObject ParticularMonth();
+    GameObject HolidayDataRed();
+    GameObject HolidayDataBlack();
+    GameObject Suggestion();
   }
 }
