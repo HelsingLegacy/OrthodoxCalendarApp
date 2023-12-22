@@ -20,9 +20,9 @@ namespace CodeBase.UI.ContentFiller.DaysContainers
 
     public virtual void FillWeekDay(string weekDay) => WeekDay.text = weekDay.RemoveNewLineInBeginning();
     public virtual void FillDateAndMonth(string dateAndMonth) => DateAndMonth.text = dateAndMonth;
-    public virtual void FillColorBackground(string dayDenotation)
+    public virtual void FillColorBackground(string holidayColor)
     { 
-      switch (dayDenotation)
+      switch (holidayColor)
       {
         case "Black":
           Background.color = new Color(0.4078432f, 0.4470589f, 0.3490196f, 1); 
