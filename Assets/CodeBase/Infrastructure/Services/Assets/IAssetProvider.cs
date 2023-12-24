@@ -7,7 +7,6 @@ namespace CodeBase.Infrastructure.Services.Assets
     GameObject HudPrefab();
     GameObject ParticularMonth();
     GameObject HolidayDataRed();
-    GameObject HolidayDataBlack();
     GameObject Suggestion();
   }
 }

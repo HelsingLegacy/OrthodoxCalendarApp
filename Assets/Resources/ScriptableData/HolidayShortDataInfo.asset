@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3cb952e8584e52ab1841e436a8a608, type: 3}
+  m_Name: HolidayShortDataInfo
+  m_EditorClassIdentifier: 
+  RedHoliday: {r: 0.6039216, g: 0.2039216, b: 0.1058824, a: 1}
+  BackgroundRedHoliday: {r: 0.9215687, g: 0.83921576, b: 0.7843138, a: 1}
+  BlackHoliday: {r: 0.4078432, g: 0.4470589, b: 0.3490196, a: 1}
+  BackgroundBlackHoliday: {r: 0.9803922, g: 1, b: 0.9490197, a: 1}
+  CategoryGreatHoliday: {fileID: 0}
+  CategoryVigil: {fileID: 0}
+  CategoryTwelfth: {fileID: 0}
+  CategoryEaster: {fileID: 0}
+  CategoryHymn: {fileID: 0}
+  CategoryGlorification: {fileID: 0}
+  CategoryHexoChordal: {fileID: 0}
+  FestUnlimited: {fileID: 0}
+  FestFish: {fileID: 0}
+  FestOil: {fileID: 0}
+  FestStrict: {fileID: 0}
+  FestAbstinence: {fileID: 0}
+  Funeral: {fileID: 0}
+  DressBurgundy: {fileID: 0}
+  DressRed: {fileID: 0}
+  DressYellow: {fileID: 0}
+  DressGreen: {fileID: 0}
+  DressBlue: {fileID: 0}
+  DressWhite: {fileID: 0}
+  DressViolet: {fileID: 0}

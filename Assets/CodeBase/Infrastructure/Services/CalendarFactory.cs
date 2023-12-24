@@ -1,5 +1,5 @@
 ﻿using CodeBase.Infrastructure.Services.Assets;
-using CodeBase.UI.ContentFiller.HolidayComponents;
+using CodeBase.UI.ContentFiller;
 using UnityEngine;
 using Zenject;
 
@@ -23,11 +23,15 @@ namespace CodeBase.Infrastructure.Services
     public GameObject CreateMonthContainer(Transform under) => 
       _instantiator.InstantiatePrefab(_provider.ParticularMonth(), under.transform);
 
-    public GameObject CreateHolidayDataRed(Transform under) => 
-      _instantiator.InstantiatePrefab(_provider.HolidayDataRed(), under.transform);
+    public GameObject CreateHolidayDataAssembly(Transform under)
+    {
+      GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataRed(), under.transform);
 
-    public GameObject CreateHolidayDataBlack(Transform under) => 
-      _instantiator.InstantiatePrefab(_provider.HolidayDataBlack(), under.transform);
+      var parent =  objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
+      
+      
+      return objectAssembly;
+    }
 
     private GameObject CreateSuggestionItem(Transform under) => 
       _instantiator.InstantiatePrefab(_provider.Suggestion(), under.transform);

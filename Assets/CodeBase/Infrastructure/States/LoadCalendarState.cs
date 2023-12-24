@@ -40,19 +40,16 @@ namespace CodeBase.Infrastructure.States
       GameObject hud =
         _factory
           .CreateHud()
-          .GetComponent<MonthParent>()
+          .GetComponent<ParentProvider>()
           .ParentObject();
 
       GameObject monthParent =
         _factory
           .CreateMonthContainer(under: hud.transform)
-          .GetComponent<DaysParent>()
+          .GetComponent<ParentProvider>()
           .ParentObject();
 
-      _factory.CreateHolidayDataRed(under: monthParent.transform);
-      _factory.CreateHolidayDataBlack(under: monthParent.transform);
-      _factory.CreateHolidayDataBlack(under: monthParent.transform);
-      _factory.CreateHolidayDataRed(under: monthParent.transform);
+      _factory.CreateHolidayDataAssembly(monthParent.transform);
     }
   }
 }

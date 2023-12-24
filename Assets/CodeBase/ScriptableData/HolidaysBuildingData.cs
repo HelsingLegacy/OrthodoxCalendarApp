@@ -5,9 +5,13 @@ namespace CodeBase.ScriptableData
   [CreateAssetMenu(fileName = "HolidayBuildingData", menuName = "HolidayData", order = 0)]
   public class HolidaysBuildingData : ScriptableObject
   {
-    [Header("Holiday Color")]
-    public Color BlackHoliday= new Color(0.4078432f, 0.4470589f, 0.3490196f, 1);
+    [Header("Red Holiday Color")]
     public Color RedHoliday= new Color(0.6039216f, 0.2039216f, 0.1058824f, 1);
+    public Color BackgroundRedHoliday= new Color(0.6039216f, 0.2039216f, 0.1058824f, 1);
+
+    [Header("Black Holiday Color")]
+    public Color BlackHoliday= new Color(0.4078432f, 0.4470589f, 0.3490196f, 1);
+    public Color BackgroundBlackHoliday= new Color(0.4078432f, 0.4470589f, 0.3490196f, 1);
 
     [Space][Header("Holiday Category")]
     public Sprite CategoryGreatHoliday;

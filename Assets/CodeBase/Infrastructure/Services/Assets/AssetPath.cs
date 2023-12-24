@@ -6,8 +6,7 @@
     
     public const string MonthContainer = "Prefabs/ParticularMonthContainer";
     
-    public const string HolidayDataRed = "Prefabs/Holiday/HolidayDataRed";
-    public const string HolidayDataBlack = "Prefabs/Holiday/HolidayDataBlack";
+    public const string HolidayDataAssembly = "Prefabs/Holiday/HolidayDataAssembly";
 
     public const string Suggestion = "Prefabs/Holiday/HolidayComponents/Suggestion";
   }

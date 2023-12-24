@@ -2,11 +2,11 @@
 
 namespace CodeBase.UI.ContentFiller
 {
-  public abstract class ContentParent : MonoBehaviour
+  public class ParentProvider : MonoBehaviour
   {
     [SerializeField] private GameObject _parent;
 
-    public virtual GameObject ParentObject()
+    public GameObject ParentObject()
     {
       return _parent;
     }
