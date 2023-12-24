@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3cb952e8584e52ab1841e436a8a608, type: 3}
+  m_Name: MobileHolidayShortDataInfo
+  m_EditorClassIdentifier: 
+  RedHoliday: {r: 0.6039216, g: 0.2039216, b: 0.1058824, a: 1}
+  BackgroundRedHoliday: {r: 0.9215687, g: 0.83921576, b: 0.7843138, a: 1}
+  BlackHoliday: {r: 0.4078432, g: 0.4470589, b: 0.3490196, a: 1}
+  BackgroundBlackHoliday: {r: 0.9803922, g: 1, b: 0.9490197, a: 1}
+  CategoryHoliday: {fileID: 21300000, guid: 6a676cc9a23b5224ea33f17ecb1bfb2c, type: 3}
+  CategoryVigil: {fileID: 21300000, guid: f94c9ca782858954a99f1405fbd06023, type: 3}
+  CategoryTwelfth: {fileID: 21300000, guid: 6a676cc9a23b5224ea33f17ecb1bfb2c, type: 3}
+  CategoryEaster: {fileID: 21300000, guid: 6a676cc9a23b5224ea33f17ecb1bfb2c, type: 3}
+  CategoryHymn: {fileID: 21300000, guid: 76b3ed9ae87c91946b83babb93fed1bc, type: 3}
+  CategoryGlorification: {fileID: 21300000, guid: cab13bedd8b5f0543bb624b4ee9fff18, type: 3}
+  CategoryHexoChordal: {fileID: 21300000, guid: 531a5fb2722eb1549a08a5a4fb5e51a2, type: 3}
+  FestUnlimited: {fileID: 21300000, guid: df810593c307056429f232d70567a96b, type: 3}
+  FestFish: {fileID: 21300000, guid: f85a4e322b6581b47a512b7dc89e98db, type: 3}
+  FestOil: {fileID: 21300000, guid: b761f14a320d15e4db4fef609b330dad, type: 3}
+  FestStrict: {fileID: 21300000, guid: d87ae110fbca6674f9f1e96b39a13fbd, type: 3}
+  FestAbstinence: {fileID: 21300000, guid: 4162f26af875f2144adac362e401adc7, type: 3}
+  Funeral: {fileID: 21300000, guid: a84017b83aca93c4eb0cbb78d951d087, type: 3}
+  DressBurgundy: {fileID: 21300000, guid: 7f8477d1bef20134daeb7bc6a0852c07, type: 3}
+  DressRed: {fileID: 21300000, guid: 3ebdb70142b72644f9304fc83c1f3f48, type: 3}
+  DressYellow: {fileID: 21300000, guid: 7eff58afc2c360c4fb73cca1c2397f17, type: 3}
+  DressGreen: {fileID: 21300000, guid: 0988ad0aa6f1259448cb55dc0b7f96b4, type: 3}
+  DressBlue: {fileID: 21300000, guid: 268301039818c894588d5cdaf2a464f9, type: 3}
+  DressWhite: {fileID: 21300000, guid: ea3faf520459c984f84aa3b6b898ee7a, type: 3}
+  DressViolet: {fileID: 21300000, guid: 4b44a3c9f0883c0459ec2b9a92038739, type: 3}
