@@ -8,9 +8,19 @@ namespace CodeBase.Infrastructure.Services.Assets
     
     public GameObject ParticularMonth() => Load(AssetPath.MonthContainer);
 
-    public GameObject HolidayDataRed() => Load(AssetPath.HolidayDataAssembly);
+    public GameObject HolidayDataAssembly() => Load(AssetPath.HolidayDataAssembly);
+    
+    public GameObject HeaderNoName() => Load(AssetPath.HeaderNoName);
+    public GameObject HeaderWithName() => Load(AssetPath.HeaderWithName);
+    
+    public GameObject HolidayName() => Load(AssetPath.HolidayName);
+    
+    public GameObject IconImage() => Load(AssetPath.IconImage);
     
     public GameObject Suggestion() => Load(AssetPath.Suggestion);
+    public GameObject SuggestionItem() => Load(AssetPath.SuggestionItem);
+    
+    public GameObject GeneralContentText() => Load(AssetPath.GeneralContentText);
 
     private GameObject Load(string path) => Resources.Load<GameObject>(path);
   }

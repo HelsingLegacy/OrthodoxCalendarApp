@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace CodeBase.UI.ContentFiller.HolidayComponents.Header
 {
-  public class SetupHeader : MonoBehaviour
+  public class HolidayHeader : MonoBehaviour
   {
     public void SetBackground(Color color) => GetComponent<Image>().color = color;
     public void SetWeekdayName(string text) => GetComponentInChildren<WeekdayName>().SetWeekdayName(text);

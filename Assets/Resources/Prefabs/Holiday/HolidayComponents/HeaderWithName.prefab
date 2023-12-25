@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8614310244949175590}
   - component: {fileID: -115128133608248446}
   m_Layer: 5
-  m_Name: HeaderPlusWeekName
+  m_Name: HeaderWithName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

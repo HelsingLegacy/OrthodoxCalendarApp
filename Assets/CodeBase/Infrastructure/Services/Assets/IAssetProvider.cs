@@ -6,7 +6,19 @@ namespace CodeBase.Infrastructure.Services.Assets
   {
     GameObject HudPrefab();
     GameObject ParticularMonth();
-    GameObject HolidayDataRed();
+    
+    GameObject HolidayDataAssembly();
+    
+    GameObject HeaderNoName();
+    GameObject HeaderWithName();
+    
+    GameObject IconImage();
+
+    GameObject HolidayName();
+    
     GameObject Suggestion();
+    GameObject SuggestionItem();
+    
+    GameObject GeneralContentText();
   }
 }
