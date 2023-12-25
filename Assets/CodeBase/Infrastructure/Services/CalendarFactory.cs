@@ -34,13 +34,24 @@ namespace CodeBase.Infrastructure.Services
     {
       GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
 
-      var infoContainer = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
+      GameObject infoContainer = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
 
       HeaderConfiguration(under: infoContainer);
+
+      IconConfiguration(under: infoContainer);
+
+      GameObject holidayName = Instantiate(_provider.HolidayName(), infoContainer);
+      holidayName.GetComponent<HolidayName>().SetHolidayName(_clearData.HolidayName);
 
       SuggestionsConfiguration(under: infoContainer);
 
       ContentTextConfiguration(under: infoContainer);
+    }
+
+    private void IconConfiguration(GameObject under)
+    {
+      GameObject icon = Instantiate(_provider.IconImage(), under);
+      icon.GetComponent<IconSetup>().SetIcon(_clearData.MainIcon);
     }
 
     private void ContentTextConfiguration(GameObject under)
@@ -70,6 +81,7 @@ namespace CodeBase.Infrastructure.Services
       {
         header = Instantiate(_provider.HeaderNoName(), under);
         header.GetComponent<HolidayHeader>().SetBackground(_clearData.HeaderColor);
+        header.GetComponent<HolidayHeader>().SetDateMonth(_clearData.DateMonth);
         header.GetComponent<HolidayHeader>().SetWeekdayName(_clearData.WeekName);
       }
       else
@@ -77,6 +89,7 @@ namespace CodeBase.Infrastructure.Services
         header = Instantiate(_provider.HeaderNoName(), under);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetBackground(_clearData.HeaderColor);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekdayName(_clearData.WeekdayName);
+        header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(_clearData.DateMonth);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekName(_clearData.WeekName);
       }
     }

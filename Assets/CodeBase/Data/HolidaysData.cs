@@ -4,11 +4,8 @@ using Newtonsoft.Json;
 
 namespace CodeBase.Data
 {
-    public class HolidayInfo
+    public class RawHolidayInfo
     {
-        [JsonProperty("postId")]
-        public int PostId;
-
         [JsonProperty("title")]
         public string Title;
 
@@ -54,70 +51,31 @@ namespace CodeBase.Data
 
     public class HolidayCategory
     {
-        [JsonProperty("term_id")]
-        public int TermId;
-
-        [JsonProperty("name")]
-        public string Name;
-
         [JsonProperty("slug")]
         public string Slug;
-
-        [JsonProperty("term_group")]
-        public int TermGroup;
-
-        [JsonProperty("term_taxonomy_id")]
-        public int TermTaxonomyId;
-
-        [JsonProperty("taxonomy")]
-        public string Taxonomy;
-
-        [JsonProperty("description")]
-        public string Description;
-
-        [JsonProperty("parent")]
-        public int Parent;
-
-        [JsonProperty("count")]
-        public int Count;
-
-        [JsonProperty("filter")]
-        public string Filter;
     }
 
     public class HolidayFast
     {
         [JsonProperty("slug")]
         public string Slug;
-
-        [JsonProperty("value")]
-        public string Value;
     }
 
     public class HolidayFastName
     {
         [JsonProperty("slug")]
         public string Slug;
-
-        [JsonProperty("value")]
-        public string Value;
     }
 
     public class HolidaySpecial
     {
         [JsonProperty("slug")]
         public string Slug;
-
-        [JsonProperty("value")]
-        public string Value;
     }
 
     public class HolidayDress
     {
         [JsonProperty("slug")]
         public string Slug;
-
-        [JsonProperty("value")]
-        public string Value;
     }
 }

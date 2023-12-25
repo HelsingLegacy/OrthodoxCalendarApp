@@ -1,0 +1,144 @@
+{
+  "postId": 119,
+  "title": "2023-11-12",
+  "holidayName": "Різдво Христове",
+  "holidayDate": "2023-11-12",
+  "weekName": "11 по п'ятидесятниці",
+  "holidayColor": "black",
+  "liturgyRecommendations": "<p>Служба прп. Євфімія Нового та прмч. Лукіана Антіохійського не має святкового знаку, звершується з недільною службою Октоїха.</p>",
+  "content": "\n<p>Прп. Єфимія Нового, Солунського (889). Прмч. Лукіана, пресвітера Антіохійського (312). <strong>Сщмч. Лукіана,<br>Києво-Печерського, в Дальніх печерах (1243)</strong>. Мчч. Сарвила та Вевеї (ІІ). Свт. Савина, єп. Катанського<br>(760). Собор святих цілителів (перехідне святкування у неділю, найближчу до 18 жовтня).<br>Ікони Божої Матері «Спорителька хлібів» (ХІХ).</p>\n",
+  "mainImage": "http://orthodox-calendar.test/wp-content/uploads/2023/10/2.12-370x494.jpg",
+  "holidayCategory": [
+    {
+      "term_id": 9,
+      "name": "Бдіння",
+      "slug": "bdinnya-uk",
+      "term_group": 0,
+      "term_taxonomy_id": 9,
+      "taxonomy": "holiday_category",
+      "description": "",
+      "parent": 0,
+      "count": 1,
+      "filter": "raw"
+    },
+    {
+      "term_id": 8,
+      "name": "Велике свято",
+      "slug": "velike-svyato-uk",
+      "term_group": 0,
+      "term_taxonomy_id": 8,
+      "taxonomy": "holiday_category",
+      "description": "",
+      "parent": 0,
+      "count": 2,
+      "filter": "raw"
+    },
+    {
+      "term_id": 7,
+      "name": "Двунадесяте",
+      "slug": "dvunadesyate-uk",
+      "term_group": 0,
+      "term_taxonomy_id": 7,
+      "taxonomy": "holiday_category",
+      "description": "",
+      "parent": 0,
+      "count": 1,
+      "filter": "raw"
+    },
+    {
+      "term_id": 6,
+      "name": "Пасха",
+      "slug": "pasha-uk",
+      "term_group": 0,
+      "term_taxonomy_id": 6,
+      "taxonomy": "holiday_category",
+      "description": "",
+      "parent": 0,
+      "count": 1,
+      "filter": "raw"
+    },
+    {
+      "term_id": 10,
+      "name": "Полієлей",
+      "slug": "poliyelej-uk",
+      "term_group": 0,
+      "term_taxonomy_id": 10,
+      "taxonomy": "holiday_category",
+      "description": "",
+      "parent": 0,
+      "count": 1,
+      "filter": "raw"
+    },
+    {
+      "term_id": 11,
+      "name": "Славословіє",
+      "slug": "slavosloviye-uk",
+      "term_group": 0,
+      "term_taxonomy_id": 11,
+      "taxonomy": "holiday_category",
+      "description": "",
+      "parent": 0,
+      "count": 1,
+      "filter": "raw"
+    },
+    {
+      "term_id": 12,
+      "name": "Шестерична",
+      "slug": "shesterichna-uk",
+      "term_group": 0,
+      "term_taxonomy_id": 12,
+      "taxonomy": "holiday_category",
+      "description": "",
+      "parent": 0,
+      "count": 3,
+      "filter": "raw"
+    }
+  ],
+  "holidayFast": {
+    "slug": "chicken",
+    "value": "Посту немає"
+  },
+  "holidayFastName": {
+    "slug": "christmas_fast",
+    "value": "Різдвяний (Пилипів) піст"
+  },
+  "holidaySpecial": [
+    {
+      "slug": "funeral",
+      "value": "Поминальний день"
+    }
+  ],
+  "holidayDress": [
+    {
+      "slug": "yellow",
+      "value": "Жовтий"
+    },
+    {
+      "slug": "red",
+      "value": "Червоний"
+    },
+    {
+      "slug": "blue",
+      "value": "Синій"
+    },
+    {
+      "slug": "green",
+      "value": "Зелений"
+    },
+    {
+      "slug": "white",
+      "value": "Білий"
+    },
+    {
+      "slug": "violet",
+      "value": "Фіолетовий"
+    },
+    {
+      "slug": "burgundy",
+      "value": "Бордовий"
+    }
+  ],
+  "dayIcons": {
+    "8": "http://orthodox-calendar.test/wp-content/uploads/2023/08/image_53.jpg"
+  }
+}
