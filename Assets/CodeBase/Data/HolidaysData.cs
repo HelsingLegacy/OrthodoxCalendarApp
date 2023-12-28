@@ -46,7 +46,7 @@ namespace CodeBase.Data
         public List<HolidayDress> HolidayDress;
 
         [JsonProperty("dayIcons")]
-        public Dictionary<string, string> DayIcons;
+        public Dictionary<int, string> DayIcons;
     }
 
     public class HolidayCategory
