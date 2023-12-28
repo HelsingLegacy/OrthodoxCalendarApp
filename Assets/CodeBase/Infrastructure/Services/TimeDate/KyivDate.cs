@@ -1,26 +1,17 @@
 ﻿using System;
 
-namespace CodeBase.Data.Services
+namespace CodeBase.Infrastructure.Services.TimeDate
 {
   public class KyivDate : IKyivDate
   {
-    public bool TodayIs(DateTime currentDate)
-    {
-      int today = DateTime.Compare(currentDate, TodayKyiv().Date);
-      int tomorrow = DateTime.Compare(currentDate, TodayKyiv().AddDays(1).Date);
-      
-      return NowIs(today) && NowIsNot(tomorrow);
-    }
-
+    private DateTime CurrentMonthFirstDay => new(TodayKyiv().Year, TodayKyiv().Month, 1);
+    private DateTime CurrentMonthLastDay => CurrentMonthFirstDay.AddMonths(1).AddDays(-1);
+    
     public DateTime StartDate() => 
-      new(TodayKyiv().Year, 12, 12);
+      CurrentMonthFirstDay;
 
     public DateTime EndDate() => 
-      new(TodayKyiv().Year, 12, 31);
-
-    private static bool NowIs(int today) => today >= 0;
-
-    private static bool NowIsNot(int tomorrow) => tomorrow < 0;
+      CurrentMonthLastDay;
 
     private DateTime TodayKyiv() => 
       DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(accordingTo: DateTime.UtcNow));

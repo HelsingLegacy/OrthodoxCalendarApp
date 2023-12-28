@@ -13,12 +13,12 @@ namespace CodeBase.Data.Services
 
     public string ReadingsFor(string date)
     {
-      CreateDataFolder();
+      CreateFolderJsonData();
 
       return ReadingsSaved(to: AppropriateDataPath, at: FolderJsonData, withFileName: date.Reading().Json());
     }
 
-    private void CreateDataFolder()
+    private void CreateFolderJsonData()
     {
       string folderJsonData = Path.Combine(AppropriateDataPath, FolderJsonData);
       

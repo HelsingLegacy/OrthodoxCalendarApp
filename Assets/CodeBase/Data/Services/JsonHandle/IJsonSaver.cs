@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.Data.Services
+namespace CodeBase.Data.Services.JsonHandle
 {
   public interface IJsonSaver
   {

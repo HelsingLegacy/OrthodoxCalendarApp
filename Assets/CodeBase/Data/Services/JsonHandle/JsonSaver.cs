@@ -6,23 +6,20 @@ using CodeBase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace CodeBase.Data.Services
+namespace CodeBase.Data.Services.JsonHandle
 {
   public class JsonSaver : IJsonSaver
   {
     private const string HolidayLink = "https://orthodox-calendar.com.ua/wp-json/calendar/v1/holiday/";
-    private const string TodayParameter = "today";
     private const string ReadingParameter = "/?recommendations=true&reading=true";
 
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly IHolidayDataPath _holidayDataPath;
-    private readonly IKyivDate _kyivDate;
 
-    public JsonSaver(ICoroutineRunner coroutineRunner, IHolidayDataPath holidayDataPath, IKyivDate kyivDate)
+    public JsonSaver(ICoroutineRunner coroutineRunner, IHolidayDataPath holidayDataPath)
     {
       _coroutineRunner = coroutineRunner;
       _holidayDataPath = holidayDataPath;
-      _kyivDate = kyivDate;
     }
 
     public void LoadJsonFor(DateTime dateParameter) => 
@@ -56,12 +53,7 @@ namespace CodeBase.Data.Services
           Debug.LogError("Error for loading JSON from server: " + www.error);
       }
     }
-
-    private string ParameterFor(DateTime date) =>
-      !_kyivDate.TodayIs(date) 
-        ? date.ToDateFormat() 
-        : TodayParameter;
-
+    
     private bool RequestedFileExist(string forThis) => 
       File.Exists(_holidayDataPath.ReadingsFor(forThis));
   }

@@ -1,11 +1,9 @@
 ﻿using System;
-using CodeBase.Infrastructure.Services;
 
-namespace CodeBase.Data.Services
+namespace CodeBase.Infrastructure.Services.TimeDate
 {
   public interface IKyivDate : IService
   {
-    bool TodayIs(DateTime currentDate);
     DateTime StartDate();
     DateTime EndDate();
   }
