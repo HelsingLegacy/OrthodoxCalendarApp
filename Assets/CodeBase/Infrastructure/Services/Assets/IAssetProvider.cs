@@ -18,7 +18,9 @@ namespace CodeBase.Infrastructure.Services.Assets
     
     GameObject Suggestion();
     GameObject SuggestionItem();
-    
+
     GameObject GeneralContentText();
+    
+    GameObject DayIconsContainer();
   }
 }

@@ -21,6 +21,7 @@ namespace CodeBase.Infrastructure.Services.Assets
     public GameObject SuggestionItem() => Load(AssetPath.SuggestionItem);
     
     public GameObject GeneralContentText() => Load(AssetPath.GeneralContentText);
+    public GameObject DayIconsContainer() => Load(AssetPath.DayIconsContainer);
 
     private GameObject Load(string path) => Resources.Load<GameObject>(path);
   }

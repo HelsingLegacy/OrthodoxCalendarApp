@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeBase.Data;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.UI.ContentFiller;
@@ -40,16 +39,44 @@ namespace CodeBase.Infrastructure.Services
 
       IconConfiguration(under: infoContainer);
 
-      GameObject holidayName = Instantiate(_provider.HolidayName(), infoContainer);
-      holidayName.GetComponent<HolidayName>().SetHolidayName(_clearData.HolidayName);
+      HolidayNameConfiguration(under: infoContainer);
 
       SuggestionsConfiguration(under: infoContainer);
 
       ContentTextConfiguration(under: infoContainer);
+
+      DayIconsConfiguration(under: infoContainer);
+    }
+
+    private void DayIconsConfiguration(GameObject under)
+    {
+      if(!_clearData.IsAnyDayIcons)
+        return;
+      
+      GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
+
+      List<Sprite> dayIcons = _clearData.DayIcons;
+      
+      for (int i = 0; i < dayIcons.Count; i++) 
+        Instantiate(_provider.IconImage(), under);
+      
+      dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
+    }
+
+    private void HolidayNameConfiguration(GameObject under)
+    {
+      if(_clearData.IsHolidayNameEmpty)
+        return;
+      
+      GameObject holidayName = Instantiate(_provider.HolidayName(), under);
+      holidayName.GetComponent<HolidayName>().SetHolidayName(_clearData.HolidayName);
     }
 
     private void IconConfiguration(GameObject under)
     {
+      if(_clearData.IsShortView)
+        return;
+      
       GameObject icon = Instantiate(_provider.IconImage(), under);
       icon.GetComponent<IconSetup>().SetIcon(_clearData.MainIcon);
     }
@@ -65,12 +92,12 @@ namespace CodeBase.Infrastructure.Services
     {
       GameObject suggestion = Instantiate(_provider.Suggestion(), under);
       
-      List<Sprite> suggestionList = _clearData.Suggestions;
+      List<Sprite> suggestions = _clearData.Suggestions;
       
-      for (int i = 0; i < suggestionList.Count; i++) 
+      for (int i = 0; i < suggestions.Count; i++) 
         Instantiate(_provider.SuggestionItem(), suggestion);
       
-      suggestion.GetComponent<SuggestionContainer>().SetSuggestions(_clearData.Suggestions);
+      suggestion.GetComponent<FillChildrenImages>().SetImagesWith(sprites: suggestions);
     }
 
     private void HeaderConfiguration(GameObject under)

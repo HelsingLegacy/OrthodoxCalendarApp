@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 namespace CodeBase.UI.ContentFiller.HolidayComponents
 {
-  public class SuggestionContainer : MonoBehaviour
+  public class FillChildrenImages : MonoBehaviour
   {
-    public void SetSuggestions(List<Sprite> sprites)
+    public void SetImagesWith(List<Sprite> sprites)
     {
       var images = new List<Image>(GetComponentsInChildren<Image>());
 
