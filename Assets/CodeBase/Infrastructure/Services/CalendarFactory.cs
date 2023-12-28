@@ -113,7 +113,7 @@ namespace CodeBase.Infrastructure.Services
       }
       else
       {
-        header = Instantiate(_provider.HeaderNoName(), under);
+        header = Instantiate(_provider.HeaderWithName(), under);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetBackground(_clearData.HeaderColor);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekdayName(_clearData.WeekdayName);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(_clearData.DateMonth);
