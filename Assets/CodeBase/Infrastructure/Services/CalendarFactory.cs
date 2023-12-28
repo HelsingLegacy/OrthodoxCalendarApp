@@ -48,58 +48,6 @@ namespace CodeBase.Infrastructure.Services
       DayIconsConfiguration(under: infoContainer);
     }
 
-    private void DayIconsConfiguration(GameObject under)
-    {
-      if(!_clearData.IsAnyDayIcons)
-        return;
-      
-      GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
-
-      List<Sprite> dayIcons = _clearData.DayIcons;
-      
-      for (int i = 0; i < dayIcons.Count; i++) 
-        Instantiate(_provider.IconImage(), under);
-      
-      dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
-    }
-
-    private void HolidayNameConfiguration(GameObject under)
-    {
-      if(_clearData.IsHolidayNameEmpty)
-        return;
-      
-      GameObject holidayName = Instantiate(_provider.HolidayName(), under);
-      holidayName.GetComponent<HolidayName>().SetHolidayName(_clearData.HolidayName);
-    }
-
-    private void IconConfiguration(GameObject under)
-    {
-      if(_clearData.IsShortView)
-        return;
-      
-      GameObject icon = Instantiate(_provider.IconImage(), under);
-      icon.GetComponent<IconSetup>().SetIcon(_clearData.MainIcon);
-    }
-
-    private void ContentTextConfiguration(GameObject under)
-    {
-      GameObject generalContentText;
-      generalContentText = Instantiate(_provider.GeneralContentText(), under: under);
-      generalContentText.GetComponent<ContentWriter>().SetContent(_clearData.ShortContentText);
-    }
-
-    private void SuggestionsConfiguration(GameObject under)
-    {
-      GameObject suggestion = Instantiate(_provider.Suggestion(), under);
-      
-      List<Sprite> suggestions = _clearData.Suggestions;
-      
-      for (int i = 0; i < suggestions.Count; i++) 
-        Instantiate(_provider.SuggestionItem(), suggestion);
-      
-      suggestion.GetComponent<FillChildrenImages>().SetImagesWith(sprites: suggestions);
-    }
-
     private void HeaderConfiguration(GameObject under)
     {
       GameObject header;
@@ -119,6 +67,58 @@ namespace CodeBase.Infrastructure.Services
         header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(_clearData.DateMonth);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekName(_clearData.WeekName);
       }
+    }
+
+    private void IconConfiguration(GameObject under)
+    {
+      if(_clearData.IsShortView)
+        return;
+      
+      GameObject icon = Instantiate(_provider.IconImage(), under);
+      icon.GetComponent<IconSetup>().SetIcon(_clearData.MainIcon);
+    }
+
+    private void HolidayNameConfiguration(GameObject under)
+    {
+      if(_clearData.IsHolidayNameEmpty)
+        return;
+      
+      GameObject holidayName = Instantiate(_provider.HolidayName(), under);
+      holidayName.GetComponent<HolidayName>().SetHolidayName(_clearData.HolidayName);
+    }
+
+    private void SuggestionsConfiguration(GameObject under)
+    {
+      GameObject suggestion = Instantiate(_provider.Suggestion(), under);
+      
+      List<Sprite> suggestions = _clearData.Suggestions;
+      
+      for (int i = 0; i < suggestions.Count; i++) 
+        Instantiate(_provider.SuggestionItem(), suggestion);
+      
+      suggestion.GetComponent<FillChildrenImages>().SetImagesWith(sprites: suggestions);
+    }
+
+    private void ContentTextConfiguration(GameObject under)
+    {
+      GameObject generalContentText = Instantiate(_provider.GeneralContentText(), under: under);
+      
+      generalContentText.GetComponent<ContentWriter>().SetContent(_clearData.ShortContentText);
+    }
+
+    private void DayIconsConfiguration(GameObject under)
+    {
+      if(!_clearData.IsAnyDayIcons)
+        return;
+      
+      GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
+
+      List<Sprite> dayIcons = _clearData.DayIcons;
+      
+      for (int i = 0; i < dayIcons.Count; i++) 
+        Instantiate(_provider.IconImage(), under);
+      
+      dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
     }
 
     private GameObject Instantiate(GameObject prefab, GameObject under) =>
