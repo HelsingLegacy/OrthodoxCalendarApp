@@ -2,6 +2,6 @@
 {
   public interface IDownloadingService
   {
-    void LoadCurrentYear();
+    void LoadHolidays();
   }
 }

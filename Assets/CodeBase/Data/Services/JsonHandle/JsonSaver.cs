@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.IO;
+﻿using System.IO;
 using CodeBase.Extensions;
-using CodeBase.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,34 +8,28 @@ namespace CodeBase.Data.Services.JsonHandle
 {
   public class JsonSaver : IJsonSaver
   {
-    private const string HolidayLink = "https://orthodox-calendar.com.ua/wp-json/calendar/v1/holiday/";
-    private const string ReadingParameter = "/?recommendations=true&reading=true";
+    private readonly IHolidaysStorage _holidaysStorage;
+    private readonly ILinkProvider _linkProvider;
 
-    private readonly ICoroutineRunner _coroutineRunner;
-    private readonly IHolidayDataPath _holidayDataPath;
-
-    public JsonSaver(ICoroutineRunner coroutineRunner, IHolidayDataPath holidayDataPath)
+    public JsonSaver(IHolidaysStorage holidaysStorage, ILinkProvider linkProvider)
     {
-      _coroutineRunner = coroutineRunner;
-      _holidayDataPath = holidayDataPath;
+      _holidaysStorage = holidaysStorage;
+      _linkProvider = linkProvider;
     }
 
-    public void LoadJsonFor(DateTime dateParameter) => 
-      _coroutineRunner.StartCoroutine(LoadJson(dateParameter));
+    public async void LoadJsonFor(string dateParameter) => 
+      await LoadJson(dateParameter);
 
-    private IEnumerator LoadJson(DateTime date)
+    private async UniTask<float> LoadJson(string date)
     {
-      string webLink = HolidayLink + date.ToDateFormat() + ReadingParameter;
+      string link = _linkProvider.HolidayLink();
+      string parameters = _linkProvider.ReadingParameter();
       
-      if (RequestedFileExist(forThis: date.ToDateFormat()))
-      {
-        Debug.Log("File Exist");
-        yield break;
-      }
-
+      string webLink = link + date + parameters;
+      
       using (UnityWebRequest www = UnityWebRequest.Get(webLink))
       {
-        yield return www.SendWebRequest();
+        await www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
@@ -46,15 +38,17 @@ namespace CodeBase.Data.Services.JsonHandle
             .RemoveUnnecessaryEscape()
             .RemoveHtmlTags();
           
-          File.WriteAllTextAsync(_holidayDataPath.ReadingsFor(date.ToDateFormat()), 
-            jsonText);
+          await UniTask.RunOnThreadPool(() => 
+              File.WriteAllTextAsync(
+              _holidaysStorage.HolidayFor(date), 
+              jsonText));
+          return 1f;
         }
         else
           Debug.LogError("Error for loading JSON from server: " + www.error);
+
+        return 0f;
       }
     }
-    
-    private bool RequestedFileExist(string forThis) => 
-      File.Exists(_holidayDataPath.ReadingsFor(forThis));
   }
 }

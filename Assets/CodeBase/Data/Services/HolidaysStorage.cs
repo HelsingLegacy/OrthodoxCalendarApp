@@ -4,21 +4,17 @@ using UnityEngine;
 
 namespace CodeBase.Data.Services
 {
-  public class HolidayDataPath : IHolidayDataPath
+  public class HolidaysStorage : IHolidaysStorage, IHolidaysStorageCreator
   {
     private const string FolderJsonData = "JsonData";
     
     private string AppropriateDataPath =>
       Application.isMobilePlatform ? MobileDataPath() : EditorDataPath();
 
-    public string ReadingsFor(string date)
-    {
-      CreateFolderJsonData();
+    public string HolidayFor(string date) => 
+      HolidaySaved(to: AppropriateDataPath, at: FolderJsonData, withFileName: date.Json());
 
-      return ReadingsSaved(to: AppropriateDataPath, at: FolderJsonData, withFileName: date.Reading().Json());
-    }
-
-    private void CreateFolderJsonData()
+    public void CreateFolderJsonData()
     {
       string folderJsonData = Path.Combine(AppropriateDataPath, FolderJsonData);
       
@@ -26,7 +22,7 @@ namespace CodeBase.Data.Services
         Directory.CreateDirectory(folderJsonData);
     }
 
-    private string ReadingsSaved(string to, string at, string withFileName) =>
+    private string HolidaySaved(string to, string at, string withFileName) =>
       Path.Combine(to, at, withFileName);
 
     private static string MobileDataPath() => Application.persistentDataPath;

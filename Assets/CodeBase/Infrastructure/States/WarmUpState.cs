@@ -12,19 +12,22 @@ namespace CodeBase.Infrastructure.States
     private readonly LoadingCurtain _curtain;
     private readonly IStateMover _resolver;
     private readonly IDownloadingService _downloadingService;
+    private readonly IHolidaysStorageCreator _holidaysStorageCreator;
 
-    public WarmUpState(ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, IDownloadingService downloadingService)
+    public WarmUpState(ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, IDownloadingService downloadingService, IHolidaysStorageCreator holidaysStorageCreator)
     {
       _sceneLoader = sceneLoader;
       _curtain = curtain;
       _resolver = resolver;
       _downloadingService = downloadingService;
+      _holidaysStorageCreator = holidaysStorageCreator;
     }
 
     public void Enter()
     {
       _curtain.Show();
-      _downloadingService.LoadCurrentYear();
+      _holidaysStorageCreator.CreateFolderJsonData();
+      _downloadingService.LoadHolidays();
       _sceneLoader.LoadScene(Main, EnterLoadCalendar);
     }
 

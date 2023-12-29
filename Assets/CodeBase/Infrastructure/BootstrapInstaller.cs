@@ -1,4 +1,5 @@
-﻿using CodeBase.Data.Services;
+﻿using CodeBase.Data;
+using CodeBase.Data.Services;
 using CodeBase.Data.Services.JsonHandle;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
@@ -49,8 +50,10 @@ namespace CodeBase.Infrastructure
 
     private void BindDataLoadingServices()
     {
+      Container.Bind<ClearData>().AsSingle();
+      Container.Bind<ILinkProvider>().To<LinkProvider>().AsTransient();
       Container.Bind<IKyivDate>().To<KyivDate>().AsTransient();
-      Container.Bind<IHolidayDataPath>().To<HolidayDataPath>().AsTransient();
+      Container.BindInterfacesTo<HolidaysStorage>().AsTransient();
       Container.Bind<IJsonSaver>().To<JsonSaver>().AsTransient();
       Container.Bind<IDownloadingService>().To<DownloadingService>().AsTransient();
     }

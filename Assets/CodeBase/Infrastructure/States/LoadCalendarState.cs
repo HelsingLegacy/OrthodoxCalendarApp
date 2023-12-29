@@ -49,7 +49,7 @@ namespace CodeBase.Infrastructure.States
           .GetComponent<ParentProvider>()
           .ParentObject();
 
-      _factory.CreateHolidayDataAssembly(monthParent.transform);
+      //_factory.CreateHolidayDataAssembly(monthParent.transform);
     }
   }
 }

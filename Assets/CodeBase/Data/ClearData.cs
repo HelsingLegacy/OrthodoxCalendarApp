@@ -26,24 +26,24 @@ namespace CodeBase.Data
     public List<Sprite> DayIcons;
 
 
-    public ClearData(Color headerColor, string weekdayName, string dateMonth,
-      bool isWeekNameEmpty, string weekName, bool isShortView, Sprite mainIcon,
-      bool isHolidayNameEmpty, string holidayName, List<Sprite> suggestions, 
-      string shortContentText, bool isAnyDayIcons, List<Sprite> dayIcons)
-    {
-      HeaderColor = headerColor;
-      WeekdayName = weekdayName;
-      DateMonth = dateMonth;
-      IsWeekNameEmpty = isWeekNameEmpty;
-      WeekName = weekName;
-      IsShortView = isShortView;
-      MainIcon = mainIcon;
-      IsHolidayNameEmpty = isHolidayNameEmpty;
-      HolidayName = holidayName;
-      Suggestions = suggestions;
-      ShortContentText = shortContentText;
-      IsAnyDayIcons = isAnyDayIcons;
-      DayIcons = dayIcons;
-    }
+    // public ClearData(Color headerColor, string weekdayName, string dateMonth,
+    //   bool isWeekNameEmpty, string weekName, bool isShortView, Sprite mainIcon,
+    //   bool isHolidayNameEmpty, string holidayName, List<Sprite> suggestions, 
+    //   string shortContentText, bool isAnyDayIcons, List<Sprite> dayIcons)
+    // {
+    //   HeaderColor = headerColor;
+    //   WeekdayName = weekdayName;
+    //   DateMonth = dateMonth;
+    //   IsWeekNameEmpty = isWeekNameEmpty;
+    //   WeekName = weekName;
+    //   IsShortView = isShortView;
+    //   MainIcon = mainIcon;
+    //   IsHolidayNameEmpty = isHolidayNameEmpty;
+    //   HolidayName = holidayName;
+    //   Suggestions = suggestions;
+    //   ShortContentText = shortContentText;
+    //   IsAnyDayIcons = isAnyDayIcons;
+    //   DayIcons = dayIcons;
+    // }
   }
 }

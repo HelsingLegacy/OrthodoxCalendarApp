@@ -4,6 +4,6 @@ namespace CodeBase.Data.Services.JsonHandle
 {
   public interface IJsonSaver
   {
-    void LoadJsonFor(DateTime dateParameter);
+    void LoadJsonFor(string dateParameter);
   }
 }

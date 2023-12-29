@@ -6,12 +6,10 @@ namespace CodeBase.Infrastructure.Services.TimeDate
   {
     private DateTime CurrentMonthFirstDay => new(TodayKyiv().Year, TodayKyiv().Month, 1);
     private DateTime CurrentMonthLastDay => CurrentMonthFirstDay.AddMonths(1).AddDays(-1);
-    
-    public DateTime StartDate() => 
-      CurrentMonthFirstDay;
 
-    public DateTime EndDate() => 
-      CurrentMonthLastDay;
+    public DateTime StartDate() => CurrentMonthFirstDay;
+
+    public DateTime EndDate() => CurrentMonthLastDay;
 
     private DateTime TodayKyiv() => 
       DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(accordingTo: DateTime.UtcNow));
