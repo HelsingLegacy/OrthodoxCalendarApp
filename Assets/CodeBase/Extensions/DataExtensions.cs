@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using CodeBase.Data;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CodeBase.Extensions
@@ -6,7 +8,7 @@ namespace CodeBase.Extensions
   public static class DataExtensions
   {
     public static T ToDeserialize<T>(this string json) =>
-      JsonUtility.FromJson<T>(json);
+      JsonConvert.DeserializeObject<T>(json);
 
     public static string RemoveUnnecessaryEscape(this string json) =>
       json.Replace(@"\/", "/");

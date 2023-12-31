@@ -51,11 +51,12 @@ namespace CodeBase.Infrastructure
     private void BindDataLoadingServices()
     {
       Container.Bind<ClearData>().AsSingle();
-      Container.Bind<ILinkProvider>().To<LinkProvider>().AsTransient();
-      Container.Bind<IKyivDate>().To<KyivDate>().AsTransient();
-      Container.BindInterfacesTo<HolidaysStorage>().AsTransient();
-      Container.Bind<IJsonSaver>().To<JsonSaver>().AsTransient();
-      Container.Bind<IDownloadingService>().To<DownloadingService>().AsTransient();
+      Container.Bind<IHolidayDataExtractor>().To<HolidayDataExtractor>().AsSingle();
+      Container.Bind<ILinkProvider>().To<LinkProvider>().AsSingle();
+      Container.BindInterfacesTo<KyivDate>().AsSingle();
+      Container.BindInterfacesTo<HolidaysStorage>().AsSingle();
+      Container.Bind<IJsonSaver>().To<JsonSaver>().AsSingle();
+      Container.Bind<IDownloadingService>().To<DownloadingService>().AsSingle();
     }
 
     private void BindFactory()

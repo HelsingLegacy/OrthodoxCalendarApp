@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.Services.TimeDate
 {
-  public class KyivDate : IKyivDate
+  public class KyivDate : IKyivDate, IToday
   {
     private DateTime MinusWeekFromToday => TodayKyiv().AddDays(-3);
     private DateTime PlusWeekFromToday => TodayKyiv().AddDays(3);
@@ -11,7 +11,7 @@ namespace CodeBase.Infrastructure.Services.TimeDate
 
     public DateTime EndDate() => PlusWeekFromToday;
 
-    private DateTime TodayKyiv() => 
+    public DateTime TodayKyiv() => 
       DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(accordingTo: DateTime.UtcNow));
 
     private int SummerTimeOffsetAdjustment(DateTime accordingTo)
