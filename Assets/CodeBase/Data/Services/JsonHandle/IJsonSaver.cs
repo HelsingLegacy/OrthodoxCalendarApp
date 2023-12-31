@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Data.Services.JsonHandle
 {
   public interface IJsonSaver
   {
-    void LoadJsonFor(string dateParameter);
+    UniTask<float> LoadJson(string date);
   }
 }

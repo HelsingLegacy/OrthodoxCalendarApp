@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using CodeBase.Extensions;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.Networking;
 
 namespace CodeBase.Data.Services.JsonHandle
@@ -17,10 +16,7 @@ namespace CodeBase.Data.Services.JsonHandle
       _linkProvider = linkProvider;
     }
 
-    public async void LoadJsonFor(string dateParameter) => 
-      await LoadJson(dateParameter);
-
-    private async UniTask<float> LoadJson(string date)
+    public async UniTask<float> LoadJson(string date)
     {
       string link = _linkProvider.HolidayLink();
       string parameters = _linkProvider.ReadingParameter();
@@ -31,24 +27,30 @@ namespace CodeBase.Data.Services.JsonHandle
       {
         await www.SendWebRequest();
 
-        if (www.result == UnityWebRequest.Result.Success)
+        if (IsSuccess(www))
         {
-          string jsonText = www.downloadHandler.text;
-          jsonText = jsonText
-            .RemoveUnnecessaryEscape()
-            .RemoveHtmlTags();
-          
-          await UniTask.RunOnThreadPool(() => 
-              File.WriteAllTextAsync(
-              _holidaysStorage.HolidayFor(date), 
-              jsonText));
-          return 1f;
+          return await OnSuccess(date, www);
         }
-        else
-          Debug.LogError("Error for loading JSON from server: " + www.error);
-
+        
         return 0f;
       }
+
+      async UniTask<float> OnSuccess(string s, UnityWebRequest www)
+      {
+        string jsonText = www.downloadHandler.text;
+        jsonText = jsonText
+          .RemoveUnnecessaryEscape()
+          .RemoveHtmlTags();
+          
+        await UniTask.RunOnThreadPool(() => 
+          File.WriteAllTextAsync(
+            _holidaysStorage.HolidayFor(s), 
+            jsonText));
+        return 1f;
+      }
+
+      bool IsSuccess(UnityWebRequest www) => 
+        www.result == UnityWebRequest.Result.Success;
     }
   }
 }

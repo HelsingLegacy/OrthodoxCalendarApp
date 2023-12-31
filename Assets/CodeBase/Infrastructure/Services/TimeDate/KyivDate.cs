@@ -4,12 +4,12 @@ namespace CodeBase.Infrastructure.Services.TimeDate
 {
   public class KyivDate : IKyivDate
   {
-    private DateTime CurrentMonthFirstDay => new(TodayKyiv().Year, TodayKyiv().Month, 1);
-    private DateTime CurrentMonthLastDay => CurrentMonthFirstDay.AddMonths(1).AddDays(-1);
+    private DateTime MinusWeekFromToday => TodayKyiv().AddDays(-3);
+    private DateTime PlusWeekFromToday => TodayKyiv().AddDays(3);
 
-    public DateTime StartDate() => CurrentMonthFirstDay;
+    public DateTime StartDate() => MinusWeekFromToday;
 
-    public DateTime EndDate() => CurrentMonthLastDay;
+    public DateTime EndDate() => PlusWeekFromToday;
 
     private DateTime TodayKyiv() => 
       DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(accordingTo: DateTime.UtcNow));

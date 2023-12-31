@@ -3,7 +3,6 @@ using System.IO;
 using CodeBase.Data.Services.JsonHandle;
 using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services.TimeDate;
-using UnityEngine;
 
 namespace CodeBase.Data.Services
 {
@@ -20,26 +19,23 @@ namespace CodeBase.Data.Services
       _holidaysStorage = holidaysStorage;
     }
 
-    public void LoadHolidays()
+    public async void LoadHolidays()
     {
       DateTime startDate = _kyivDate.StartDate();
       DateTime endDate = _kyivDate.EndDate();
-      
+
       for (DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
       {
         string date = currentDate.ToStringDateFormat();
-        
-        if(!RequestedFileExist(date))
-          _jsonSaver.LoadJsonFor(date);
-        else
+
+        if (!RequestedFileExist(date))
         {
-          Debug.Log($"Holiday for {date} already exist");
+          await _jsonSaver.LoadJson(date);
         }
       }
     }
-    
-    private bool RequestedFileExist(string date) => 
-      File.Exists(_holidaysStorage.HolidayFor(date));
 
+    private bool RequestedFileExist(string date) =>
+      File.Exists(_holidaysStorage.HolidayFor(date));
   }
 }
