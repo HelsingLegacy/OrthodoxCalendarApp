@@ -1,5 +1,6 @@
-using CodeBase.Data.Services.JsonHandle;
+using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI;
 using CodeBase.UI.ContentFiller;
 using UnityEngine;
@@ -11,14 +12,14 @@ namespace CodeBase.Infrastructure.States
     private readonly LoadingCurtain _curtain;
     private readonly CalendarFactory _factory;
     private readonly IStateMover _resolver;
-    private readonly HolidayDataExtractor _extractor;
+    private readonly IToday _today;
 
-    public LoadCalendarState(LoadingCurtain curtain, CalendarFactory factory, IStateMover resolver, HolidayDataExtractor extractor)
+    public LoadCalendarState(LoadingCurtain curtain, CalendarFactory factory, IStateMover resolver, IToday today)
     {
       _curtain = curtain;
       _factory = factory;
       _resolver = resolver;
-      _extractor = extractor;
+      _today = today;
     }
 
     public void Enter()
@@ -52,7 +53,7 @@ namespace CodeBase.Infrastructure.States
           .GetComponent<ParentProvider>()
           .ParentObject();
 
-      //_factory.CreateHolidayDataAssembly(monthParent.transform);
+        _factory.CreateHolidayDataAssembly(monthParent.transform, _today.TodayKyiv().ToStringDateFormat());
     }
   }
 }

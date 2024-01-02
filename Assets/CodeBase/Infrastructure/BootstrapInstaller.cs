@@ -50,11 +50,9 @@ namespace CodeBase.Infrastructure
 
     private void BindDataLoadingServices()
     {
-      Container.Bind<ClearData>().AsSingle();
-      Container.Bind<IHolidayDataExtractor>().To<HolidayDataExtractor>().AsSingle();
-      Container.Bind<ILinkProvider>().To<LinkProvider>().AsSingle();
       Container.BindInterfacesTo<KyivDate>().AsSingle();
       Container.BindInterfacesTo<HolidaysStorage>().AsSingle();
+      Container.Bind<ILinkProvider>().To<LinkProvider>().AsSingle();
       Container.Bind<IJsonSaver>().To<JsonSaver>().AsSingle();
       Container.Bind<IDownloadingService>().To<DownloadingService>().AsSingle();
     }

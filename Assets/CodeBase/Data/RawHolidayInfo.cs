@@ -42,20 +42,7 @@ namespace CodeBase.Data
           return categoryList;
         return new List<HolidayCategory>();
       }
-      set => HolidayCategory = value;
     }
-
-    [JsonIgnore]
-    public bool HolidayCategoryBool
-    {
-      get
-      {
-        if (HolidayCategory is bool categoryBool)
-          return categoryBool;
-        return false;
-      }
-      set => HolidayCategory = value;
-    } 
 
     [JsonProperty("holidayFast")] 
     public HolidayFast HolidayFast;
@@ -87,8 +74,8 @@ namespace CodeBase.Data
 
   public class HolidayFastName
   {
-    [JsonProperty("slug")] 
-    public string Slug;
+    [JsonProperty("value")] 
+    public string Value;
   }
 
   public class HolidaySpecial
