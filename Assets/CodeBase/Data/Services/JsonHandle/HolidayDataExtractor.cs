@@ -198,7 +198,7 @@ namespace CodeBase.Data.Services.JsonHandle
               case "bdinnya":
                 Suggestions.Add(BuildingData().CategoryVigil);
                 break;
-              case "velike-svyato":
+              case "velike-svyato": 
                 Suggestions.Add(BuildingData().CategoryHoliday);
                 break;
               case "dvunadesyate":
@@ -224,7 +224,7 @@ namespace CodeBase.Data.Services.JsonHandle
       {
         switch (info.HolidayFast.Slug.ToLower())
         {
-          case "":
+          case "chicken":
             Suggestions.Add(BuildingData().FestUnlimited);
             break;
           case "fish":
