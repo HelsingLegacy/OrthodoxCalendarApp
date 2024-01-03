@@ -53,7 +53,9 @@ namespace CodeBase.Infrastructure.States
           .GetComponent<ParentProvider>()
           .ParentObject();
 
-        _factory.CreateHolidayDataAssembly(monthParent.transform, _today.TodayKyiv().ToStringDateFormat());
+        _factory.CreateHolidayDataAssembly(monthParent.transform, _today.TodayKyiv().ToStringDateFormat()); 
+        //"2024-01-06"
+        //_today.TodayKyiv().ToStringDateFormat()
     }
   }
 }

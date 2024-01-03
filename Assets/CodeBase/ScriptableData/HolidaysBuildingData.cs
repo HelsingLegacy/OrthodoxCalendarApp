@@ -50,12 +50,12 @@ namespace CodeBase.ScriptableData
     /// </summary>
     public Sprite CategoryHexoChordal;
     
-    [Space][Header("Fest")] 
-    public Sprite FestUnlimited;
-    public Sprite FestFish;
-    public Sprite FestOil;
-    public Sprite FestStrict;
-    public Sprite FestAbstinence;
+    [Space][Header("Fast")] 
+    public Sprite FastUnlimited;
+    public Sprite FastFish;
+    public Sprite FastOil;
+    public Sprite FastStrict;
+    public Sprite FastAbstinence;
     
     [Space][Header("Holiday Special")]
     public Sprite Funeral;

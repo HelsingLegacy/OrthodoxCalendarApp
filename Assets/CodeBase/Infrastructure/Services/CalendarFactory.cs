@@ -34,29 +34,30 @@ namespace CodeBase.Infrastructure.Services
     public void CreateHolidayDataAssembly(Transform under, string on)
     {
       HolidayDataExtractor extractor = new HolidayDataExtractor(_storage, on);
-      
+
       GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
 
-      GameObject infoContainer = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
+      GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
+      
 
-      HeaderConfiguration(under: infoContainer, extractor);
+      HeaderConfiguration(under: container, extractor);
 
-      IconConfiguration(under: infoContainer, extractor);
+      IconConfiguration(under: container, extractor);
 
-      HolidayNameConfiguration(under: infoContainer, extractor);
+      HolidayNameConfiguration(under: container, extractor);
 
-      SuggestionsConfiguration(under: infoContainer, extractor);
+      SuggestionsConfiguration(under: container, extractor);
 
-      ContentTextConfiguration(under: infoContainer, extractor);
+      ContentTextConfiguration(under: container, extractor);
 
-      DayIconsConfiguration(under: infoContainer, extractor);
+      DayIconsConfiguration(under: container, extractor);
     }
 
     private void HeaderConfiguration(GameObject under, HolidayDataExtractor extracted)
     {
       GameObject header;
 
-      if (extracted.IsWeekNameEmpty)
+      if (EmptyWeekName())
       {
         header = Instantiate(_provider.HeaderNoName(), under);
         header.GetComponent<HolidayHeader>().SetBackground(extracted.HeaderColor);
@@ -71,11 +72,14 @@ namespace CodeBase.Infrastructure.Services
         header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(extracted.DateMonth);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekName(extracted.WeekName);
       }
+
+      bool EmptyWeekName() =>
+        string.IsNullOrEmpty(extracted.WeekName);
     }
 
     private void IconConfiguration(GameObject under, HolidayDataExtractor extractor)
     {
-      if(extractor.IsShortView)
+      if (extractor.IsMobilePreview) 
         return;
       
       GameObject icon = Instantiate(_provider.IconImage(), under);
@@ -84,7 +88,7 @@ namespace CodeBase.Infrastructure.Services
 
     private void HolidayNameConfiguration(GameObject under, HolidayDataExtractor extractor)
     {
-      if(!string.IsNullOrEmpty(extractor.HolidayName))
+      if (!string.IsNullOrEmpty(extractor.HolidayName))
       {
         GameObject holidayName = Instantiate(_provider.HolidayName(), under);
         holidayName.GetComponent<HolidayName>().SetHolidayName(extractor.HolidayName);
@@ -94,34 +98,34 @@ namespace CodeBase.Infrastructure.Services
     private void SuggestionsConfiguration(GameObject under, HolidayDataExtractor extractor)
     {
       GameObject suggestion = Instantiate(_provider.Suggestion(), under);
-      
+
       List<Sprite> suggestions = extractor.Suggestions;
-      
-      for (int i = 0; i < suggestions.Count; i++) 
+
+      for (int i = 0; i < suggestions.Count; i++)
         Instantiate(_provider.SuggestionItem(), suggestion);
-      
+
       suggestion.GetComponent<FillChildrenImages>().SetImagesWith(sprites: suggestions);
     }
 
     private void ContentTextConfiguration(GameObject under, HolidayDataExtractor extractor)
     {
       GameObject generalContentText = Instantiate(_provider.GeneralContentText(), under: under);
-      
+
       generalContentText.GetComponent<ContentWriter>().SetContent(extractor.ShortContentText);
     }
 
     private void DayIconsConfiguration(GameObject under, HolidayDataExtractor extractor)
     {
-      if(!extractor.IsAnyDayIcons)
+      if (!extractor.IsAnyDayIcons)
         return;
-      
+
       GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
 
       List<Sprite> dayIcons = extractor.DayIcons;
-      
-      for (int i = 0; i < dayIcons.Count; i++) 
+
+      for (int i = 0; i < dayIcons.Count; i++)
         Instantiate(_provider.IconImage(), under);
-      
+
       dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
     }
 

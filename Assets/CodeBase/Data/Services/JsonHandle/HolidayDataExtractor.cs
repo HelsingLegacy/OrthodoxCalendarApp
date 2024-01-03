@@ -16,13 +16,11 @@ namespace CodeBase.Data.Services.JsonHandle
     public string WeekdayName { get; private set; }
     public string DateMonth { get; private set; }
 
-    public bool IsWeekNameEmpty { get; private set; }
     public string WeekName { get; private set; }
 
-    public bool IsShortView => true;
+    public bool IsMobilePreview => true;
     public Sprite MainIcon { get; private set; }
 
-    public bool IsHolidayName { get; private set; }
     public string HolidayName { get; private set; }
 
     public List<Sprite> Suggestions { get; private set; }
@@ -37,7 +35,7 @@ namespace CodeBase.Data.Services.JsonHandle
       ExtractedData(storage, date);
     }
 
-    public void ExtractedData(IHolidaysStorage storage, string date)
+    private void ExtractedData(IHolidaysStorage storage, string date)
     {
       string jsonFilePath = storage.HolidayFor(date);
 
@@ -153,12 +151,8 @@ namespace CodeBase.Data.Services.JsonHandle
       DateMonth = day + monthName;
     }
 
-    private void SetWeekName(RawHolidayInfo info)
-    {
+    private void SetWeekName(RawHolidayInfo info) => 
       WeekName = info.WeekName;
-
-      IsWeekNameEmpty = string.IsNullOrEmpty(WeekName);
-    }
 
     private void SetMainIcon(RawHolidayInfo info)
     {
@@ -214,19 +208,19 @@ namespace CodeBase.Data.Services.JsonHandle
         switch (info.HolidayFast.Slug.ToLower())
         {
           case "chicken":
-            Suggestions.Add(BuildingData().FestUnlimited);
+            Suggestions.Add(BuildingData().FastUnlimited);
             break;
           case "fish":
-            Suggestions.Add(BuildingData().FestFish);
+            Suggestions.Add(BuildingData().FastFish);
             break;
           case "oil":
-            Suggestions.Add(BuildingData().FestOil);
+            Suggestions.Add(BuildingData().FastOil);
             break;
           case "strict":
-            Suggestions.Add(BuildingData().FestStrict);
+            Suggestions.Add(BuildingData().FastStrict);
             break;
           case "abstinence":
-            Suggestions.Add(BuildingData().FestAbstinence);
+            Suggestions.Add(BuildingData().FastAbstinence);
             break;
         }
       }
