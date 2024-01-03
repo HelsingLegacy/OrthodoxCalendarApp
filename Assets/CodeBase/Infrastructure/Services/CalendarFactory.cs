@@ -52,24 +52,24 @@ namespace CodeBase.Infrastructure.Services
       DayIconsConfiguration(under: infoContainer, extractor);
     }
 
-    private void HeaderConfiguration(GameObject under, HolidayDataExtractor extractor)
+    private void HeaderConfiguration(GameObject under, HolidayDataExtractor extracted)
     {
       GameObject header;
 
-      if (extractor.IsWeekNameEmpty)
+      if (extracted.IsWeekNameEmpty)
       {
         header = Instantiate(_provider.HeaderNoName(), under);
-        header.GetComponent<HolidayHeader>().SetBackground(extractor.HeaderColor);
-        header.GetComponent<HolidayHeader>().SetDateMonth(extractor.DateMonth);
-        header.GetComponent<HolidayHeader>().SetWeekdayName(extractor.WeekName);
+        header.GetComponent<HolidayHeader>().SetBackground(extracted.HeaderColor);
+        header.GetComponent<HolidayHeader>().SetWeekdayName(extracted.WeekdayName);
+        header.GetComponent<HolidayHeader>().SetDateMonth(extracted.DateMonth);
       }
       else
       {
         header = Instantiate(_provider.HeaderWithName(), under);
-        header.GetComponent<HolidayHeaderPlusWeekName>().SetBackground(extractor.HeaderColor);
-        header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekdayName(extractor.WeekdayName);
-        header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(extractor.DateMonth);
-        header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekName(extractor.WeekName);
+        header.GetComponent<HolidayHeaderPlusWeekName>().SetBackground(extracted.HeaderColor);
+        header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekdayName(extracted.WeekdayName);
+        header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(extracted.DateMonth);
+        header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekName(extracted.WeekName);
       }
     }
 
@@ -84,7 +84,7 @@ namespace CodeBase.Infrastructure.Services
 
     private void HolidayNameConfiguration(GameObject under, HolidayDataExtractor extractor)
     {
-      if(extractor.IsHolidayName)
+      if(!string.IsNullOrEmpty(extractor.HolidayName))
       {
         GameObject holidayName = Instantiate(_provider.HolidayName(), under);
         holidayName.GetComponent<HolidayName>().SetHolidayName(extractor.HolidayName);

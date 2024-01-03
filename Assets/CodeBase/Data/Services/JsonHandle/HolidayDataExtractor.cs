@@ -105,10 +105,8 @@ namespace CodeBase.Data.Services.JsonHandle
 
     private void SetDateMonth(RawHolidayInfo info)
     {
-      DateTime.TryParse(info.Title, out DateTime date);
-
-      int day = date.Day;
-      int month = date.Month;
+      int day = info.HolidayDate.Day;
+      int month = info.HolidayDate.Month;
 
       string monthName = "";
 
@@ -166,16 +164,8 @@ namespace CodeBase.Data.Services.JsonHandle
     {
     }
 
-    private void SetHolidayName(RawHolidayInfo info)
-    {
-      if (string.IsNullOrEmpty(info.HolidayName.ToLower()))
-        IsHolidayName = false;
-      else
-      {
-        IsHolidayName = true;
-        HolidayName = info.HolidayName;
-      }
-    }
+    private void SetHolidayName(RawHolidayInfo info) => 
+      HolidayName = info.HolidayName;
 
     private void SetSuggestions(RawHolidayInfo info)
     {
@@ -185,7 +175,6 @@ namespace CodeBase.Data.Services.JsonHandle
       SetFest();
       SetSpecial(info);
       SetDress(info);
-
 
       void SetHolidayIfExist(RawHolidayInfo rawInfo)
       {
@@ -198,7 +187,7 @@ namespace CodeBase.Data.Services.JsonHandle
               case "bdinnya":
                 Suggestions.Add(BuildingData().CategoryVigil);
                 break;
-              case "velike-svyato": 
+              case "velike-svyato":
                 Suggestions.Add(BuildingData().CategoryHoliday);
                 break;
               case "dvunadesyate":
