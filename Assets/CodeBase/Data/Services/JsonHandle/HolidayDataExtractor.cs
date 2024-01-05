@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using CodeBase.Data.DeserializationClasses;
 using CodeBase.Extensions;
 using CodeBase.ScriptableData;
@@ -29,7 +30,8 @@ namespace CodeBase.Data.Services.JsonHandle
     public string ShortContentText { get; private set; }
     public string LiturgyText { get; private set; }
 
-    public string ReadingsText { get; private set; }
+    public string ReadingsShortLinks { get; private set; }
+    public string ReadingsContent { get; private set; }
 
     public bool IsAnyDayIcons { get; private set; }
     public List<Sprite> DayIcons { get; private set; }
@@ -60,6 +62,8 @@ namespace CodeBase.Data.Services.JsonHandle
       SetHolidayName(info);
       SetSuggestions(info);
       SetShortContent(info);
+      SetLiturgy(info);
+      SetReadingsShortLinks(info);
       SetDayIcons();
     }
 
@@ -282,20 +286,27 @@ namespace CodeBase.Data.Services.JsonHandle
       }
     }
 
-    private void SetShortContent(RawHolidayInfo info)
+    private void SetShortContent(RawHolidayInfo info) => 
+      ShortContentText = info.Content;
+
+    private void SetReadingsShortLinks(RawHolidayInfo info)
     {
-      string content = info.Content;
-      string readingShort = "";
+      var groupedTitles = info.ReadingGroupList
+        .GroupBy(mc => mc.Title)
+        .Select(group => $"<b>{group.Key}</b>\n<u>{string.Join("\n", group.Select(mc => mc.Code))}</u>");
 
-      foreach (ReadingGroup group in info.ReadingGroup)
-        readingShort += $"{group.Title} {group.Code} ";
+      string result = string.Join("\n", groupedTitles);
 
-      if (!string.IsNullOrEmpty(readingShort))
-        ShortContentText = content + "\n" + readingShort;
-      else
-        ShortContentText = content;
+      ReadingsShortLinks = result;
     }
 
+    private void SetReadingsContent(RawHolidayInfo info)
+    {
+      ReadingsContent = info.Content;
+    }
+
+    private void SetLiturgy(RawHolidayInfo info) => 
+      LiturgyText = info.LiturgyRecommendations;
 
     private void SetDayIcons() =>
       IsAnyDayIcons = false; //DayIcons.Any();

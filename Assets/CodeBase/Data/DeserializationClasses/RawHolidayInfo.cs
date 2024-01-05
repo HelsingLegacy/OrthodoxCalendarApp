@@ -44,7 +44,7 @@ namespace CodeBase.Data.DeserializationClasses
     public List<HolidayDress> HolidayDress;
 
     [JsonProperty("readingGroup")] 
-    public List<ReadingGroup> ReadingGroup;
+    public List<ReadingGroup> ReadingGroupList;
 
     [JsonProperty("dayIcons")] 
     public Dictionary<int, string> DayIcons;
