@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace CodeBase.Data
+namespace CodeBase.Data.DeserializationClasses
 {
   public class RawHolidayInfo
   {
-    [JsonProperty("title")] 
-    public string Title;
-
     [JsonProperty("holidayName")] 
     public string HolidayName;
 
@@ -31,18 +28,8 @@ namespace CodeBase.Data
     public string MainImage;
 
     [JsonProperty("holidayCategory")] 
-    public object HolidayCategory;
-
-    [JsonIgnore]
-    public List<HolidayCategory> HolidayCategoryList
-    {
-      get
-      {
-        if (HolidayCategory is List<HolidayCategory> categoryList)
-          return categoryList;
-        return new List<HolidayCategory>();
-      }
-    }
+    [JsonConverter(typeof(HolidayCategoryConverter))]
+    public List<HolidayCategory> HolidayCategory;
 
     [JsonProperty("holidayFast")] 
     public HolidayFast HolidayFast;
@@ -56,37 +43,10 @@ namespace CodeBase.Data
     [JsonProperty("holidayDress")] 
     public List<HolidayDress> HolidayDress;
 
+    [JsonProperty("readingGroup")] 
+    public List<ReadingGroup> ReadingGroup;
+
     [JsonProperty("dayIcons")] 
     public Dictionary<int, string> DayIcons;
-  }
-
-  public class HolidayCategory
-  {
-    [JsonProperty("slug")] 
-    public string Slug;
-  }
-
-  public class HolidayFast
-  {
-    [JsonProperty("slug")] 
-    public string Slug;
-  }
-
-  public class HolidayFastName
-  {
-    [JsonProperty("value")] 
-    public string Value;
-  }
-
-  public class HolidaySpecial
-  {
-    [JsonProperty("slug")] 
-    public string Slug;
-  }
-
-  public class HolidayDress
-  {
-    [JsonProperty("slug")] 
-    public string Slug;
   }
 }

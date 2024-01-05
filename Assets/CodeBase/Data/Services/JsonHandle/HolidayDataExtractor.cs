@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CodeBase.Data.DeserializationClasses;
 using CodeBase.Extensions;
 using CodeBase.ScriptableData;
 using UnityEngine;
@@ -26,6 +27,9 @@ namespace CodeBase.Data.Services.JsonHandle
     public List<Sprite> Suggestions { get; private set; }
 
     public string ShortContentText { get; private set; }
+    public string LiturgyText { get; private set; }
+
+    public string ReadingsText { get; private set; }
 
     public bool IsAnyDayIcons { get; private set; }
     public List<Sprite> DayIcons { get; private set; }
@@ -61,14 +65,18 @@ namespace CodeBase.Data.Services.JsonHandle
 
     private void SetHolidayColor(RawHolidayInfo info)
     {
-      if (info.HolidayColor.ToLower() == "black")
+      string color = info.HolidayColor;
+
+      if (color == "black")
       {
         HeaderColor = BuildingData().HeaderBlack;
         TextBackgroundColor = BuildingData().BackgroundBlack;
       }
-
-      HeaderColor = BuildingData().HeaderRed;
-      TextBackgroundColor = BuildingData().BackgroundRed;
+      else
+      {
+        HeaderColor = BuildingData().HeaderRed;
+        TextBackgroundColor = BuildingData().BackgroundRed;
+      }
     }
 
     private void SetWeekdayName(RawHolidayInfo info)
@@ -151,14 +159,14 @@ namespace CodeBase.Data.Services.JsonHandle
       DateMonth = day + monthName;
     }
 
-    private void SetWeekName(RawHolidayInfo info) => 
+    private void SetWeekName(RawHolidayInfo info) =>
       WeekName = info.WeekName;
 
     private void SetMainIcon(RawHolidayInfo info)
     {
     }
 
-    private void SetHolidayName(RawHolidayInfo info) => 
+    private void SetHolidayName(RawHolidayInfo info) =>
       HolidayName = info.HolidayName;
 
     private void SetSuggestions(RawHolidayInfo info)
@@ -172,9 +180,9 @@ namespace CodeBase.Data.Services.JsonHandle
 
       void SetHolidayIfExist(RawHolidayInfo rawInfo)
       {
-        if (rawInfo.HolidayCategoryList.Count > 0)
+        if (rawInfo.HolidayCategory.Count > 0)
         {
-          foreach (HolidayCategory holidayCategory in rawInfo.HolidayCategoryList)
+          foreach (HolidayCategory holidayCategory in rawInfo.HolidayCategory)
           {
             switch (holidayCategory.Slug)
             {
@@ -203,6 +211,7 @@ namespace CodeBase.Data.Services.JsonHandle
           }
         }
       }
+
       void SetFest()
       {
         switch (info.HolidayFast.Slug.ToLower())
@@ -216,7 +225,7 @@ namespace CodeBase.Data.Services.JsonHandle
           case "oil":
             Suggestions.Add(BuildingData().FastOil);
             break;
-          case "strict":
+          case "vegetables":
             Suggestions.Add(BuildingData().FastStrict);
             break;
           case "abstinence":
@@ -224,6 +233,7 @@ namespace CodeBase.Data.Services.JsonHandle
             break;
         }
       }
+
       void SetSpecial(RawHolidayInfo rawInfo)
       {
         if (rawInfo.HolidaySpecial != null)
@@ -239,6 +249,7 @@ namespace CodeBase.Data.Services.JsonHandle
           }
         }
       }
+
       void SetDress(RawHolidayInfo rawInfo)
       {
         foreach (HolidayDress holidayDress in rawInfo.HolidayDress)
@@ -274,12 +285,15 @@ namespace CodeBase.Data.Services.JsonHandle
     private void SetShortContent(RawHolidayInfo info)
     {
       string content = info.Content;
-      string liturgy = info.LiturgyRecommendations;
+      string readingShort = "";
 
-      if (string.IsNullOrEmpty(liturgy))
-        ShortContentText = content;
+      foreach (ReadingGroup group in info.ReadingGroup)
+        readingShort += $"{group.Title} {group.Code} ";
+
+      if (!string.IsNullOrEmpty(readingShort))
+        ShortContentText = content + "\n" + readingShort;
       else
-        ShortContentText = content + "\n" + liturgy;
+        ShortContentText = content;
     }
 
 
