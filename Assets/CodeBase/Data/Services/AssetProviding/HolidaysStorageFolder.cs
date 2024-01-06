@@ -2,9 +2,9 @@
 using CodeBase.Extensions;
 using UnityEngine;
 
-namespace CodeBase.Data.Services
+namespace CodeBase.Data.Services.AssetProviding
 {
-  public class HolidaysStorage : IHolidaysStorage, IHolidaysStorageCreator
+  public class HolidaysStorageFolder : IHolidaysStorage, IHolidaysStorageFolderCreator
   {
     private const string FolderJsonData = "JsonData";
     

@@ -7,9 +7,9 @@ using CodeBase.Extensions;
 using CodeBase.ScriptableData;
 using UnityEngine;
 
-namespace CodeBase.Data.Services.JsonHandle
+namespace CodeBase.Data.Services.AssetProviding
 {
-  public class HolidayDataExtractor
+  public class ExtractorService
   {
     private const string MobileBuildingData = "ScriptableData/MobileHolidayShortDataInfo";
 
@@ -36,7 +36,7 @@ namespace CodeBase.Data.Services.JsonHandle
     public bool IsAnyDayIcons { get; private set; }
     public List<Sprite> DayIcons { get; private set; }
 
-    public HolidayDataExtractor(IHolidaysStorage storage, string date)
+    public ExtractorService(IHolidaysStorage storage, string date)
     {
       ExtractedData(storage, date);
     }

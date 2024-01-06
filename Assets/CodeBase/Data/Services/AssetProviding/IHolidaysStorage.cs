@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Data.Services
+﻿namespace CodeBase.Data.Services.AssetProviding
 {
   public interface IHolidaysStorage
   {

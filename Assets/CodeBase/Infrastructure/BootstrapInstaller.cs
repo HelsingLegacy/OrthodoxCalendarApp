@@ -1,6 +1,7 @@
 ﻿using CodeBase.Data;
 using CodeBase.Data.Services;
-using CodeBase.Data.Services.JsonHandle;
+using CodeBase.Data.Services.AssetProviding;
+using CodeBase.Data.Services.DownloadServices;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
@@ -51,9 +52,9 @@ namespace CodeBase.Infrastructure
     private void BindDataLoadingServices()
     {
       Container.BindInterfacesTo<KyivDate>().AsSingle();
-      Container.BindInterfacesTo<HolidaysStorage>().AsSingle();
+      Container.BindInterfacesTo<HolidaysStorageFolder>().AsSingle();
       Container.Bind<ILinkProvider>().To<LinkProvider>().AsSingle();
-      Container.Bind<IJsonSaver>().To<JsonSaver>().AsSingle();
+      Container.Bind<IDataLoaderService>().To<DataLoaderService>().AsSingle();
       Container.Bind<IDownloadingService>().To<DownloadingService>().AsSingle();
     }
 

@@ -1,16 +1,17 @@
 ﻿using System.IO;
+using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Networking;
 
-namespace CodeBase.Data.Services.JsonHandle
+namespace CodeBase.Data.Services.DownloadServices
 {
-  public class JsonSaver : IJsonSaver
+  public class DataLoaderService : IDataLoaderService
   {
     private readonly IHolidaysStorage _holidaysStorage;
     private readonly ILinkProvider _linkProvider;
 
-    public JsonSaver(IHolidaysStorage holidaysStorage, ILinkProvider linkProvider)
+    public DataLoaderService(IHolidaysStorage holidaysStorage, ILinkProvider linkProvider)
     {
       _holidaysStorage = holidaysStorage;
       _linkProvider = linkProvider;

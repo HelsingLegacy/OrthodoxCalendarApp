@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data.Services;
-using CodeBase.Data.Services.JsonHandle;
+using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.ContentFiller;
@@ -33,27 +33,27 @@ namespace CodeBase.Infrastructure.Services
 
     public void CreateHolidayDataAssembly(Transform under, string on)
     {
-      HolidayDataExtractor extractor = new HolidayDataExtractor(_storage, on);
+      ExtractorService extractorService = new ExtractorService(_storage, on);
 
       GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
 
       GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
       
 
-      HeaderConfiguration(under: container, extractor);
+      HeaderConfiguration(under: container, extractorService);
 
-      IconConfiguration(under: container, extractor);
+      IconConfiguration(under: container, extractorService);
 
-      HolidayNameConfiguration(under: container, extractor);
+      HolidayNameConfiguration(under: container, extractorService);
 
-      SuggestionsConfiguration(under: container, extractor);
+      SuggestionsConfiguration(under: container, extractorService);
 
-      ContentTextConfiguration(under: container, extractor);
+      ContentTextConfiguration(under: container, extractorService);
 
-      DayIconsConfiguration(under: container, extractor);
+      DayIconsConfiguration(under: container, extractorService);
     }
 
-    private void HeaderConfiguration(GameObject under, HolidayDataExtractor extracted)
+    private void HeaderConfiguration(GameObject under, ExtractorService extracted)
     {
       GameObject header;
 
@@ -77,29 +77,29 @@ namespace CodeBase.Infrastructure.Services
         string.IsNullOrEmpty(extracted.WeekName);
     }
 
-    private void IconConfiguration(GameObject under, HolidayDataExtractor extractor)
+    private void IconConfiguration(GameObject under, ExtractorService extractorService)
     {
-      if (extractor.IsMobilePreview) 
+      if (extractorService.IsMobilePreview) 
         return;
       
       GameObject icon = Instantiate(_provider.IconImage(), under);
-      icon.GetComponent<IconSetup>().SetIcon(extractor.MainIcon);
+      icon.GetComponent<IconSetup>().SetIcon(extractorService.MainIcon);
     }
 
-    private void HolidayNameConfiguration(GameObject under, HolidayDataExtractor extractor)
+    private void HolidayNameConfiguration(GameObject under, ExtractorService extractorService)
     {
-      if (!string.IsNullOrEmpty(extractor.HolidayName))
+      if (!string.IsNullOrEmpty(extractorService.HolidayName))
       {
         GameObject holidayName = Instantiate(_provider.HolidayName(), under);
-        holidayName.GetComponent<HolidayName>().SetHolidayName(extractor.HolidayName);
+        holidayName.GetComponent<HolidayName>().SetHolidayName(extractorService.HolidayName);
       }
     }
 
-    private void SuggestionsConfiguration(GameObject under, HolidayDataExtractor extractor)
+    private void SuggestionsConfiguration(GameObject under, ExtractorService extractorService)
     {
       GameObject suggestion = Instantiate(_provider.Suggestion(), under);
 
-      List<Sprite> suggestions = extractor.Suggestions;
+      List<Sprite> suggestions = extractorService.Suggestions;
 
       for (int i = 0; i < suggestions.Count; i++)
         Instantiate(_provider.SuggestionItem(), suggestion);
@@ -107,21 +107,21 @@ namespace CodeBase.Infrastructure.Services
       suggestion.GetComponent<FillChildrenImages>().SetImagesWith(sprites: suggestions);
     }
 
-    private void ContentTextConfiguration(GameObject under, HolidayDataExtractor extractor)
+    private void ContentTextConfiguration(GameObject under, ExtractorService extractorService)
     {
       GameObject generalContentText = Instantiate(_provider.GeneralContentText(), under: under);
 
-      generalContentText.GetComponent<ContentWriter>().SetContent(extractor.ShortContentText);
+      generalContentText.GetComponent<ContentWriter>().SetContent(extractorService.ShortContentText);
     }
 
-    private void DayIconsConfiguration(GameObject under, HolidayDataExtractor extractor)
+    private void DayIconsConfiguration(GameObject under, ExtractorService extractorService)
     {
-      if (!extractor.IsAnyDayIcons)
+      if (!extractorService.IsAnyDayIcons)
         return;
 
       GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
 
-      List<Sprite> dayIcons = extractor.DayIcons;
+      List<Sprite> dayIcons = extractorService.DayIcons;
 
       for (int i = 0; i < dayIcons.Count; i++)
         Instantiate(_provider.IconImage(), under);

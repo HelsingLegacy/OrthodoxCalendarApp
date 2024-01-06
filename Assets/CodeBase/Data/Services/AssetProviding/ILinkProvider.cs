@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Data.Services.JsonHandle
+﻿namespace CodeBase.Data.Services.AssetProviding
 {
   public interface ILinkProvider
   {

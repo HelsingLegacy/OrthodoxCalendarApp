@@ -1,24 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using CodeBase.Data.Services.JsonHandle;
+using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services.TimeDate;
+using Cysharp.Threading.Tasks;
 
-namespace CodeBase.Data.Services
+namespace CodeBase.Data.Services.DownloadServices
 {
   public class DownloadingService : IDownloadingService
   {
-    private readonly IJsonSaver _jsonSaver;
+    private readonly IDataLoaderService _dataLoader;
+    private readonly DownloadReporterService _downloadReporter;
     private readonly IKyivDate _kyivDate;
     private readonly IHolidaysStorage _holidaysStorage;
 
-    public DownloadingService(IJsonSaver jsonSaver, IKyivDate kyivDate, IHolidaysStorage holidaysStorage)
+    public DownloadingService(IDataLoaderService dataLoader, DownloadReporterService downloadReporter, IKyivDate kyivDate, IHolidaysStorage holidaysStorage)
     {
-      _jsonSaver = jsonSaver;
+      _dataLoader = dataLoader;
+      _downloadReporter = downloadReporter;
       _kyivDate = kyivDate;
       _holidaysStorage = holidaysStorage;
     }
 
+    private async UniTask DownloadContentWithPreciseProgress(List<string> dates)
+    {
+      
+
+      _downloadReporter.Reset();
+    }
+    
     public async void LoadHolidays()
     {
       DateTime startDate = _kyivDate.StartDate();
@@ -30,7 +41,7 @@ namespace CodeBase.Data.Services
 
         if (!RequestedFileExist(date))
         {
-          await _jsonSaver.LoadJson(date);
+          await _dataLoader.LoadJson(date);
         }
       }
     }

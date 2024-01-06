@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace CodeBase.Data.Services.JsonHandle
+namespace CodeBase.Data.Services.DownloadServices
 {
-  public interface IJsonSaver
+  public interface IDataLoaderService
   {
     UniTask<float> LoadJson(string date);
   }
