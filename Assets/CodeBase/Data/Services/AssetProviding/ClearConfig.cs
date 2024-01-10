@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace CodeBase.Data.Services.AssetProviding
 {
-  public class ExtractorService
+  public class ClearConfig
   {
     private const string MobileBuildingData = "ScriptableData/MobileHolidayShortDataInfo";
 
@@ -36,7 +36,7 @@ namespace CodeBase.Data.Services.AssetProviding
     public bool IsAnyDayIcons { get; private set; }
     public List<Sprite> DayIcons { get; private set; }
 
-    public ExtractorService(IHolidaysStorage storage, string date)
+    public ClearConfig(IHolidaysStorage storage, string date)
     {
       ExtractedData(storage, date);
     }

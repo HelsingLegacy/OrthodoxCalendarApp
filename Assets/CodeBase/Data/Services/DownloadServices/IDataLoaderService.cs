@@ -4,6 +4,6 @@ namespace CodeBase.Data.Services.DownloadServices
 {
   public interface IDataLoaderService
   {
-    UniTask<float> LoadJson(string date);
+    UniTask<int> LoadJson(string dates);
   }
 }

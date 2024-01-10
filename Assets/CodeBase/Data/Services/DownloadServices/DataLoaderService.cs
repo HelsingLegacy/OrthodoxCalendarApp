@@ -17,37 +17,37 @@ namespace CodeBase.Data.Services.DownloadServices
       _linkProvider = linkProvider;
     }
 
-    public async UniTask<float> LoadJson(string date)
+    public async UniTask<int> LoadJson(string dates)
     {
       string link = _linkProvider.HolidayLink();
       string parameters = _linkProvider.ReadingParameter();
       
-      string webLink = link + date + parameters;
+      string url = link + dates + parameters;
       
-      using (UnityWebRequest www = UnityWebRequest.Get(webLink))
+      using (UnityWebRequest webLink = UnityWebRequest.Get(url))
       {
-        await www.SendWebRequest();
+        await webLink.SendWebRequest();
 
-        if (IsSuccess(www))
+        if (IsSuccess(webLink))
         {
-          return await OnSuccess(date, www);
+          return await CreateDataConfig(forDate: dates, from: webLink);
         }
         
-        return 0f;
+        return 0;
       }
 
-      async UniTask<float> OnSuccess(string s, UnityWebRequest www)
+      async UniTask<int> CreateDataConfig(string forDate, UnityWebRequest from)
       {
-        string jsonText = www.downloadHandler.text;
+        string jsonText = from.downloadHandler.text;
         jsonText = jsonText
           .RemoveUnnecessaryEscape()
           .RemoveHtmlTags();
           
-        await UniTask.RunOnThreadPool(() => 
-          File.WriteAllTextAsync(
-            _holidaysStorage.HolidayFor(s), 
+        await UniTask.RunOnThreadPool(async () => 
+          await File.WriteAllTextAsync(
+            _holidaysStorage.HolidayFor(forDate), 
             jsonText));
-        return 1f;
+        return 1;
       }
 
       bool IsSuccess(UnityWebRequest www) => 

@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.Services.TimeDate
 {
-  public interface IKyivDate : IService
+  public interface IKyivDate : IService, IToday
   {
     DateTime StartDate();
     DateTime EndDate();

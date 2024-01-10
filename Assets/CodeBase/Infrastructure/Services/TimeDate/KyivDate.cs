@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.Services.TimeDate
 {
-  public class KyivDate : IKyivDate, IToday
+  public class KyivDate : IKyivDate
   {
     private DateTime MinusWeekFromToday => TodayKyiv().AddDays(-3);
     private DateTime PlusWeekFromToday => TodayKyiv().AddDays(3);

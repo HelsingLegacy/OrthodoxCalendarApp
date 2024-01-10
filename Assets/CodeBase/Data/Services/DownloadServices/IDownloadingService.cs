@@ -1,7 +1,10 @@
-﻿namespace CodeBase.Data.Services.DownloadServices
+﻿using System;
+
+namespace CodeBase.Data.Services.DownloadServices
 {
   public interface IDownloadingService
   {
-    void LoadHolidays();
+    void LoadHoliday( Action onLoaded);
+    void LoadHolidays( Action onLoaded);
   }
 }

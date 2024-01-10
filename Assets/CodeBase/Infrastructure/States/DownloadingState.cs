@@ -1,4 +1,3 @@
-using CodeBase.Data.Services;
 using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Data.Services.DownloadServices;
 using CodeBase.Infrastructure.Services;
@@ -6,7 +5,7 @@ using CodeBase.UI;
 
 namespace CodeBase.Infrastructure.States
 {
-  public class WarmUpState : IState
+  public class DownloadingState : IState
   {
     private const string Main = "Main";
     
@@ -16,7 +15,10 @@ namespace CodeBase.Infrastructure.States
     private readonly IDownloadingService _downloadingService;
     private readonly IHolidaysStorageFolderCreator _holidaysStorageFolderCreator;
 
-    public WarmUpState(ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, IDownloadingService downloadingService, IHolidaysStorageFolderCreator holidaysStorageFolderCreator)
+    public DownloadingState(
+      ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, 
+      IDownloadingService downloadingService, IHolidaysStorageFolderCreator holidaysStorageFolderCreator
+      )
     {
       _sceneLoader = sceneLoader;
       _curtain = curtain;
@@ -29,15 +31,18 @@ namespace CodeBase.Infrastructure.States
     {
       _curtain.Show();
       _holidaysStorageFolderCreator.CreateFolderJsonData();
-      _downloadingService.LoadHolidays();
-      _sceneLoader.LoadScene(Main, EnterLoadCalendar);
+      _downloadingService.LoadHoliday(onLoaded: MoveToNextState);
     }
 
     public void Exit()
     {
     }
 
-    private void EnterLoadCalendar() => 
+    private void MoveToNextState() => 
+      _sceneLoader.LoadScene(Main, onLoaded: EnterLoadCalendarState);
+
+
+    private void EnterLoadCalendarState() => 
       _resolver.MoveTo<LoadCalendarState>();
   }
 }

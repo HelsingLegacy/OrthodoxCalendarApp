@@ -1,39 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services.TimeDate;
-using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace CodeBase.Data.Services.DownloadServices
 {
   public class DownloadingService : IDownloadingService
   {
     private readonly IDataLoaderService _dataLoader;
-    private readonly DownloadReporterService _downloadReporter;
     private readonly IKyivDate _kyivDate;
     private readonly IHolidaysStorage _holidaysStorage;
 
-    public DownloadingService(IDataLoaderService dataLoader, DownloadReporterService downloadReporter, IKyivDate kyivDate, IHolidaysStorage holidaysStorage)
+    public DownloadingService(IDataLoaderService dataLoader, IKyivDate kyivDate, IHolidaysStorage holidaysStorage)
     {
       _dataLoader = dataLoader;
-      _downloadReporter = downloadReporter;
       _kyivDate = kyivDate;
       _holidaysStorage = holidaysStorage;
     }
 
-    private async UniTask DownloadContentWithPreciseProgress(List<string> dates)
+    public async void LoadHoliday(Action onLoaded)
     {
-      
+      string date = _kyivDate.TodayKyiv().ToStringDateFormat();
+      int progress = 0;
 
-      _downloadReporter.Reset();
+      if (!RequestedFileExist(date))
+      {
+        progress += await _dataLoader.LoadJson(date);
+      }
+      
+      if (progress > 0)
+        onLoaded?.Invoke();
+      else
+      {
+        Debug.LogError($"Cannot download config for {date}.");
+      }
     }
-    
-    public async void LoadHolidays()
+ 
+    public async void LoadHolidays(Action onLoaded)
     {
       DateTime startDate = _kyivDate.StartDate();
       DateTime endDate = _kyivDate.EndDate();
+
+      TimeSpan datesBetween = endDate - startDate;
+
+      int dates = datesBetween.Days + 1;
+      int progress = 0;
 
       for (DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
       {
@@ -41,8 +54,17 @@ namespace CodeBase.Data.Services.DownloadServices
 
         if (!RequestedFileExist(date))
         {
-          await _dataLoader.LoadJson(date);
+          progress += await _dataLoader.LoadJson(date);
         }
+        else
+        {
+          progress += 1;
+        }
+      }
+
+      if (Mathf.Abs(dates - progress) < 0.01f)
+      {
+        onLoaded?.Invoke();
       }
     }
 

@@ -1,6 +1,4 @@
-﻿using CodeBase.Data;
-using CodeBase.Data.Services;
-using CodeBase.Data.Services.AssetProviding;
+﻿using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Data.Services.DownloadServices;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
@@ -30,7 +28,7 @@ namespace CodeBase.Infrastructure
 
     public void Initialize()
     {
-      MoveTo<WarmUpState>();
+      MoveTo<DownloadingState>();
     }
 
     public void MoveTo<TState>() where TState : IState => 
@@ -68,7 +66,7 @@ namespace CodeBase.Infrastructure
     {
       Container.Bind<UserObservationState>().AsSingle();
       Container.Bind<LoadCalendarState>().AsSingle();
-      Container.Bind<WarmUpState>().AsSingle();
+      Container.Bind<DownloadingState>().AsSingle();
       Container.Bind<CalendarStateMachine>().AsSingle();
     }
   }
