@@ -24,20 +24,26 @@ namespace CodeBase.Data.Services.DownloadServices
     {
       string date = _kyivDate.TodayKyiv().ToStringDateFormat();
       int progress = 0;
+      float progressIcons = 0;
 
       if (!RequestedFileExist(date))
       {
-        progress += await _dataLoader.LoadJson(date);
+        int process = await _dataLoader.LoadRawHoliday(date);
+        float processIcons = await _dataLoader.LoadIcons(date);
+        
+        progress += process;
+        progressIcons += processIcons;
+
       }
       
-      if (progress > 0)
+      if ((progress > 0 && Mathf.Abs(progressIcons - 1f) < 0.07f) || RequestedFileExist(date))
         onLoaded?.Invoke();
       else
       {
         Debug.LogError($"Cannot download config for {date}.");
       }
     }
- 
+
     public async void LoadHolidays(Action onLoaded)
     {
       DateTime startDate = _kyivDate.StartDate();
@@ -54,7 +60,7 @@ namespace CodeBase.Data.Services.DownloadServices
 
         if (!RequestedFileExist(date))
         {
-          progress += await _dataLoader.LoadJson(date);
+          progress += await _dataLoader.LoadRawHoliday(date);
         }
         else
         {
@@ -69,6 +75,6 @@ namespace CodeBase.Data.Services.DownloadServices
     }
 
     private bool RequestedFileExist(string date) =>
-      File.Exists(_holidaysStorage.HolidayFor(date));
+      File.Exists(_holidaysStorage.HolidayConfigFor(date));
   }
 }

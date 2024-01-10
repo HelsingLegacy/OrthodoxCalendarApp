@@ -43,9 +43,7 @@ namespace CodeBase.Data.Services.AssetProviding
 
     private void ExtractedData(IHolidaysStorage storage, string date)
     {
-      string jsonFilePath = storage.HolidayFor(date);
-
-      string jsonText = File.ReadAllText(jsonFilePath);
+      string jsonText = File.ReadAllText(storage.HolidayConfigFor(date));
 
       RawHolidayInfo info = jsonText.ToDeserialize<RawHolidayInfo>();
 

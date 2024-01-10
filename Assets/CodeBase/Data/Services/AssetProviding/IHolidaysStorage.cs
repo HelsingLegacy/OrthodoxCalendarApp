@@ -2,6 +2,7 @@
 {
   public interface IHolidaysStorage
   {
-    string HolidayFor(string date);
+    string HolidayConfigFor(string date);
+    string HolidayIconFor(string date);
   }
 }

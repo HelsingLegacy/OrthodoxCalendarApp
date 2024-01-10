@@ -54,7 +54,7 @@ namespace CodeBase.Infrastructure.States
           .ParentObject();
 
         _factory.CreateHolidayDataAssembly(monthParent.transform, _today.TodayKyiv().ToStringDateFormat()); 
-        //"2024-01-06"
+        //"2024-01-07"
         //_today.TodayKyiv().ToStringDateFormat()
     }
   }

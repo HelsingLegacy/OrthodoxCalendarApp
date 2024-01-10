@@ -4,6 +4,7 @@ namespace CodeBase.Data.Services.DownloadServices
 {
   public interface IDataLoaderService
   {
-    UniTask<int> LoadJson(string dates);
+    UniTask<int> LoadRawHoliday(string dates);
+    UniTask<float> LoadIcons(string date);
   }
 }

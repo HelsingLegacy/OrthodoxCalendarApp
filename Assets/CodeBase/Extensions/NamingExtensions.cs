@@ -12,5 +12,8 @@ namespace CodeBase.Extensions
 
     public static string ToStringDateFormat(this DateTime date) => 
       date.ToString(Format);
+
+    public static string WithoutYear(this string date) => 
+      date.Substring(5);
   }
 }
