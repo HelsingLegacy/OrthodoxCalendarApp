@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using CodeBase.Extensions;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CodeBase.Data.Services.AssetProviding
@@ -25,12 +24,10 @@ namespace CodeBase.Data.Services.AssetProviding
       return IconSaved(to: AppropriateDataPath, at: FolderIcons, date.WithoutYear());
     }
 
-    public void CreateFolder(string name)
+    private void CreateFolder(string name)
     {
-      string folderJsonData = Path.Combine(AppropriateDataPath, name);
-      
-      if (!Directory.Exists(folderJsonData)) 
-        Directory.CreateDirectory(folderJsonData);
+      if (!Directory.Exists(Path.Combine(AppropriateDataPath, name))) 
+        Directory.CreateDirectory(Path.Combine(AppropriateDataPath, name));
     }
 
     private string HolidaySaved(string to, string at, string withFileName) =>

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace CodeBase.Data.Services.AssetProviding
 {
-  public class ClearConfig
+  public class ConfigAssembly
   {
     private const string MobileBuildingData = "ScriptableData/MobileHolidayShortDataInfo";
 
@@ -20,7 +20,7 @@ namespace CodeBase.Data.Services.AssetProviding
 
     public string WeekName { get; private set; }
 
-    public bool IsMobilePreview => true;
+    public bool IsMobilePreview => true; //{ get; private set; }
     public Sprite MainIcon { get; private set; }
 
     public string HolidayName { get; private set; }
@@ -36,7 +36,7 @@ namespace CodeBase.Data.Services.AssetProviding
     public bool IsAnyDayIcons { get; private set; }
     public List<Sprite> DayIcons { get; private set; }
 
-    public ClearConfig(IHolidaysStorage storage, string date)
+    public ConfigAssembly(IHolidaysStorage storage, string date)
     {
       ExtractedData(storage, date);
     }
@@ -47,22 +47,23 @@ namespace CodeBase.Data.Services.AssetProviding
 
       RawHolidayInfo info = jsonText.ToDeserialize<RawHolidayInfo>();
 
-      SetCleanDataForToday(info);
+      SetCleanDataForToday(info, date, storage);
     }
 
-    private void SetCleanDataForToday(RawHolidayInfo info)
+    private void SetCleanDataForToday(RawHolidayInfo info, string date, IHolidaysStorage storage)
     {
       SetHolidayColor(info);
       SetWeekdayName(info);
       SetDateMonth(info);
       SetWeekName(info);
-      SetMainIcon(info);
+      SetMainIcon(storage, date);
       SetHolidayName(info);
       SetSuggestions(info);
       SetShortContent(info);
       SetLiturgy(info);
       SetReadingsShortLinks(info);
-      SetDayIcons();
+      SetReadingsContent(info);
+      SetDayIcons(info, storage, date);
     }
 
     private void SetHolidayColor(RawHolidayInfo info)
@@ -164,9 +165,8 @@ namespace CodeBase.Data.Services.AssetProviding
     private void SetWeekName(RawHolidayInfo info) =>
       WeekName = info.WeekName;
 
-    private void SetMainIcon(RawHolidayInfo info)
-    {
-    }
+    private void SetMainIcon(IHolidaysStorage storage, string date) => 
+      MainIcon = SpriteProvider(storage, date);
 
     private void SetHolidayName(RawHolidayInfo info) =>
       HolidayName = info.HolidayName;
@@ -306,10 +306,38 @@ namespace CodeBase.Data.Services.AssetProviding
     private void SetLiturgy(RawHolidayInfo info) => 
       LiturgyText = info.LiturgyRecommendations;
 
-    private void SetDayIcons() =>
-      IsAnyDayIcons = false; //DayIcons.Any();
+    private void SetDayIcons(RawHolidayInfo info, IHolidaysStorage storage, string date)
+    {
+      if(info.DayIcons is { Count: > 1 })
+      {
+        for (int i = 1; i > info.DayIcons.Count; i++)
+        {
+          DayIcons.Add(SpriteProvider(storage, date + $" ({i})"));
+        }
+
+        IsAnyDayIcons = true;
+      }
+      else
+      {
+        IsAnyDayIcons = false;
+      }
+      
+      //DayIcons.Any();
+    }
 
     private HolidaysBuildingData BuildingData() =>
       Resources.Load<HolidaysBuildingData>(MobileBuildingData);
+
+    private static Sprite SpriteProvider(IHolidaysStorage storage, string date)
+    {
+      var icon = File.ReadAllBytes(storage.HolidayIconFor(date));
+      
+      Texture2D texture = new Texture2D(340, 377);
+      texture.LoadImage(icon);
+      
+      Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+      
+      return sprite;
+    }
   }
 }

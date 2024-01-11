@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Data.Services;
 using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
@@ -31,29 +30,52 @@ namespace CodeBase.Infrastructure.Services
     public GameObject CreateMonthContainer(Transform under) =>
       _instantiator.InstantiatePrefab(_provider.ParticularMonth(), under.transform);
 
-    public void CreateHolidayDataAssembly(Transform under, string on)
+    public void CreateHolidayShortInfo(Transform under, string on)
     {
-      ClearConfig clearConfig = new ClearConfig(_storage, on);
+      ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
 
       GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
 
       GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
       
+      HeaderConfiguration(under: container, configAssembly);
 
-      HeaderConfiguration(under: container, clearConfig);
+      HolidayNameConfiguration(under: container, configAssembly);
 
-      IconConfiguration(under: container, clearConfig);
+      SuggestionsConfiguration(under: container, configAssembly);
 
-      HolidayNameConfiguration(under: container, clearConfig);
+      ShortContextTextConfiguration(under: container, configAssembly);
+    }
+    
+    public void CreateHolidayFullInfo(Transform under, string on)
+    {
+      ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
 
-      SuggestionsConfiguration(under: container, clearConfig);
+      GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
 
-      ContentTextConfiguration(under: container, clearConfig);
+      GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
+      
+      HeaderConfiguration(under: container, configAssembly);
+      
+      IconConfiguration(under: container, configAssembly);
 
-      DayIconsConfiguration(under: container, clearConfig);
+      HolidayNameConfiguration(under: container, configAssembly);
+
+      SuggestionsConfiguration(under: container, configAssembly);
+
+      ShortContextTextConfiguration(under: container, configAssembly);
+
+      LiturgyConfiguration(under: container, configAssembly);
+      
+      DayIconsConfiguration(under: container, configAssembly);
     }
 
-    private void HeaderConfiguration(GameObject under, ClearConfig extracted)
+    private void LiturgyConfiguration(GameObject under, ConfigAssembly configAssembly)
+    {
+      
+    }
+
+    private void HeaderConfiguration(GameObject under, ConfigAssembly extracted)
     {
       GameObject header;
 
@@ -77,29 +99,29 @@ namespace CodeBase.Infrastructure.Services
         string.IsNullOrEmpty(extracted.WeekName);
     }
 
-    private void IconConfiguration(GameObject under, ClearConfig clearConfig)
+    private void IconConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      if (clearConfig.IsMobilePreview) 
+      if(configAssembly.IsMobilePreview)
         return;
       
       GameObject icon = Instantiate(_provider.IconImage(), under);
-      icon.GetComponent<IconSetup>().SetIcon(clearConfig.MainIcon);
+      icon.GetComponent<IconSetup>().SetIcon(configAssembly.MainIcon);
     }
 
-    private void HolidayNameConfiguration(GameObject under, ClearConfig clearConfig)
+    private void HolidayNameConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      if (!string.IsNullOrEmpty(clearConfig.HolidayName))
+      if (!string.IsNullOrEmpty(configAssembly.HolidayName))
       {
         GameObject holidayName = Instantiate(_provider.HolidayName(), under);
-        holidayName.GetComponent<HolidayName>().SetHolidayName(clearConfig.HolidayName);
+        holidayName.GetComponent<HolidayName>().SetHolidayName(configAssembly.HolidayName);
       }
     }
 
-    private void SuggestionsConfiguration(GameObject under, ClearConfig clearConfig)
+    private void SuggestionsConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
       GameObject suggestion = Instantiate(_provider.Suggestion(), under);
 
-      List<Sprite> suggestions = clearConfig.Suggestions;
+      List<Sprite> suggestions = configAssembly.Suggestions;
 
       for (int i = 0; i < suggestions.Count; i++)
         Instantiate(_provider.SuggestionItem(), suggestion);
@@ -107,21 +129,21 @@ namespace CodeBase.Infrastructure.Services
       suggestion.GetComponent<FillChildrenImages>().SetImagesWith(sprites: suggestions);
     }
 
-    private void ContentTextConfiguration(GameObject under, ClearConfig clearConfig)
+    private void ShortContextTextConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
       GameObject generalContentText = Instantiate(_provider.GeneralContentText(), under: under);
 
-      generalContentText.GetComponent<ContentWriter>().SetContent(clearConfig.ShortContentText);
+      generalContentText.GetComponent<ContentWriter>().SetContent(configAssembly.ShortContentText);
     }
 
-    private void DayIconsConfiguration(GameObject under, ClearConfig clearConfig)
+    private void DayIconsConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      if (!clearConfig.IsAnyDayIcons)
+      if (!configAssembly.IsAnyDayIcons)
         return;
 
       GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
 
-      List<Sprite> dayIcons = clearConfig.DayIcons;
+      List<Sprite> dayIcons = configAssembly.DayIcons;
 
       for (int i = 0; i < dayIcons.Count; i++)
         Instantiate(_provider.IconImage(), under);

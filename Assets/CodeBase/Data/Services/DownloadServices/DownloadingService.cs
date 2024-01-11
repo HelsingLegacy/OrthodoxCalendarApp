@@ -20,9 +20,8 @@ namespace CodeBase.Data.Services.DownloadServices
       _holidaysStorage = holidaysStorage;
     }
 
-    public async void LoadHoliday(Action onLoaded)
+    public async void LoadHoliday(string date, Action onLoaded)
     {
-      string date = _kyivDate.TodayKyiv().ToStringDateFormat();
       int progress = 0;
       float progressIcons = 0;
 
@@ -40,7 +39,7 @@ namespace CodeBase.Data.Services.DownloadServices
         onLoaded?.Invoke();
       else
       {
-        Debug.LogError($"Cannot download config for {date}.");
+        Debug.LogError($"Cannot download config and/or icons for {date}.");
       }
     }
 

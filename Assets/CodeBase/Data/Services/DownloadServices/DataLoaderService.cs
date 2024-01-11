@@ -49,8 +49,6 @@ namespace CodeBase.Data.Services.DownloadServices
             _holidaysStorage.HolidayConfigFor(forDate),
             jsonText));
 
-        // await LoadIcons(forDate);
-
         return 1;
       }
 
@@ -69,11 +67,11 @@ namespace CodeBase.Data.Services.DownloadServices
 
       string mainIcon = links.MainIcon;
 
-      await LoadIconFor(mainIcon, with: pathAndName+".jpg");
+      await LoadIconFor(mainIcon, with: pathAndName);
       
       if (links.DayIcons is { Count: > 0 }) 
         for (int i = 1; i <= links.DayIcons.Count; i++) 
-          await LoadIconFor(links.DayIcons[i - 1], pathAndName + $" ({i})" +".jpg");
+          await LoadIconFor(links.DayIcons[i - 1], pathAndName + $" ({i})");
 
       return value;
       
@@ -88,7 +86,9 @@ namespace CodeBase.Data.Services.DownloadServices
             byte[] texture = webLink.downloadHandler.data;
 
             await File.WriteAllBytesAsync(with, texture);
-            value += completedValue / completedValue;
+            
+            if(completedValue > 0)
+              value += completedValue / completedValue;
           }
           else
           {

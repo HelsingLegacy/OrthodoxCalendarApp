@@ -1,5 +1,7 @@
 using CodeBase.Data.Services.DownloadServices;
+using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI;
 
 namespace CodeBase.Infrastructure.States
@@ -12,22 +14,23 @@ namespace CodeBase.Infrastructure.States
     private readonly LoadingCurtain _curtain;
     private readonly IStateMover _resolver;
     private readonly IDownloadingService _downloadingService;
+    private readonly IToday _today;
 
     public DownloadingState(
       ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, 
-      IDownloadingService downloadingService
-      )
+      IDownloadingService downloadingService, IToday today)
     {
       _sceneLoader = sceneLoader;
       _curtain = curtain;
       _resolver = resolver;
       _downloadingService = downloadingService;
+      _today = today;
     }
 
     public void Enter()
     {
       _curtain.Show();
-      _downloadingService.LoadHoliday(onLoaded: MoveToNextState);
+      _downloadingService.LoadHoliday(_today.TodayKyiv().ToStringDateFormat(), onLoaded: MoveToNextState);
     }
 
     public void Exit()
