@@ -28,12 +28,12 @@ namespace CodeBase.Data.Services.AssetProviding
     public List<Sprite> Suggestions { get; private set; }
 
     public string ShortContentText { get; private set; }
-    public string LiturgyText { get; private set; }
 
     public string ReadingsShortLinks { get; private set; }
-    public string ReadingsContent { get; private set; }
+    public string LiturgyText { get; private set; }
+    
+    public string EvangelionReadingsText { get; private set; }
 
-    public bool IsAnyDayIcons { get; private set; }
     public List<Sprite> DayIcons { get; private set; }
 
     public ConfigAssembly(IHolidaysStorage storage, string date)
@@ -224,13 +224,13 @@ namespace CodeBase.Data.Services.AssetProviding
           case "fish":
             Suggestions.Add(BuildingData().FastFish);
             break;
-          case "oil":
+          case "olive-oil":
             Suggestions.Add(BuildingData().FastOil);
             break;
           case "vegetables":
             Suggestions.Add(BuildingData().FastStrict);
             break;
-          case "abstinence":
+          case "no-food":
             Suggestions.Add(BuildingData().FastAbstinence);
             break;
         }
@@ -298,31 +298,36 @@ namespace CodeBase.Data.Services.AssetProviding
       ReadingsShortLinks = result;
     }
 
-    private void SetReadingsContent(RawHolidayInfo info)
-    {
-      ReadingsContent = info.Content;
-    }
-
     private void SetLiturgy(RawHolidayInfo info) => 
       LiturgyText = info.LiturgyRecommendations;
 
+    private void SetReadingsContent(RawHolidayInfo info)
+    {
+      string readings = "";
+
+      foreach (ReadingGroup reading in info.ReadingGroupList)
+      {
+        readings += $"<b>{reading.Title}</b>\n";
+        readings += $"<u>{reading.Code}</u> ";
+        readings += $"{reading.Text} \n";
+      }
+
+      readings += $"<size=30%>{info.ReadingGroupList[0].Copyright}</size>";
+      
+      EvangelionReadingsText = readings;
+    }
+
     private void SetDayIcons(RawHolidayInfo info, IHolidaysStorage storage, string date)
     {
-      if(info.DayIcons is { Count: > 1 })
+      if(info.DayIcons.Any())
       {
+        DayIcons = new List<Sprite>();
+        
         for (int i = 1; i > info.DayIcons.Count; i++)
         {
           DayIcons.Add(SpriteProvider(storage, date + $" ({i})"));
         }
-
-        IsAnyDayIcons = true;
       }
-      else
-      {
-        IsAnyDayIcons = false;
-      }
-      
-      //DayIcons.Any();
     }
 
     private HolidaysBuildingData BuildingData() =>

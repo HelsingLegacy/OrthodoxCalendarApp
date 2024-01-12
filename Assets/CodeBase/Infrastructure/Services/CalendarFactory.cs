@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.ContentFiller;
 using CodeBase.UI.ContentFiller.HolidayComponents;
 using CodeBase.UI.ContentFiller.HolidayComponents.Header;
+using ModestTree;
 using UnityEngine;
 using Zenject;
 
@@ -37,7 +38,7 @@ namespace CodeBase.Infrastructure.Services
       GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
 
       GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
-      
+
       HeaderConfiguration(under: container, configAssembly);
 
       HolidayNameConfiguration(under: container, configAssembly);
@@ -46,7 +47,7 @@ namespace CodeBase.Infrastructure.Services
 
       ShortContextTextConfiguration(under: container, configAssembly);
     }
-    
+
     public void CreateHolidayFullInfo(Transform under, string on)
     {
       ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
@@ -54,9 +55,9 @@ namespace CodeBase.Infrastructure.Services
       GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
 
       GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
-      
+
       HeaderConfiguration(under: container, configAssembly);
-      
+
       IconConfiguration(under: container, configAssembly);
 
       HolidayNameConfiguration(under: container, configAssembly);
@@ -65,14 +66,13 @@ namespace CodeBase.Infrastructure.Services
 
       ShortContextTextConfiguration(under: container, configAssembly);
 
-      LiturgyConfiguration(under: container, configAssembly);
-      
-      DayIconsConfiguration(under: container, configAssembly);
-    }
+      ReadingGroupTitleAndCodeConfiguration(under: container, configAssembly);
 
-    private void LiturgyConfiguration(GameObject under, ConfigAssembly configAssembly)
-    {
-      
+      LiturgyConfiguration(under: container, configAssembly);
+
+      EvangelionReadingsConfiguration(under: container, configAssembly);
+
+      DayIconsConfiguration(under: container, configAssembly);
     }
 
     private void HeaderConfiguration(GameObject under, ConfigAssembly extracted)
@@ -101,9 +101,9 @@ namespace CodeBase.Infrastructure.Services
 
     private void IconConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      if(configAssembly.IsMobilePreview)
+      if (configAssembly.IsMobilePreview)
         return;
-      
+
       GameObject icon = Instantiate(_provider.IconImage(), under);
       icon.GetComponent<IconSetup>().SetIcon(configAssembly.MainIcon);
     }
@@ -136,9 +136,21 @@ namespace CodeBase.Infrastructure.Services
       generalContentText.GetComponent<ContentWriter>().SetContent(configAssembly.ShortContentText);
     }
 
+    private void ReadingGroupTitleAndCodeConfiguration(GameObject under, ConfigAssembly configAssembly)
+    {
+    }
+
+    private void LiturgyConfiguration(GameObject under, ConfigAssembly configAssembly)
+    {
+    }
+
+    private void EvangelionReadingsConfiguration(GameObject under, ConfigAssembly configAssembly)
+    {
+    }
+
     private void DayIconsConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      if (!configAssembly.IsAnyDayIcons)
+      if (configAssembly.DayIcons.IsEmpty())
         return;
 
       GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
