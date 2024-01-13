@@ -1,7 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using CodeBase.Data;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace CodeBase.Extensions
 {

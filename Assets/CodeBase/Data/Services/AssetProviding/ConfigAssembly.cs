@@ -319,7 +319,7 @@ namespace CodeBase.Data.Services.AssetProviding
 
     private void SetDayIcons(RawHolidayInfo info, IHolidaysStorage storage, string date)
     {
-      if(info.DayIcons.Any())
+      if(info.DayIcons is { Count: > 0 })
       {
         DayIcons = new List<Sprite>();
         
