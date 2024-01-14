@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 934344699724190992}
   - component: {fileID: 481668384379319093}
   - component: {fileID: 5623600465691049182}
+  - component: {fileID: 6567252303021790280}
   m_Layer: 5
   m_Name: HolidayName
   m_TagString: Untagged
@@ -104,6 +105,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9e4a34728144992a0a4623dd6f14776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6567252303021790280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6516379741691887521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9cfa00dee7410ca6bc8452c6c0cbcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7331521926265590450

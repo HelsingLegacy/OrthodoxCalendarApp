@@ -36,9 +36,13 @@ namespace CodeBase.Infrastructure.Services
       ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
 
       GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
+      
+      HolidayAssembler assembler = objectAssembly.GetComponent<HolidayAssembler>();
+      
+      GameObject container = assembler.InfoContainer();
 
-      GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
-
+      SetBackgroundColor(assembler, configAssembly);
+      
       HeaderConfiguration(under: container, configAssembly);
 
       HolidayNameConfiguration(under: container, configAssembly);
@@ -52,10 +56,17 @@ namespace CodeBase.Infrastructure.Services
     {
       ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
 
-      GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
+      GameObject content = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
+      GameObject readings = _instantiator.InstantiatePrefab(_provider.HolidayReadings(), under.transform);
 
-      GameObject container = objectAssembly.GetComponent<HolidayAssembler>().InfoContainer();
-
+      HolidayAssembler contentAssembler = content.GetComponent<HolidayAssembler>();
+      ReadingAssembler readingAssembler = readings.GetComponent<ReadingAssembler>();
+      
+      GameObject container = contentAssembler.InfoContainer();
+      
+      SetBackgroundColor(contentAssembler, configAssembly);
+      SetBackgroundColor(contentAssembler, readingAssembler, configAssembly);
+      
       HeaderConfiguration(under: container, configAssembly);
 
       IconConfiguration(under: container, configAssembly);
@@ -70,9 +81,18 @@ namespace CodeBase.Infrastructure.Services
 
       LiturgyConfiguration(under: container, configAssembly);
 
-      EvangelionReadingsConfiguration(under: container, configAssembly);
+      ReadingsConfiguration(under: readings, configAssembly);
+      
+      DayIconsConfiguration(under: under.gameObject, configAssembly);
+    }
 
-      DayIconsConfiguration(under: container, configAssembly);
+    private void SetBackgroundColor(HolidayAssembler content, ConfigAssembly configAssembly) => 
+      content.SetBackgroundColor(configAssembly.TextBackgroundColor);
+    
+    private void SetBackgroundColor(HolidayAssembler content, ReadingAssembler reading, ConfigAssembly configAssembly)
+    {
+      content.SetBackgroundColor(configAssembly.TextBackgroundColor);
+      reading.SetBackgroundColor(configAssembly.TextBackgroundColor);
     }
 
     private void HeaderConfiguration(GameObject under, ConfigAssembly extracted)
@@ -101,8 +121,8 @@ namespace CodeBase.Infrastructure.Services
 
     private void IconConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      if (configAssembly.IsMobilePreview)
-        return;
+      // if (configAssembly.IsMobilePreview)
+      //   return;
 
       GameObject icon = Instantiate(_provider.IconImage(), under);
       icon.GetComponent<IconSetup>().SetIcon(configAssembly.MainIcon);
@@ -138,19 +158,26 @@ namespace CodeBase.Infrastructure.Services
 
     private void ReadingGroupTitleAndCodeConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
+      GameObject generalContentText = Instantiate(_provider.GeneralContentText(), under: under);
+
+      generalContentText.GetComponent<ContentWriter>().SetContent(configAssembly.ReadingsShortLinks);
     }
 
     private void LiturgyConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
+      GameObject generalContentText = Instantiate(_provider.GeneralContentText(), under: under);
+
+      generalContentText.GetComponent<ContentWriter>().SetContent(configAssembly.LiturgyText);
     }
 
-    private void EvangelionReadingsConfiguration(GameObject under, ConfigAssembly configAssembly)
+    private void ReadingsConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
+      under.GetComponent<ReadingAssembler>().SetReadings(configAssembly.EvangelionReadingsText);
     }
 
     private void DayIconsConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      if (configAssembly.DayIcons.IsEmpty())
+      if (configAssembly.DayIcons is {Count: < 1})
         return;
 
       GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);

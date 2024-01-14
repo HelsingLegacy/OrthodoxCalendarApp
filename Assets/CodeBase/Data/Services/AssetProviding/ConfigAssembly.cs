@@ -308,11 +308,11 @@ namespace CodeBase.Data.Services.AssetProviding
       foreach (ReadingGroup reading in info.ReadingGroupList)
       {
         readings += $"<b>{reading.Title}</b>\n";
-        readings += $"<u>{reading.Code}</u> ";
+        readings += $"<u>{reading.Code}</u>\n";
         readings += $"{reading.Text} \n";
       }
 
-      readings += $"<size=30%>{info.ReadingGroupList[0].Copyright}</size>";
+      readings += $"<size=70%><i>{info.ReadingGroupList[0].Copyright}</i></size>";
       
       EvangelionReadingsText = readings;
     }

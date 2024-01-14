@@ -19,6 +19,8 @@
     public const string SuggestionItem = "Prefabs/Holiday/HolidayComponents/Elements/Suggestion_image";
 
     public const string GeneralContentText = "Prefabs/Holiday/HolidayComponents/GeneralContentText";
+
+    public const string HolidayReadings = "Prefabs/Holiday/HolidayReadings";
     
     public const string DayIconsContainer = "Prefabs/Holiday/HolidayComponents/DayIconsContainer";
   }

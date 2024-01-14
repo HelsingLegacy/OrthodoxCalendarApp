@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace CodeBase.UI.ContentFiller
 {
-  public class HolidayAssembler : MonoBehaviour
+  public class ReadingAssembler : MonoBehaviour
   {
     private void Start()
     {
@@ -18,10 +18,11 @@ namespace CodeBase.UI.ContentFiller
       GetComponent<LayoutElement>().preferredHeight = currentObjectHeight;
     }
 
-    public GameObject InfoContainer() => 
-      GetComponentInChildren<InformationContainer>().gameObject;
-
+    public void SetReadings(string text) => 
+      GetComponentInChildren<ContentWriter>().SetContent(text);
+    
     public void SetBackgroundColor(Color color) => 
       GetComponentInChildren<BackgroundColor>().SetBackground(color);
+
   }
 }
