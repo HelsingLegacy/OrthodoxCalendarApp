@@ -5,7 +5,6 @@ using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.ContentFiller;
 using CodeBase.UI.ContentFiller.HolidayComponents;
 using CodeBase.UI.ContentFiller.HolidayComponents.Header;
-using ModestTree;
 using UnityEngine;
 using Zenject;
 
@@ -28,14 +27,14 @@ namespace CodeBase.Infrastructure.Services
     public GameObject CreateHud() =>
       _instantiator.InstantiatePrefab(_provider.HudPrefab());
 
-    public GameObject CreateMonthContainer(Transform under) =>
-      _instantiator.InstantiatePrefab(_provider.ParticularMonth(), under.transform);
+    public GameObject CreateMonthContainer(GameObject under) =>
+      Instantiate(_provider.ParticularMonth(), under);
 
-    public void CreateHolidayShortInfo(Transform under, string on)
+    public void CreateHolidayShortInfo(GameObject under, string on)
     {
       ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
 
-      GameObject objectAssembly = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
+      GameObject objectAssembly = Instantiate(_provider.HolidayDataAssembly(), under);
       
       HolidayAssembler assembler = objectAssembly.GetComponent<HolidayAssembler>();
       
@@ -52,12 +51,12 @@ namespace CodeBase.Infrastructure.Services
       ShortContextTextConfiguration(under: container, configAssembly);
     }
 
-    public void CreateHolidayFullInfo(Transform under, string on)
+    public void CreateHolidayFullInfo(GameObject under, string on)
     {
       ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
 
-      GameObject content = _instantiator.InstantiatePrefab(_provider.HolidayDataAssembly(), under.transform);
-      GameObject readings = _instantiator.InstantiatePrefab(_provider.HolidayReadings(), under.transform);
+      GameObject content = Instantiate(_provider.HolidayDataAssembly(), under);
+      GameObject readings = Instantiate(_provider.HolidayReadings(), under);
 
       HolidayAssembler contentAssembler = content.GetComponent<HolidayAssembler>();
       ReadingAssembler readingAssembler = readings.GetComponent<ReadingAssembler>();
@@ -177,6 +176,7 @@ namespace CodeBase.Infrastructure.Services
 
     private void DayIconsConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
+      Debug.Log(configAssembly.DayIcons.Count);
       if (configAssembly.DayIcons is {Count: < 1})
         return;
 
@@ -185,7 +185,7 @@ namespace CodeBase.Infrastructure.Services
       List<Sprite> dayIcons = configAssembly.DayIcons;
 
       for (int i = 0; i < dayIcons.Count; i++)
-        Instantiate(_provider.IconImage(), under);
+        Instantiate(_provider.IconImage(), dayIconsContainer);
 
       dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
     }

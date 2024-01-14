@@ -49,11 +49,11 @@ namespace CodeBase.Infrastructure.States
 
       GameObject monthParent =
         _factory
-          .CreateMonthContainer(under: hud.transform)
+          .CreateMonthContainer(under: hud)
           .GetComponent<ParentProvider>()
           .ParentObject();
 
-        _factory.CreateHolidayFullInfo(monthParent.transform, _today.TodayKyiv().ToStringDateFormat()); 
+        _factory.CreateHolidayFullInfo(monthParent, _today.TodayKyiv().ToStringDateFormat()); 
         //"2024-01-07"
         //_today.TodayKyiv().ToStringDateFormat()
     }
