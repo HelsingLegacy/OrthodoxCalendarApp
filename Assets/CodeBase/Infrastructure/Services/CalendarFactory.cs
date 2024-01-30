@@ -176,18 +176,19 @@ namespace CodeBase.Infrastructure.Services
 
     private void DayIconsConfiguration(GameObject under, ConfigAssembly configAssembly)
     {
-      Debug.Log(configAssembly.DayIcons.Count);
-      if (configAssembly.DayIcons is {Count: < 1})
-        return;
+      if (configAssembly.DayIcons is {Count: > 0})
+      {
+        GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
 
-      GameObject dayIconsContainer = Instantiate(_provider.DayIconsContainer(), under);
+        List<Sprite> dayIcons = configAssembly.DayIcons;
 
-      List<Sprite> dayIcons = configAssembly.DayIcons;
+        Debug.Log(dayIcons);
 
-      for (int i = 0; i < dayIcons.Count; i++)
-        Instantiate(_provider.IconImage(), dayIconsContainer);
+        for (int i = 0; i < dayIcons.Count; i++)
+          Instantiate(_provider.IconImage(), dayIconsContainer);
 
-      dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
+        dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
+      }
     }
 
     private GameObject Instantiate(GameObject prefab, GameObject under) =>
