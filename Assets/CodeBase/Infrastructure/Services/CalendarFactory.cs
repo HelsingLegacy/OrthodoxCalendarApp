@@ -18,7 +18,9 @@ namespace CodeBase.Infrastructure.Services
     private readonly IHolidaysStorage _storage;
     private IToday _today;
 
-    public CalendarFactory(IInstantiator instantiator, IAssetProvider provider, IHolidaysStorage storage)
+    public CalendarFactory(
+      IInstantiator instantiator, IAssetProvider provider, IHolidaysStorage storage
+      )
     {
       _instantiator = instantiator;
       _provider = provider;
@@ -29,7 +31,9 @@ namespace CodeBase.Infrastructure.Services
     {
       GameObject hud = _instantiator.InstantiatePrefab(_provider.HudPrefab());
       
-      hud.GetComponent<HudMediator>().ShiftMediatorParent();
+      HudMediator mediator = hud.GetComponent<HudMediator>();
+      
+      mediator.ShiftMediatorParent();
       
       return hud;
     }

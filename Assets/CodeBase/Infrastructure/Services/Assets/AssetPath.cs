@@ -4,7 +4,7 @@
   {
     public const string Hud = "Prefabs/HUD";
 
-    public const string MonthContainer = "Prefabs/ParticularMonthContainer";
+    public const string MonthContainer = "Prefabs/ContentContainer";
 
     public const string HolidayDataAssembly = "Prefabs/Holiday/HolidayDataAssembly";
 
