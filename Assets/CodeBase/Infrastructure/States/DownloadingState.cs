@@ -12,17 +12,17 @@ namespace CodeBase.Infrastructure.States
     
     private readonly ISceneLoader _sceneLoader;
     private readonly LoadingCurtain _curtain;
-    private readonly IStateMover _resolver;
+    private readonly IStateMover _stateMover;
     private readonly IDownloadingService _downloadingService;
     private readonly IToday _today;
 
     public DownloadingState(
-      ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover resolver, 
+      ISceneLoader sceneLoader, LoadingCurtain curtain, IStateMover stateMover, 
       IDownloadingService downloadingService, IToday today)
     {
       _sceneLoader = sceneLoader;
       _curtain = curtain;
-      _resolver = resolver;
+      _stateMover = stateMover;
       _downloadingService = downloadingService;
       _today = today;
     }
@@ -42,6 +42,6 @@ namespace CodeBase.Infrastructure.States
 
 
     private void EnterLoadCalendarState() => 
-      _resolver.MoveTo<LoadCalendarState>();
+      _stateMover.MoveTo<AssemblyCalendarState>();
   }
 }

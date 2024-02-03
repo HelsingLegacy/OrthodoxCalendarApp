@@ -65,7 +65,7 @@ namespace CodeBase.Infrastructure
     private void BindCalendarStateMachine()
     {
       Container.Bind<UserObservationState>().AsSingle();
-      Container.Bind<LoadCalendarState>().AsSingle();
+      Container.Bind<AssemblyCalendarState>().AsSingle();
       Container.Bind<DownloadingState>().AsSingle();
       Container.Bind<CalendarStateMachine>().AsSingle();
     }

@@ -2,6 +2,7 @@
 using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
+using CodeBase.Infrastructure.States;
 using CodeBase.UI.ContentFiller;
 using CodeBase.UI.ContentFiller.HolidayComponents;
 using CodeBase.UI.ContentFiller.HolidayComponents.Header;
@@ -24,8 +25,14 @@ namespace CodeBase.Infrastructure.Services
       _storage = storage;
     }
 
-    public GameObject CreateHud() =>
-      _instantiator.InstantiatePrefab(_provider.HudPrefab());
+    public GameObject CreateHud()
+    {
+      GameObject hud = _instantiator.InstantiatePrefab(_provider.HudPrefab());
+      
+      hud.GetComponent<HudMediator>().ShiftMediatorParent();
+      
+      return hud;
+    }
 
     public GameObject CreateMonthContainer(GameObject under) =>
       Instantiate(_provider.ParticularMonth(), under);

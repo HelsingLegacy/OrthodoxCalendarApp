@@ -8,13 +8,13 @@ namespace CodeBase.Infrastructure.States
     private readonly Dictionary<Type, IState> _states;
     private IState _activeState;
     
-    public CalendarStateMachine(DownloadingState downloadingState, LoadCalendarState loadCalendarState,
+    public CalendarStateMachine(DownloadingState downloadingState, AssemblyCalendarState assemblyCalendarState,
                                 UserObservationState userObservationState) 
     {
       _states = new Dictionary<Type, IState>
       {
         [typeof(DownloadingState)] = downloadingState,
-        [typeof(LoadCalendarState)] = loadCalendarState,
+        [typeof(AssemblyCalendarState)] = assemblyCalendarState,
         [typeof(UserObservationState)] = userObservationState,
       };
     }

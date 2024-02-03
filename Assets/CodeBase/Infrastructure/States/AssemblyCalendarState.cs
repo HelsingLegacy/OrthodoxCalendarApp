@@ -7,18 +7,18 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
-  public class LoadCalendarState : IState
+  public class AssemblyCalendarState : IState
   {
     private readonly LoadingCurtain _curtain;
     private readonly CalendarFactory _factory;
-    private readonly IStateMover _resolver;
+    private readonly IStateMover _stateMover;
     private readonly IToday _today;
 
-    public LoadCalendarState(LoadingCurtain curtain, CalendarFactory factory, IStateMover resolver, IToday today)
+    public AssemblyCalendarState(LoadingCurtain curtain, CalendarFactory factory, IStateMover stateMover, IToday today)
     {
       _curtain = curtain;
       _factory = factory;
-      _resolver = resolver;
+      _stateMover = stateMover;
       _today = today;
     }
 
@@ -34,12 +34,12 @@ namespace CodeBase.Infrastructure.States
 
     private void InitCalendar()
     {
-      TestUIElementsCreation();
+      DayAssembly();
 
-      _resolver.MoveTo<UserObservationState>();
+      _stateMover.MoveTo<UserObservationState>();
     }
 
-    private void TestUIElementsCreation()
+    private void DayAssembly()
     {
       GameObject hud =
         _factory
