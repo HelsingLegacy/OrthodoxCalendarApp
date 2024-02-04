@@ -5,7 +5,7 @@ namespace CodeBase.Infrastructure.Services.Assets
   public interface IAssetProvider
   {
     GameObject HudPrefab();
-    GameObject ParticularMonth();
+    GameObject ContentContainer();
     
     GameObject HolidayDataAssembly();
 
@@ -24,5 +24,6 @@ namespace CodeBase.Infrastructure.Services.Assets
     GameObject HolidayReadings();
     
     GameObject DayIconsContainer();
+    GameObject MonthList();
   }
 }

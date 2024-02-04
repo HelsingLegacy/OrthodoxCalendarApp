@@ -23,5 +23,8 @@
     public const string HolidayReadings = "Prefabs/Holiday/HolidayReadings";
     
     public const string DayIconsContainer = "Prefabs/Holiday/HolidayComponents/DayIconsContainer";
+    
+    public const string MonthList = "Prefabs/MonthList";
+    
   }
 }

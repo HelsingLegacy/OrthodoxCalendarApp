@@ -3,9 +3,9 @@ using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.Infrastructure.States;
-using CodeBase.UI.ContentFiller;
-using CodeBase.UI.ContentFiller.HolidayComponents;
-using CodeBase.UI.ContentFiller.HolidayComponents.Header;
+using CodeBase.UI.ContentView;
+using CodeBase.UI.ContentView.HolidayComponents;
+using CodeBase.UI.ContentView.HolidayComponents.Header;
 using UnityEngine;
 using Zenject;
 
@@ -18,9 +18,7 @@ namespace CodeBase.Infrastructure.Services
     private readonly IHolidaysStorage _storage;
     private IToday _today;
 
-    public CalendarFactory(
-      IInstantiator instantiator, IAssetProvider provider, IHolidaysStorage storage
-      )
+    public CalendarFactory(IInstantiator instantiator, IAssetProvider provider, IHolidaysStorage storage)
     {
       _instantiator = instantiator;
       _provider = provider;
@@ -31,19 +29,23 @@ namespace CodeBase.Infrastructure.Services
     {
       GameObject hud = _instantiator.InstantiatePrefab(_provider.HudPrefab());
       
-      HudMediator mediator = hud.GetComponent<HudMediator>();
+      HudModel model = hud.GetComponent<HudModel>();
       
-      mediator.ShiftMediatorParent();
+      model.ShiftMediatorParent();
+      model.ShowTodayHoliday();
       
       return hud;
     }
 
-    public GameObject CreateMonthContainer(GameObject under) =>
-      Instantiate(_provider.ParticularMonth(), under);
+    public GameObject CreateContentContainer(GameObject under) => 
+      Instantiate(_provider.ContentContainer(), under);
 
-    public void CreateHolidayShortInfo(GameObject under, string on)
+    public void CreateMonthList(GameObject parent) => 
+      Instantiate(_provider.MonthList(), parent);
+
+    public void CreateHolidayShortInfo(GameObject under, string onDate)
     {
-      ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
+      ConfigAssembly configAssembly = new ConfigAssembly(_storage, onDate);
 
       GameObject objectAssembly = Instantiate(_provider.HolidayDataAssembly(), under);
       
@@ -62,9 +64,9 @@ namespace CodeBase.Infrastructure.Services
       ShortContextTextConfiguration(under: container, configAssembly);
     }
 
-    public void CreateHolidayFullInfo(GameObject under, string on)
+    public void CreateHolidayFullInfo(GameObject under, string onDate)
     {
-      ConfigAssembly configAssembly = new ConfigAssembly(_storage, on);
+      ConfigAssembly configAssembly = new ConfigAssembly(_storage, onDate);
 
       GameObject content = Instantiate(_provider.HolidayDataAssembly(), under);
       GameObject readings = Instantiate(_provider.HolidayReadings(), under);
@@ -98,7 +100,7 @@ namespace CodeBase.Infrastructure.Services
 
     private void SetBackgroundColor(HolidayAssembler content, ConfigAssembly configAssembly) => 
       content.SetBackgroundColor(configAssembly.TextBackgroundColor);
-    
+
     private void SetBackgroundColor(HolidayAssembler content, ReadingAssembler reading, ConfigAssembly configAssembly)
     {
       content.SetBackgroundColor(configAssembly.TextBackgroundColor);

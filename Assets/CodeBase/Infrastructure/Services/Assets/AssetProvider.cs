@@ -6,7 +6,7 @@ namespace CodeBase.Infrastructure.Services.Assets
   {
     public GameObject HudPrefab() => Load(AssetPath.Hud);
     
-    public GameObject ParticularMonth() => Load(AssetPath.MonthContainer);
+    public GameObject ContentContainer() => Load(AssetPath.MonthContainer);
 
     public GameObject HolidayDataAssembly() => Load(AssetPath.HolidayDataAssembly);
     
@@ -24,6 +24,8 @@ namespace CodeBase.Infrastructure.Services.Assets
     public GameObject HolidayReadings() => Load(AssetPath.HolidayReadings);
 
     public GameObject DayIconsContainer() => Load(AssetPath.DayIconsContainer);
+    
+    public GameObject MonthList() => Load(AssetPath.MonthList);
 
     private GameObject Load(string path) => Resources.Load<GameObject>(path);
   }
