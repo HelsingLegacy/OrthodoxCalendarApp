@@ -6,6 +6,7 @@ using CodeBase.Infrastructure.States;
 using CodeBase.UI.ContentView;
 using CodeBase.UI.ContentView.HolidayComponents;
 using CodeBase.UI.ContentView.HolidayComponents.Header;
+using CodeBase.UI.Presenters;
 using UnityEngine;
 using Zenject;
 
@@ -40,8 +41,13 @@ namespace CodeBase.Infrastructure.Services
     public GameObject CreateContentContainer(GameObject under) => 
       Instantiate(_provider.ContentContainer(), under);
 
-    public void CreateMonthList(GameObject parent) => 
-      Instantiate(_provider.MonthList(), parent);
+    public void CreateMonthList(HudModel parent)
+    {
+      var presenter = Instantiate(_provider.MonthList(), parent.ContentPresenter.gameObject);
+      
+      presenter.GetComponent<MonthListPresenter>()
+        .Construct(parent, this);
+    }
 
     public void CreateHolidayShortInfo(GameObject under, string onDate)
     {

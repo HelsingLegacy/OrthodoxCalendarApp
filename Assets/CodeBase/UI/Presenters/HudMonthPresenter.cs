@@ -24,7 +24,7 @@ namespace CodeBase.UI.Presenters
     public void ShowMonthList()
     {
       _model.ClearContent();
-      _factory.CreateMonthList(_model.ContentPresenter.gameObject);
+      _factory.CreateMonthList(_model);
     }
   }
 }

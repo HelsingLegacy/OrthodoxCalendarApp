@@ -1,10 +1,8 @@
 ﻿using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.TimeDate;
-using CodeBase.UI;
 using CodeBase.UI.Presenters;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace CodeBase.Infrastructure.States
@@ -42,7 +40,7 @@ namespace CodeBase.Infrastructure.States
 
     public void ShowTodayHoliday()
     {
-      PresentersConstructWith(this);
+      PresentersConstructWith(this, _factory); 
       
       ContentPresenter.ShowHoliday(_today.TodayKyiv().ToStringDateFormat());
       HudMonthPresenter.SetMonthName("Лютий");
@@ -53,14 +51,22 @@ namespace CodeBase.Infrastructure.States
       ContentPresenter.CleanUp();
     }
 
-    private void PresentersConstructWith(HudModel model)
+    private void PresentersConstructWith(HudModel model, CalendarFactory factory)
     {
-      ContentPresenter.Construct(model, _factory);
-      HudMonthPresenter.Construct(model, _factory);
+      ContentPresenter.Construct(model, factory);
+      HudMonthPresenter.Construct(model, factory);
     }
-  }
 
-  public interface IPresenter
-  {
+    public bool Has(Month month)
+    {
+      switch (month)
+      {
+        case Month.February:
+          //
+          return true;
+      }
+
+      return false;
+    }
   }
 }
