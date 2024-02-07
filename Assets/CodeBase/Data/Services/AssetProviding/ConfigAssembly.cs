@@ -31,7 +31,7 @@ namespace CodeBase.Data.Services.AssetProviding
 
     public string ReadingsShortLinks { get; private set; }
     public string LiturgyText { get; private set; }
-    
+
     public string EvangelionReadingsText { get; private set; }
 
     public List<Sprite> DayIcons { get; private set; }
@@ -165,7 +165,7 @@ namespace CodeBase.Data.Services.AssetProviding
     private void SetWeekName(RawHolidayInfo info) =>
       WeekName = info.WeekName;
 
-    private void SetMainIcon(IHolidaysStorage storage, string date) => 
+    private void SetMainIcon(IHolidaysStorage storage, string date) =>
       MainIcon = SpriteProvider(storage, date);
 
     private void SetHolidayName(RawHolidayInfo info) =>
@@ -254,37 +254,38 @@ namespace CodeBase.Data.Services.AssetProviding
 
       void SetDress(RawHolidayInfo rawInfo)
       {
-        foreach (HolidayDress holidayDress in rawInfo.HolidayDress)
-        {
-          switch (holidayDress.Slug)
+        if (rawInfo.HolidayDress is { Count: > 0 })
+          foreach (HolidayDress holidayDress in rawInfo.HolidayDress)
           {
-            case "burgundy":
-              Suggestions.Add(BuildingData().DressBurgundy);
-              break;
-            case "violet":
-              Suggestions.Add(BuildingData().DressViolet);
-              break;
-            case "white":
-              Suggestions.Add(BuildingData().DressWhite);
-              break;
-            case "green":
-              Suggestions.Add(BuildingData().DressGreen);
-              break;
-            case "blue":
-              Suggestions.Add(BuildingData().DressBlue);
-              break;
-            case "red":
-              Suggestions.Add(BuildingData().DressRed);
-              break;
-            case "yellow":
-              Suggestions.Add(BuildingData().DressYellow);
-              break;
+            switch (holidayDress.Slug)
+            {
+              case "burgundy":
+                Suggestions.Add(BuildingData().DressBurgundy);
+                break;
+              case "violet":
+                Suggestions.Add(BuildingData().DressViolet);
+                break;
+              case "white":
+                Suggestions.Add(BuildingData().DressWhite);
+                break;
+              case "green":
+                Suggestions.Add(BuildingData().DressGreen);
+                break;
+              case "blue":
+                Suggestions.Add(BuildingData().DressBlue);
+                break;
+              case "red":
+                Suggestions.Add(BuildingData().DressRed);
+                break;
+              case "yellow":
+                Suggestions.Add(BuildingData().DressYellow);
+                break;
+            }
           }
-        }
       }
     }
 
-    private void SetShortContent(RawHolidayInfo info) => 
+    private void SetShortContent(RawHolidayInfo info) =>
       ShortContentText = info.Content;
 
     private void SetReadingsShortLinks(RawHolidayInfo info)
@@ -298,7 +299,7 @@ namespace CodeBase.Data.Services.AssetProviding
       ReadingsShortLinks = result;
     }
 
-    private void SetLiturgy(RawHolidayInfo info) => 
+    private void SetLiturgy(RawHolidayInfo info) =>
       LiturgyText = info.LiturgyRecommendations;
 
     private void SetReadingsContent(RawHolidayInfo info)
@@ -313,16 +314,16 @@ namespace CodeBase.Data.Services.AssetProviding
       }
 
       readings += $"<size=70%><i>{info.ReadingGroupList[0].Copyright}</i></size>";
-      
+
       EvangelionReadingsText = readings;
     }
 
     private void SetDayIcons(RawHolidayInfo info, IHolidaysStorage storage, string date)
     {
-      if(info.DayIcons is { Count: > 0 })
+      if (info.DayIcons is { Count: > 0 })
       {
         DayIcons = new List<Sprite>();
-        
+
         for (int i = 1; i <= info.DayIcons.Count; i++)
         {
           DayIcons.Add(SpriteProvider(storage, date + $" ({i})"));
@@ -336,12 +337,12 @@ namespace CodeBase.Data.Services.AssetProviding
     private static Sprite SpriteProvider(IHolidaysStorage storage, string date)
     {
       var icon = File.ReadAllBytes(storage.HolidayIconFor(date));
-      
+
       Texture2D texture = new Texture2D(340, 377);
       texture.LoadImage(icon);
-      
+
       Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-      
+
       return sprite;
     }
   }
