@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace CodeBase.UI.ContentView.HolidayComponents.Header
+namespace CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents.Header
 {
   public class WeekName : MonoBehaviour
   {

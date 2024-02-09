@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.TimeDate;
-using CodeBase.Infrastructure.States;
+using CodeBase.UI.Mediator;
 using UnityEngine;
 
 namespace CodeBase.UI.Presenters
 {
   public class MonthListPresenter : MonoBehaviour
   {
-    private HudModel _model;
+    private HudMediator _mediator;
     private CalendarFactory _factory;
 
-    public void Construct(HudModel model, CalendarFactory factory)
+    public void Construct(HudMediator mediator, CalendarFactory factory)
     {
-      _model = model;
+      _mediator = mediator;
       _factory = factory;
     }
 
     public void Show(Month month)
     {
-      if (_model.Has(month))
+      if (_mediator.Has(month))
       {
-        _model.ContentPresenter.CleanUp();
+        _mediator.ContentPresenter.CleanUp();
         ShowShortHolidaysList();
       }
     }
@@ -37,7 +37,7 @@ namespace CodeBase.UI.Presenters
       
       foreach (var day in days)
       {
-        _factory.CreateHolidayShortInfo(_model.ContentPresenter.gameObject, day);
+        _factory.CreateHolidayShortInfo(_mediator.ContentPresenter.gameObject, day);
       }
     }
   }

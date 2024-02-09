@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CodeBase.UI.ContentView.HolidayComponents
+namespace CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents
 {
   public class FillChildrenImages : MonoBehaviour
   {

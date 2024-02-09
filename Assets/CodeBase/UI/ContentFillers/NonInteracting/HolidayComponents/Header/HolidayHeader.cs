@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace CodeBase.UI.ContentView.HolidayComponents.Header
+namespace CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents.Header
 {
   public class HolidayHeader : MonoBehaviour
   {

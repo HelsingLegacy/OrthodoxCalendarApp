@@ -3,7 +3,7 @@ using CodeBase.UI.Presenters;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CodeBase.UI.ContentView
+namespace CodeBase.UI.ContentFillers.Interacting
 {
   public class MonthButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
   {
@@ -13,9 +13,6 @@ namespace CodeBase.UI.ContentView
     public void OnPointerUp(PointerEventData eventData) => 
       Presenter.Show(Month);
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-      
-    }
+    public void OnPointerDown(PointerEventData eventData) { }
   }
 }

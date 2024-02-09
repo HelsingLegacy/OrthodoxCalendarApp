@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace CodeBase.UI.ContentView
+namespace CodeBase.UI.ContentFillers.NonInteracting
 {
   public class BackgroundColor : MonoBehaviour
   {

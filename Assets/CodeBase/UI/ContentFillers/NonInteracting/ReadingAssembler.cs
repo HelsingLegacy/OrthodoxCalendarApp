@@ -1,10 +1,10 @@
-﻿using CodeBase.UI.ContentView.HolidayComponents;
+﻿using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CodeBase.UI.ContentView
+namespace CodeBase.UI.ContentFillers.NonInteracting
 {
-  public class HolidayAssembler : MonoBehaviour
+  public class ReadingAssembler : MonoBehaviour
   {
     private void Start()
     {
@@ -18,10 +18,11 @@ namespace CodeBase.UI.ContentView
       GetComponent<LayoutElement>().preferredHeight = currentObjectHeight;
     }
 
-    public GameObject InfoContainer() => 
-      GetComponentInChildren<InformationContainer>().gameObject;
-
+    public void SetReadings(string text) => 
+      GetComponentInChildren<ContentWriter>().SetContent(text);
+    
     public void SetBackgroundColor(Color color) => 
       GetComponentInChildren<BackgroundColor>().SetBackground(color);
+
   }
 }

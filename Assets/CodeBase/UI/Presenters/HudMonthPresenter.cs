@@ -1,6 +1,6 @@
 ﻿using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.States;
-using CodeBase.UI.ContentView;
+using CodeBase.UI.ContentFillers.NonInteracting;
+using CodeBase.UI.Mediator;
 using UnityEngine;
 
 namespace CodeBase.UI.Presenters
@@ -9,12 +9,12 @@ namespace CodeBase.UI.Presenters
   {
     public MonthView View;
     
-    private HudModel _model;
+    private HudMediator _mediator;
     private CalendarFactory _factory;
     
-    public void Construct(HudModel model, CalendarFactory factory)
+    public void Construct(HudMediator mediator, CalendarFactory factory)
     {
-      _model = model;
+      _mediator = mediator;
       _factory = factory;
     }
 
@@ -23,8 +23,8 @@ namespace CodeBase.UI.Presenters
 
     public void ShowMonthList()
     {
-      _model.ClearContent();
-      _factory.CreateMonthList(_model);
+      _mediator.ClearContent();
+      _factory.CreateMonthList(_mediator);
     }
   }
 }

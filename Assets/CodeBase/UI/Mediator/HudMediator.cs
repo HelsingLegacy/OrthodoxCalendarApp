@@ -5,9 +5,9 @@ using CodeBase.UI.Presenters;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Infrastructure.States
+namespace CodeBase.UI.Mediator
 {
-  public class HudModel : MonoBehaviour
+  public class HudMediator : MonoBehaviour
   {
     public GameObject GeneralYear;
     public HudMonthPresenter HudMonthPresenter;
@@ -51,10 +51,10 @@ namespace CodeBase.Infrastructure.States
       ContentPresenter.CleanUp();
     }
 
-    private void PresentersConstructWith(HudModel model, CalendarFactory factory)
+    private void PresentersConstructWith(HudMediator mediator, CalendarFactory factory)
     {
-      ContentPresenter.Construct(model, factory);
-      HudMonthPresenter.Construct(model, factory);
+      ContentPresenter.Construct(mediator, factory);
+      HudMonthPresenter.Construct(mediator, factory);
     }
 
     public bool Has(Month month)

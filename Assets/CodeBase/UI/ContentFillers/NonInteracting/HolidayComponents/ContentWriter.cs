@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace CodeBase.UI.ContentView.HolidayComponents
+namespace CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents
 {
   public class ContentWriter : MonoBehaviour
   {

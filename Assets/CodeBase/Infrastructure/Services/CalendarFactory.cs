@@ -2,10 +2,10 @@
 using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
-using CodeBase.Infrastructure.States;
-using CodeBase.UI.ContentView;
-using CodeBase.UI.ContentView.HolidayComponents;
-using CodeBase.UI.ContentView.HolidayComponents.Header;
+using CodeBase.UI.ContentFillers.NonInteracting;
+using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents;
+using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents.Header;
+using CodeBase.UI.Mediator;
 using CodeBase.UI.Presenters;
 using UnityEngine;
 using Zenject;
@@ -30,10 +30,10 @@ namespace CodeBase.Infrastructure.Services
     {
       GameObject hud = _instantiator.InstantiatePrefab(_provider.HudPrefab());
       
-      HudModel model = hud.GetComponent<HudModel>();
+      HudMediator mediator = hud.GetComponent<HudMediator>();
       
-      model.ShiftMediatorParent();
-      model.ShowTodayHoliday();
+      mediator.ShiftMediatorParent();
+      mediator.ShowTodayHoliday();
       
       return hud;
     }
@@ -41,7 +41,7 @@ namespace CodeBase.Infrastructure.Services
     public GameObject CreateContentContainer(GameObject under) => 
       Instantiate(_provider.ContentContainer(), under);
 
-    public void CreateMonthList(HudModel parent)
+    public void CreateMonthList(HudMediator parent)
     {
       var presenter = Instantiate(_provider.MonthList(), parent.ContentPresenter.gameObject);
       

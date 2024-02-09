@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.UI.ContentView
+namespace CodeBase.UI.ContentFillers.NonInteracting
 {
   public class SizeProvider : MonoBehaviour
   {

@@ -1,17 +1,17 @@
 ﻿using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.States;
+using CodeBase.UI.Mediator;
 using UnityEngine;
 
 namespace CodeBase.UI.Presenters
 {
   public class ContentPresenter : MonoBehaviour
   {
-    private HudModel _model;
+    private HudMediator _mediator;
     private CalendarFactory _factory;
     
-    public void Construct(HudModel model, CalendarFactory factory)
+    public void Construct(HudMediator mediator, CalendarFactory factory)
     {
-      _model = model;
+      _mediator = mediator;
       _factory = factory;
     }
     

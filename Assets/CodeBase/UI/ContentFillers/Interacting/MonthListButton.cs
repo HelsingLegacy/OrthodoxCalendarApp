@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CodeBase.UI.ContentView
+namespace CodeBase.UI.ContentFillers.Interacting
 {
   public class MonthListButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
   {
