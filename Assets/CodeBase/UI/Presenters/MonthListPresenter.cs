@@ -3,6 +3,7 @@ using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Mediator;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.UI.Presenters
 {
@@ -11,6 +12,7 @@ namespace CodeBase.UI.Presenters
     private HudMediator _mediator;
     private CalendarFactory _factory;
 
+    [Inject]
     public void Construct(HudMediator mediator, CalendarFactory factory)
     {
       _mediator = mediator;
@@ -21,7 +23,7 @@ namespace CodeBase.UI.Presenters
     {
       if (_mediator.Has(month))
       {
-        _mediator.ContentPresenter.CleanUp();
+        _mediator.ClearContent();
         ShowShortHolidaysList();
       }
     }
@@ -31,13 +33,13 @@ namespace CodeBase.UI.Presenters
       List<string> days = new();
       
       days.Add("2024-02-04");
-      days.Add("2024-02-05");
-      days.Add("2024-02-06");
       days.Add("2024-02-07");
+      days.Add("2024-02-08");
+      days.Add("2024-02-09");
       
       foreach (var day in days)
       {
-        _factory.CreateHolidayShortInfo(_mediator.ContentPresenter.gameObject, day);
+        _factory.CreateHolidayShortInfo(_mediator.ContentContainer, day);
       }
     }
   }

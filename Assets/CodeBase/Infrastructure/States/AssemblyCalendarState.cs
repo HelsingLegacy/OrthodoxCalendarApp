@@ -19,6 +19,9 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       InitCalendar();
+      
+      _stateMover.MoveTo<UserObservationState>();
+      
       _curtain.Hide();
     }
 
@@ -26,14 +29,10 @@ namespace CodeBase.Infrastructure.States
     {
     }
 
-    private void InitCalendar()
-    {
+    private void InitCalendar() => 
       HudInitialization();
 
-      _stateMover.MoveTo<UserObservationState>();
-    }
-
     private void HudInitialization() => 
-      _factory.CreateHud();
+      _factory.CreateHudWithBinding();
   }
 }

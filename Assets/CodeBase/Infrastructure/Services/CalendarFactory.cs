@@ -14,40 +14,36 @@ namespace CodeBase.Infrastructure.Services
 {
   public class CalendarFactory
   {
-    private readonly IInstantiator _instantiator;
+    private readonly DiContainer _container;
     private readonly IAssetProvider _provider;
     private readonly IHolidaysStorage _storage;
     private IToday _today;
 
-    public CalendarFactory(IInstantiator instantiator, IAssetProvider provider, IHolidaysStorage storage)
+    public CalendarFactory(DiContainer container, IAssetProvider provider, IHolidaysStorage storage)
     {
-      _instantiator = instantiator;
+      _container = container;
       _provider = provider;
       _storage = storage;
     }
 
-    public GameObject CreateHud()
+    public void CreateHudWithBinding()
     {
-      GameObject hud = _instantiator.InstantiatePrefab(_provider.HudPrefab());
+      GameObject hud = _container.InstantiatePrefab(_provider.HudPrefab());
       
       HudMediator mediator = hud.GetComponent<HudMediator>();
       
-      mediator.ShiftMediatorParent();
-      mediator.ShowTodayHoliday();
+      hud.GetComponent<Shifting>().ShiftMediatorParent();
       
-      return hud;
+      mediator.ShowTodayHoliday();
+
+      _container.Bind<HudMediator>().FromInstance(mediator);
     }
 
     public GameObject CreateContentContainer(GameObject under) => 
       Instantiate(_provider.ContentContainer(), under);
 
-    public void CreateMonthList(HudMediator parent)
-    {
-      var presenter = Instantiate(_provider.MonthList(), parent.ContentPresenter.gameObject);
-      
-      presenter.GetComponent<MonthListPresenter>()
-        .Construct(parent, this);
-    }
+    public void CreateMonthList(HudMediator parent) => 
+      Instantiate(_provider.MonthList(), parent.ContentContainer);
 
     public void CreateHolidayShortInfo(GameObject under, string onDate)
     {
@@ -201,8 +197,6 @@ namespace CodeBase.Infrastructure.Services
 
         List<Sprite> dayIcons = configAssembly.DayIcons;
 
-        Debug.Log(dayIcons);
-
         for (int i = 0; i < dayIcons.Count; i++)
           Instantiate(_provider.IconImage(), dayIconsContainer);
 
@@ -211,6 +205,6 @@ namespace CodeBase.Infrastructure.Services
     }
 
     private GameObject Instantiate(GameObject prefab, GameObject under) =>
-      _instantiator.InstantiatePrefab(prefab, under.transform);
+      _container.InstantiatePrefab(prefab, under.transform);
   }
 }

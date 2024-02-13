@@ -1,18 +1,24 @@
 ﻿using System;
+using CodeBase.Extensions;
 
 namespace CodeBase.Infrastructure.Services.TimeDate
 {
   public class KyivDate : IKyivDate
   {
-    private DateTime MinusWeekFromToday => TodayKyiv().AddDays(-3);
-    private DateTime PlusWeekFromToday => TodayKyiv().AddDays(3);
+    private DateTime MinusWeekFromToday => TodayKyivDate().AddDays(-3);
+    private DateTime PlusWeekFromToday => TodayKyivDate().AddDays(3);
 
     public DateTime StartDate() => MinusWeekFromToday;
 
     public DateTime EndDate() => PlusWeekFromToday;
 
-    public DateTime TodayKyiv() => 
+    public DateTime TodayKyivDate() => 
       DateTime.UtcNow.AddHours(SummerTimeOffsetAdjustment(accordingTo: DateTime.UtcNow));
+    
+    public string TodayKyivText() => 
+      DateTime.UtcNow
+        .AddHours(SummerTimeOffsetAdjustment(accordingTo: DateTime.UtcNow))
+        .ToStringDateFormat();
 
     private int SummerTimeOffsetAdjustment(DateTime accordingTo)
     {
