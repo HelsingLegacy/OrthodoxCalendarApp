@@ -2,15 +2,10 @@
 
 namespace CodeBase.Infrastructure.Services.TimeDate
 {
-  public interface IToday : ITodayDate, ITodayText { }
-  
-  public interface ITodayDate
+  public interface IToday : IService
   {
     DateTime TodayKyivDate();
-  }
-  
-  public interface ITodayText
-  {
+
     string TodayKyivText();
   }
 }

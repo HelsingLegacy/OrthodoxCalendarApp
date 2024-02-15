@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee1ec0c38e2c4528983bcf0ea27a499a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  YearButton: {fileID: 3049143519305261530}
-  NavigationButton: {fileID: 80662563033820078}
+  year: {fileID: 8779416025361173519}
+  navigation: {fileID: 80662563033820078}
   ContentContainer: {fileID: 4454772830138774072}
 --- !u!114 &6459975705703873481
 MonoBehaviour:
@@ -233,6 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4233007462018334681}
   - component: {fileID: 6200916446987517581}
+  - component: {fileID: 8779416025361173519}
   m_Layer: 5
   m_Name: Year_Button
   m_TagString: Untagged
@@ -268,6 +269,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3049143519305261530}
   m_CullTransparentMesh: 1
+--- !u!114 &8779416025361173519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049143519305261530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c991e9c2994cba960b7f0ea039cbef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  YearText: {fileID: 55996392098835730}
 --- !u!1 &4454772830138774072
 GameObject:
   m_ObjectHideFlags: 0

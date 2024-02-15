@@ -26,6 +26,8 @@ namespace CodeBase.Infrastructure.Services.Assets
     public GameObject DayIconsContainer() => Load(AssetPath.DayIconsContainer);
     
     public GameObject MonthList() => Load(AssetPath.MonthList);
+    
+    public GameObject NoticePopup() => Load(AssetPath.NoticePopup);
 
     private GameObject Load(string path) => Resources.Load<GameObject>(path);
   }

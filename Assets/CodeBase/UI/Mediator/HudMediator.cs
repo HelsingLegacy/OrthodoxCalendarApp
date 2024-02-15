@@ -8,9 +8,8 @@ namespace CodeBase.UI.Mediator
 {
   public class HudMediator : MonoBehaviour
   {
-    public GameObject YearButton;
-    public MainNavigationButton NavigationButton;
-    
+    public YearNavigation year;
+    public MainNavigation navigation;
     public GameObject ContentContainer;
 
     private CalendarFactory _factory;
@@ -26,17 +25,17 @@ namespace CodeBase.UI.Mediator
     public void ShowTodayHoliday()
     {
       ShowHolidayForToday();
-      NavigationButton.SetMonthName("Лютий");
+      navigation.SetMonthName("Лютий");
     }
 
     public void ClearContent() => CleanUpContainer();
 
-    public bool Has(Month month)
+    public bool Has(Month month, string year)
     {
       switch (month)
       {
         case Month.February:
-          //
+          
           return true;
       }
 
@@ -47,10 +46,7 @@ namespace CodeBase.UI.Mediator
 
     public void ShowHoliday(string date) => _factory.CreateHolidayFullInfo(ContentContainer, date);
 
-    private void Download(Month month)
-    {
-      
-    }
+    public string GetCurrentYear() => year.YearText.text;
 
     private void CleanUpContainer()
     {
@@ -63,6 +59,5 @@ namespace CodeBase.UI.Mediator
         Destroy(child);
       }
     }
-
   }
 }

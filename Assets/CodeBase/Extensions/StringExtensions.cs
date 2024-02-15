@@ -2,7 +2,7 @@
 
 namespace CodeBase.Extensions
 {
-  public static class NamingExtensions
+  public static class StringExtensions
   {
     private const string JsonExtension = ".json";
     private const string Format = "yyyy-MM-dd";
@@ -15,5 +15,8 @@ namespace CodeBase.Extensions
 
     public static string WithoutYear(this string date) => 
       date.Substring(5);
+
+    public static int ToInteger(this string year) => 
+      int.Parse(year);
   }
 }

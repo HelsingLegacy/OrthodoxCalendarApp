@@ -25,6 +25,7 @@
     public const string DayIconsContainer = "Prefabs/Holiday/HolidayComponents/DayIconsContainer";
     
     public const string MonthList = "Prefabs/MonthList";
-    
+
+    public const string NoticePopup = "Prefabs/NoticePopup";
   }
 }

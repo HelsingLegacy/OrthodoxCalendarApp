@@ -6,7 +6,6 @@ using CodeBase.UI.ContentFillers.NonInteracting;
 using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents;
 using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents.Header;
 using CodeBase.UI.Mediator;
-using CodeBase.UI.Presenters;
 using UnityEngine;
 using Zenject;
 
@@ -204,7 +203,13 @@ namespace CodeBase.Infrastructure.Services
       }
     }
 
+    public void CreateNoticePopup() => 
+      Instantiate(_provider.NoticePopup());
+
     private GameObject Instantiate(GameObject prefab, GameObject under) =>
       _container.InstantiatePrefab(prefab, under.transform);
+    
+    private GameObject Instantiate(GameObject prefab) =>
+      _container.InstantiatePrefab(prefab);
   }
 }

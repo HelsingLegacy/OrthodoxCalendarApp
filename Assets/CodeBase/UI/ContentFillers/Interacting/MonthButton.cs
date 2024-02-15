@@ -11,7 +11,7 @@ namespace CodeBase.UI.ContentFillers.Interacting
     public Month Month;
     
     public void OnPointerUp(PointerEventData eventData) => 
-      Presenter.Show(Month);
+      Presenter.ShowOrDownload(Month);
 
     public void OnPointerDown(PointerEventData eventData) { }
   }

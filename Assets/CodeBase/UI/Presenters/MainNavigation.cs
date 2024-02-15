@@ -7,7 +7,7 @@ using Zenject;
 
 namespace CodeBase.UI.Presenters
 {
-  public class MainNavigationButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+  public class MainNavigation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
   {
     private const string TodayText = "Сьогодні";
     private bool _isTodayDisplay;

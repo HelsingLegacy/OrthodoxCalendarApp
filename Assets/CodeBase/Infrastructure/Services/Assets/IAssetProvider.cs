@@ -25,5 +25,6 @@ namespace CodeBase.Infrastructure.Services.Assets
     
     GameObject DayIconsContainer();
     GameObject MonthList();
+    GameObject NoticePopup();
   }
 }

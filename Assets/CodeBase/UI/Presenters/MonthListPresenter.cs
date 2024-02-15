@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using CodeBase.Data.Services.DownloadServices;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Mediator;
@@ -11,33 +11,42 @@ namespace CodeBase.UI.Presenters
   {
     private HudMediator _mediator;
     private CalendarFactory _factory;
+    private IKyivDate _dateService;
+    private string _year;
+    private IDownloadingService _downloadingService;
 
     [Inject]
-    public void Construct(HudMediator mediator, CalendarFactory factory)
+    public void Construct(HudMediator mediator, CalendarFactory factory, IKyivDate dateService,
+      IDownloadingService downloadingService)
     {
       _mediator = mediator;
       _factory = factory;
+      _dateService = dateService;
+      _year = _mediator.GetCurrentYear();
+      _downloadingService = downloadingService;
     }
 
-    public void Show(Month month)
+    public void ShowOrDownload(Month month)
     {
-      if (_mediator.Has(month))
+      if (_mediator.Has(month, _year))
       {
         _mediator.ClearContent();
-        ShowShortHolidaysList();
+        ShowShortHolidaysList(month, _year);
+      }
+      else
+      {
+        _factory.CreateNoticePopup();
       }
     }
 
-    private void ShowShortHolidaysList()
+    private void ShowShortHolidaysList(Month month, string year)
     {
-      List<string> days = new();
+      // foreach (string day in _dateService.DaysFor(month, year))
+      // {
+      //   _downloadingService.LoadHoliday(day);
+      // }
       
-      days.Add("2024-02-04");
-      days.Add("2024-02-07");
-      days.Add("2024-02-08");
-      days.Add("2024-02-09");
-      
-      foreach (var day in days)
+      foreach (string day in _dateService.DaysFor(month, year))
       {
         _factory.CreateHolidayShortInfo(_mediator.ContentContainer, day);
       }

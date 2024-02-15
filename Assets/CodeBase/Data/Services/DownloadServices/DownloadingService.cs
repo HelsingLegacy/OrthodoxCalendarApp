@@ -20,7 +20,7 @@ namespace CodeBase.Data.Services.DownloadServices
       _holidaysStorage = holidaysStorage;
     }
 
-    public async void LoadHoliday(string date, Action onLoaded)
+    public async void LoadHoliday(string date, Action onLoaded = null)
     {
       int progress = 0;
       float progressIcons = 0;
