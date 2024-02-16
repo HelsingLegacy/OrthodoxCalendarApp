@@ -3,6 +3,7 @@ using System.IO;
 using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services.TimeDate;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Data.Services.DownloadServices
@@ -20,7 +21,7 @@ namespace CodeBase.Data.Services.DownloadServices
       _holidaysStorage = holidaysStorage;
     }
 
-    public async void LoadHoliday(string date, Action onLoaded = null)
+    public async UniTask LoadHoliday(string date, Action onLoaded = null)
     {
       int progress = 0;
       float progressIcons = 0;

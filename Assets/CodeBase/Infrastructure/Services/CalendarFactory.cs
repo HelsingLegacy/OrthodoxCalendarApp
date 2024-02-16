@@ -203,8 +203,12 @@ namespace CodeBase.Infrastructure.Services
       }
     }
 
-    public void CreateNoticePopup() => 
-      Instantiate(_provider.NoticePopup());
+    public GameObject CreateNoticePopup(GameObject parent)
+    {
+      var popup = Instantiate(_provider.NoticePopup(), parent);
+
+      return popup;
+    }
 
     private GameObject Instantiate(GameObject prefab, GameObject under) =>
       _container.InstantiatePrefab(prefab, under.transform);

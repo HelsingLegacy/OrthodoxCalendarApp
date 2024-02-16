@@ -10,8 +10,8 @@ namespace CodeBase.UI.ContentFillers.Interacting
     public MonthListPresenter Presenter;
     public Month Month;
     
-    public void OnPointerUp(PointerEventData eventData) => 
-      Presenter.ShowOrDownload(Month);
+    public async void OnPointerUp(PointerEventData eventData) => 
+      await Presenter.ShowOrDownload(Month);
 
     public void OnPointerDown(PointerEventData eventData) { }
   }

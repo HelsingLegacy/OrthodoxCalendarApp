@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Mediator;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -26,30 +27,39 @@ namespace CodeBase.UI.Presenters
       _downloadingService = downloadingService;
     }
 
-    public void ShowOrDownload(Month month)
+    public async UniTask ShowOrDownload(Month month)
     {
-      if (_mediator.Has(month, _year))
-      {
-        _mediator.ClearContent();
-        ShowShortHolidaysList(month, _year);
-      }
-      else
-      {
-        _factory.CreateNoticePopup();
-      }
+      // if (!_mediator.Has(month, _year))
+      // {
+      //   _mediator.ClearContent();
+      //   ShowShortHolidaysList(month, _year);
+      // }
+      // else
+      // {
+        
+        await DownloadHolidays(month, _year);
+      // }
     }
 
     private void ShowShortHolidaysList(Month month, string year)
     {
-      // foreach (string day in _dateService.DaysFor(month, year))
-      // {
-      //   _downloadingService.LoadHoliday(day);
-      // }
-      
       foreach (string day in _dateService.DaysFor(month, year))
       {
         _factory.CreateHolidayShortInfo(_mediator.ContentContainer, day);
       }
+    }
+
+    private async UniTask DownloadHolidays(Month month, string year)
+    {
+      _mediator.ClearContent();
+      GameObject popup = _factory.CreateNoticePopup(_mediator.ContentContainer);
+      
+      foreach (string day in _dateService.DaysFor(month, year)) 
+        await _downloadingService.LoadHoliday(day);
+      
+      ShowShortHolidaysList(month, _year);
+      
+      Destroy(popup);
     }
   }
 }
