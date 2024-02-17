@@ -6,13 +6,6 @@ namespace CodeBase.Infrastructure.Services.TimeDate
 {
   public class KyivDate : IKyivDate, IToday
   {
-    private DateTime MinusWeekFromToday => TodayKyivDate().AddDays(-3);
-    private DateTime PlusWeekFromToday => TodayKyivDate().AddDays(3);
-
-    public DateTime StartDate() => MinusWeekFromToday;
-
-    public DateTime EndDate() => PlusWeekFromToday;
-
     public List<string> DaysFor(Month month, string year)
     {
       List<string> allDays = new List<string>();

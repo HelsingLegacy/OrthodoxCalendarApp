@@ -1,5 +1,6 @@
 ﻿using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Data.Services.DownloadServices;
+using CodeBase.Data.Services.HolidayObserverService;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
@@ -21,6 +22,7 @@ namespace CodeBase.Infrastructure
       BindBootstrapInstallerInterfaces();
       BindSceneLoader();
       BindLoadingCurtain(from: CurtainInstance());
+      BindSupportServices();
       BindDataLoadingServices();
       BindFactory();
       BindCalendarStateMachine();
@@ -49,11 +51,16 @@ namespace CodeBase.Infrastructure
 
     private void BindDataLoadingServices()
     {
-      Container.BindInterfacesTo<KyivDate>().AsSingle();
-      Container.BindInterfacesTo<HolidaysStorageFolder>().AsSingle();
       Container.Bind<ILinkProvider>().To<LinkProvider>().AsSingle();
       Container.Bind<IDataLoaderService>().To<DataLoaderService>().AsSingle();
       Container.Bind<IDownloadingService>().To<DownloadingService>().AsSingle();
+    }
+
+    private void BindSupportServices()
+    {
+      Container.BindInterfacesTo<KyivDate>().AsSingle();
+      Container.BindInterfacesTo<HolidaysStorageFolder>().AsSingle();
+      Container.BindInterfacesTo<HolidayObserver>().AsSingle();
     }
 
     private void BindFactory()

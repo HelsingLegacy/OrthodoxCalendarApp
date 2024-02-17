@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Infrastructure.Services.Assets;
-using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.ContentFillers.NonInteracting;
 using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents;
 using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents.Header;
@@ -16,7 +15,6 @@ namespace CodeBase.Infrastructure.Services
     private readonly DiContainer _container;
     private readonly IAssetProvider _provider;
     private readonly IHolidaysStorage _storage;
-    private IToday _today;
 
     public CalendarFactory(DiContainer container, IAssetProvider provider, IHolidaysStorage storage)
     {
@@ -41,8 +39,8 @@ namespace CodeBase.Infrastructure.Services
     public GameObject CreateContentContainer(GameObject under) => 
       Instantiate(_provider.ContentContainer(), under);
 
-    public void CreateMonthList(HudMediator parent) => 
-      Instantiate(_provider.MonthList(), parent.ContentContainer);
+    public void CreateMonthList(GameObject parent) => 
+      Instantiate(_provider.MonthList(), parent);
 
     public void CreateHolidayShortInfo(GameObject under, string onDate)
     {
@@ -65,9 +63,10 @@ namespace CodeBase.Infrastructure.Services
       ShortContextTextConfiguration(under: container, configAssembly);
     }
 
-    public void CreateHolidayFullInfo(GameObject under, string onDate)
+    public void CreateHolidayFullInfo(GameObject under, string onDate, out ConfigAssembly config)
     {
       ConfigAssembly configAssembly = new ConfigAssembly(_storage, onDate);
+      config = configAssembly;
 
       GameObject content = Instantiate(_provider.HolidayDataAssembly(), under);
       GameObject readings = Instantiate(_provider.HolidayReadings(), under);
@@ -97,6 +96,7 @@ namespace CodeBase.Infrastructure.Services
       ReadingsConfiguration(under: readings, configAssembly);
       
       DayIconsConfiguration(under: under.gameObject, configAssembly);
+
     }
 
     private void SetBackgroundColor(HolidayAssembler content, ConfigAssembly configAssembly) => 
@@ -117,14 +117,14 @@ namespace CodeBase.Infrastructure.Services
         header = Instantiate(_provider.HeaderNoName(), under);
         header.GetComponent<HolidayHeader>().SetBackground(extracted.HeaderColor);
         header.GetComponent<HolidayHeader>().SetWeekdayName(extracted.WeekdayName);
-        header.GetComponent<HolidayHeader>().SetDateMonth(extracted.DateMonth);
+        header.GetComponent<HolidayHeader>().SetDateMonth(extracted.Day + extracted.Month);
       }
       else
       {
         header = Instantiate(_provider.HeaderWithName(), under);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetBackground(extracted.HeaderColor);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekdayName(extracted.WeekdayName);
-        header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(extracted.DateMonth);
+        header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(extracted.Month);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekName(extracted.WeekName);
       }
 

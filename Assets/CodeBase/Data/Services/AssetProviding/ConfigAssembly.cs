@@ -16,7 +16,8 @@ namespace CodeBase.Data.Services.AssetProviding
     public Color HeaderColor { get; private set; }
     public Color TextBackgroundColor { get; private set; }
     public string WeekdayName { get; private set; }
-    public string DateMonth { get; private set; }
+    public string Day { get; private set; }
+    public string Month { get; private set; }
 
     public string WeekName { get; private set; }
 
@@ -159,7 +160,8 @@ namespace CodeBase.Data.Services.AssetProviding
           break;
       }
 
-      DateMonth = day + monthName;
+      Day = $"{day}";
+      Month = monthName;
     }
 
     private void SetWeekName(RawHolidayInfo info) =>

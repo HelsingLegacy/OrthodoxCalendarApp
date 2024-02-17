@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
-using CodeBase.Data.Services.AssetProviding;
-using CodeBase.Extensions;
+using CodeBase.Data.Services.HolidayObserverService;
 using CodeBase.Infrastructure.Services.TimeDate;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -11,32 +9,32 @@ namespace CodeBase.Data.Services.DownloadServices
   public class DownloadingService : IDownloadingService
   {
     private readonly IDataLoaderService _dataLoader;
-    private readonly IKyivDate _kyivDate;
-    private readonly IHolidaysStorage _holidaysStorage;
+    private readonly IHolidayObserver _holidayObserver;
+    private readonly IKyivDate _dateService;
 
-    public DownloadingService(IDataLoaderService dataLoader, IKyivDate kyivDate, IHolidaysStorage holidaysStorage)
+    public DownloadingService(IDataLoaderService dataLoader, IHolidayObserver holidayObserver, 
+      IKyivDate dateService)
     {
       _dataLoader = dataLoader;
-      _kyivDate = kyivDate;
-      _holidaysStorage = holidaysStorage;
+      _holidayObserver = holidayObserver;
+      _dateService = dateService;
     }
 
-    public async UniTask LoadHoliday(string date, Action onLoaded = null)
+    public async UniTask DownloadHoliday(string date, Action onLoaded = null)
     {
       int progress = 0;
       float progressIcons = 0;
 
-      if (!RequestedFileExist(date))
+      if (!_holidayObserver.RequestedFileExistFor(date))
       {
         int process = await _dataLoader.LoadRawHoliday(date);
         float processIcons = await _dataLoader.LoadIcons(date);
-        
+
         progress += process;
         progressIcons += processIcons;
-
       }
-      
-      if ((progress > 0 && Mathf.Abs(progressIcons - 1f) < 0.07f) || RequestedFileExist(date))
+
+      if ((progress > 0 && Mathf.Abs(progressIcons - 1f) < 0.07f) || _holidayObserver.RequestedFileExistFor(date))
         onLoaded?.Invoke();
       else
       {
@@ -44,37 +42,11 @@ namespace CodeBase.Data.Services.DownloadServices
       }
     }
 
-    public async void LoadHolidays(Action onLoaded)
+    public async UniTask DownloadHolidays(Month month, string year)
     {
-      DateTime startDate = _kyivDate.StartDate();
-      DateTime endDate = _kyivDate.EndDate();
+      foreach (string day in _dateService.DaysFor(month, year))
+        await DownloadHoliday(day);
 
-      TimeSpan datesBetween = endDate - startDate;
-
-      int dates = datesBetween.Days + 1;
-      int progress = 0;
-
-      for (DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
-      {
-        string date = currentDate.ToStringDateFormat();
-
-        if (!RequestedFileExist(date))
-        {
-          progress += await _dataLoader.LoadRawHoliday(date);
-        }
-        else
-        {
-          progress += 1;
-        }
-      }
-
-      if (Mathf.Abs(dates - progress) < 0.01f)
-      {
-        onLoaded?.Invoke();
-      }
     }
-
-    private bool RequestedFileExist(string date) =>
-      File.Exists(_holidaysStorage.HolidayConfigFor(date));
   }
 }

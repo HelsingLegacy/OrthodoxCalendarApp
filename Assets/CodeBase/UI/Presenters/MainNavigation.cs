@@ -27,18 +27,19 @@ namespace CodeBase.UI.Presenters
     {
       if (_isTodayDisplay)
       {
+        SetMonthName(Mediator.GetConfig.Month);
         _isTodayDisplay = false;
       }
       else
       {
         ShowMonthList();
+        
+        SetMonthName(TodayText);
+        _isTodayDisplay = true;
       }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-      
-    }
+    public void OnPointerDown(PointerEventData eventData) { }
 
     public void SetMonthName(string month) =>
       Text.text = month;
@@ -46,9 +47,8 @@ namespace CodeBase.UI.Presenters
     private void ShowMonthList()
     {
       Mediator.ClearContent();
-      _factory.CreateMonthList(Mediator);
-      SetMonthName(TodayText);
-      _isTodayDisplay = true;
+      
+      _factory.CreateMonthList(parent: Mediator.ContentContainer);
     }
   }
 }

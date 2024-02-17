@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Data.Services.AssetProviding;
+using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Presenters;
 using UnityEngine;
@@ -11,9 +12,14 @@ namespace CodeBase.UI.Mediator
     public YearNavigation year;
     public MainNavigation navigation;
     public GameObject ContentContainer;
-
+    
     private CalendarFactory _factory;
     private string _today;
+    
+    private ConfigAssembly _config;
+
+    public ConfigAssembly GetConfig => _config;
+
 
     [Inject]
     public void Construct(CalendarFactory factory, IToday today)
@@ -25,28 +31,19 @@ namespace CodeBase.UI.Mediator
     public void ShowTodayHoliday()
     {
       ShowHolidayForToday();
-      navigation.SetMonthName("Лютий");
+      navigation.SetMonthName(_config.Month);
     }
 
     public void ClearContent() => CleanUpContainer();
 
-    public bool Has(Month month, string year)
-    {
-      switch (month)
-      {
-        case Month.February:
-          
-          return true;
-      }
+    public void ShowHolidayForToday() => 
+      _factory.CreateHolidayFullInfo(under: ContentContainer, _today, out _config);
 
-      return false;
-    }
+    public void ShowHolidayFor(string date) => 
+      _factory.CreateHolidayFullInfo(under: ContentContainer, date, out _config);
 
-    public void ShowHolidayForToday() => _factory.CreateHolidayFullInfo(ContentContainer, _today);
-
-    public void ShowHoliday(string date) => _factory.CreateHolidayFullInfo(ContentContainer, date);
-
-    public string GetCurrentYear() => year.YearText.text;
+    public string GetCurrentYear() => 
+      year.YearText.text;
 
     private void CleanUpContainer()
     {
@@ -59,5 +56,6 @@ namespace CodeBase.UI.Mediator
         Destroy(child);
       }
     }
+
   }
 }
