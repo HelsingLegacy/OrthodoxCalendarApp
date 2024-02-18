@@ -34,18 +34,23 @@ namespace CodeBase.UI.Presenters
     {
       if (_holidayObserver.Has(month, _year))
       {
+        _mediator.ShowCurtain();
         _mediator.ClearContent();
+        
         ShowShortHolidaysList(month, _year);
+        
+        _mediator.HideCurtain();
       }
       else
       {
+        _mediator.ShowCurtain();
         _mediator.ClearContent();
-        _factory.CreateNoticePopup(_mediator.ContentContainer);
-
+        
         await _downloadingService.DownloadHolidays(month, _year);
         
-        _mediator.ClearContent();
         ShowShortHolidaysList(month, _year);
+        
+        _mediator.HideCurtain();
       }
     }
 

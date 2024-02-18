@@ -56,6 +56,8 @@ namespace CodeBase.Infrastructure.Services
       SuggestionsConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
       ShortContextTextConfiguration(under: container, _configProvider.GetConfigFor(onDate));
+      
+      assembler.UpdateSize();
     }
 
     public void CreateHolidayFullInfo(GameObject under, string onDate)
@@ -195,13 +197,6 @@ namespace CodeBase.Infrastructure.Services
 
         dayIconsContainer.GetComponent<FillChildrenImages>().SetImagesWith(sprites: dayIcons);
       }
-    }
-
-    public GameObject CreateNoticePopup(GameObject parent)
-    {
-      var popup = Instantiate(_provider.NoticePopup(), parent);
-
-      return popup;
     }
 
     private GameObject Instantiate(GameObject prefab, GameObject under) =>
