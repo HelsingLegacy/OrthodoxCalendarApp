@@ -1,23 +1,10 @@
 ﻿using CodeBase.UI.ContentFillers.NonInteracting.HolidayComponents;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CodeBase.UI.ContentFillers.NonInteracting
 {
-  public class ReadingAssembler : MonoBehaviour
+  public class ReadingAssembler : BaseHolidayAssembler
   {
-    private void Start()
-    {
-      float currentObjectHeight = 0f;
-      
-      var providers = GetComponentsInChildren<SizeProvider>();
-
-      foreach (SizeProvider provider in providers) 
-        currentObjectHeight += provider.ObjectSize();
-
-      GetComponent<LayoutElement>().preferredHeight = currentObjectHeight;
-    }
-
     public void SetReadings(string text) => 
       GetComponentInChildren<ContentWriter>().SetContent(text);
     

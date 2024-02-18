@@ -309,4 +309,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e93f015174784525834a1027a5a397eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curtain: {fileID: 154195674086108390}
+  Curtain: {fileID: 154195674086108390}
+  Delay: 1

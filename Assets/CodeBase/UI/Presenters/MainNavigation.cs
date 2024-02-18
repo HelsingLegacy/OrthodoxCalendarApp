@@ -11,10 +11,10 @@ namespace CodeBase.UI.Presenters
   {
     private const string TodayText = "Сьогодні";
     private bool _isTodayDisplay;
-    
+
     public TextMeshProUGUI Text;
     public HudMediator Mediator;
-    
+
     private CalendarFactory _factory;
     private IConfigProvider _configProvider;
 
@@ -24,35 +24,52 @@ namespace CodeBase.UI.Presenters
       _factory = factory;
       _configProvider = configProvider;
     }
-    
+
     public void OnPointerUp(PointerEventData eventData)
     {
       if (_isTodayDisplay)
       {
-        SetMonthName(_configProvider.GetConfigForToday().Month);
-        Mediator.ClearContent();
-        _factory.CreateHolidayFullInfo(Mediator.ContentContainer, Mediator.GetTodayDate);
-        _isTodayDisplay = false;
+        ShowTodayFullInfo();
       }
       else
       {
         ShowMonthList();
-        
-        SetMonthName(TodayText);
-        _isTodayDisplay = true;
       }
     }
 
-    public void OnPointerDown(PointerEventData eventData) { }
+    public void OnPointerDown(PointerEventData eventData)
+    { }
 
     public void SetMonthName(string month) =>
       Text.text = month;
 
+    private void ShowTodayFullInfo()
+    {
+      ShowCurtain();
+      SetMonthName(_configProvider.GetConfigForToday().Month);
+
+      _factory.CreateHolidayFullInfo(Mediator.ContentContainer, Mediator.GetTodayDate);
+      _isTodayDisplay = false;
+
+      Mediator.HideCurtain();
+    }
+
     private void ShowMonthList()
     {
-      Mediator.ClearContent();
+      ShowCurtain();
+
+      SetMonthName(TodayText);
       
       _factory.CreateMonthList(parent: Mediator.ContentContainer);
+      _isTodayDisplay = true;
+      
+      Mediator.HideCurtain();
+    }
+
+    private void ShowCurtain()
+    {
+      Mediator.ShowCurtain();
+      Mediator.ClearContent();
     }
   }
 }

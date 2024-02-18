@@ -1,5 +1,4 @@
-﻿using CodeBase.Data.Services.AssetProviding;
-using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Presenters;
 using UnityEngine;
@@ -12,7 +11,8 @@ namespace CodeBase.UI.Mediator
     public YearNavigation year;
     public MainNavigation navigation;
     public GameObject ContentContainer;
-    
+
+    private LoadingCurtain _curtain;
     private CalendarFactory _factory;
     private string _today;
     private IConfigProvider _configProvider;
@@ -21,8 +21,10 @@ namespace CodeBase.UI.Mediator
 
 
     [Inject]
-    public void Construct(CalendarFactory factory, IToday today, IConfigProvider configProvider)
+    public void Construct(CalendarFactory factory, IToday today, IConfigProvider configProvider, 
+      LoadingCurtain curtain)
     {
+      _curtain = curtain;
       _factory = factory;
       _today = today.TodayKyivText();
       _configProvider = configProvider;
@@ -34,7 +36,8 @@ namespace CodeBase.UI.Mediator
       navigation.SetMonthName(_configProvider.GetConfigForToday().Month);
     }
 
-    public void ClearContent() => CleanUpContainer();
+    public void ClearContent() => 
+      CleanUpContainer();
 
     public void ShowHolidayForToday() => 
       _factory.CreateHolidayFullInfo(under: ContentContainer, _today);
@@ -44,6 +47,12 @@ namespace CodeBase.UI.Mediator
 
     public string GetCurrentYear() => 
       year.YearText.text;
+
+    public void ShowCurtain() => 
+      _curtain.Show();
+
+    public void HideCurtain() => 
+      _curtain.HideWithDelay();
 
     private void CleanUpContainer()
     {

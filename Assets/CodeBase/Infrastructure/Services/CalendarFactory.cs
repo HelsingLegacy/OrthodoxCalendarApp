@@ -89,6 +89,8 @@ namespace CodeBase.Infrastructure.Services
       
       DayIconsConfiguration(under: under.gameObject, _configProvider.GetConfigFor(onDate));
 
+      contentAssembler.UpdateSize();
+      readingAssembler.UpdateSize();
     }
 
     private void SetBackgroundColor(HolidayAssembler content, ConfigAssembly configAssembly) => 
