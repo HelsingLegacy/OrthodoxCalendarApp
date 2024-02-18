@@ -60,6 +60,8 @@ namespace CodeBase.Infrastructure
     {
       Container.BindInterfacesTo<KyivDate>().AsSingle();
       Container.BindInterfacesTo<HolidaysStorageFolder>().AsSingle();
+      
+      Container.Bind<IConfigProvider>().To<ConfigProvider>().AsSingle();
       Container.BindInterfacesTo<HolidayObserver>().AsSingle();
     }
 

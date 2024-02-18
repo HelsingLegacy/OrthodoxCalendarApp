@@ -16,18 +16,22 @@ namespace CodeBase.UI.Presenters
     public HudMediator Mediator;
     
     private CalendarFactory _factory;
-    
+    private IConfigProvider _configProvider;
+
     [Inject]
-    public void Construct(CalendarFactory factory)
+    public void Construct(CalendarFactory factory, IConfigProvider configProvider)
     {
       _factory = factory;
+      _configProvider = configProvider;
     }
     
     public void OnPointerUp(PointerEventData eventData)
     {
       if (_isTodayDisplay)
       {
-        SetMonthName(Mediator.GetConfig.Month);
+        SetMonthName(_configProvider.GetConfigForToday().Month);
+        Mediator.ClearContent();
+        _factory.CreateHolidayFullInfo(Mediator.ContentContainer, Mediator.GetTodayDate);
         _isTodayDisplay = false;
       }
       else

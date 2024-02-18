@@ -15,32 +15,32 @@ namespace CodeBase.UI.Mediator
     
     private CalendarFactory _factory;
     private string _today;
-    
-    private ConfigAssembly _config;
+    private IConfigProvider _configProvider;
 
-    public ConfigAssembly GetConfig => _config;
+    public string GetTodayDate => _today;
 
 
     [Inject]
-    public void Construct(CalendarFactory factory, IToday today)
+    public void Construct(CalendarFactory factory, IToday today, IConfigProvider configProvider)
     {
       _factory = factory;
       _today = today.TodayKyivText();
+      _configProvider = configProvider;
     }
 
     public void ShowTodayHoliday()
     {
       ShowHolidayForToday();
-      navigation.SetMonthName(_config.Month);
+      navigation.SetMonthName(_configProvider.GetConfigForToday().Month);
     }
 
     public void ClearContent() => CleanUpContainer();
 
     public void ShowHolidayForToday() => 
-      _factory.CreateHolidayFullInfo(under: ContentContainer, _today, out _config);
+      _factory.CreateHolidayFullInfo(under: ContentContainer, _today);
 
     public void ShowHolidayFor(string date) => 
-      _factory.CreateHolidayFullInfo(under: ContentContainer, date, out _config);
+      _factory.CreateHolidayFullInfo(under: ContentContainer, date);
 
     public string GetCurrentYear() => 
       year.YearText.text;

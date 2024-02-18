@@ -14,13 +14,13 @@ namespace CodeBase.Infrastructure.Services
   {
     private readonly DiContainer _container;
     private readonly IAssetProvider _provider;
-    private readonly IHolidaysStorage _storage;
+    private readonly IConfigProvider _configProvider;
 
-    public CalendarFactory(DiContainer container, IAssetProvider provider, IHolidaysStorage storage)
+    public CalendarFactory(DiContainer container, IAssetProvider provider, IConfigProvider configProvider)
     {
       _container = container;
       _provider = provider;
-      _storage = storage;
+      _configProvider = configProvider;
     }
 
     public void CreateHudWithBinding()
@@ -36,38 +36,30 @@ namespace CodeBase.Infrastructure.Services
       _container.Bind<HudMediator>().FromInstance(mediator);
     }
 
-    public GameObject CreateContentContainer(GameObject under) => 
-      Instantiate(_provider.ContentContainer(), under);
-
     public void CreateMonthList(GameObject parent) => 
       Instantiate(_provider.MonthList(), parent);
 
     public void CreateHolidayShortInfo(GameObject under, string onDate)
     {
-      ConfigAssembly configAssembly = new ConfigAssembly(_storage, onDate);
-
       GameObject objectAssembly = Instantiate(_provider.HolidayDataAssembly(), under);
       
       HolidayAssembler assembler = objectAssembly.GetComponent<HolidayAssembler>();
       
       GameObject container = assembler.InfoContainer();
 
-      SetBackgroundColor(assembler, configAssembly);
+      SetBackgroundColor(assembler, _configProvider.GetConfigFor(onDate));
       
-      HeaderConfiguration(under: container, configAssembly);
+      HeaderConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      HolidayNameConfiguration(under: container, configAssembly);
+      HolidayNameConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      SuggestionsConfiguration(under: container, configAssembly);
+      SuggestionsConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      ShortContextTextConfiguration(under: container, configAssembly);
+      ShortContextTextConfiguration(under: container, _configProvider.GetConfigFor(onDate));
     }
 
-    public void CreateHolidayFullInfo(GameObject under, string onDate, out ConfigAssembly config)
+    public void CreateHolidayFullInfo(GameObject under, string onDate)
     {
-      ConfigAssembly configAssembly = new ConfigAssembly(_storage, onDate);
-      config = configAssembly;
-
       GameObject content = Instantiate(_provider.HolidayDataAssembly(), under);
       GameObject readings = Instantiate(_provider.HolidayReadings(), under);
 
@@ -76,26 +68,26 @@ namespace CodeBase.Infrastructure.Services
       
       GameObject container = contentAssembler.InfoContainer();
       
-      SetBackgroundColor(contentAssembler, configAssembly);
-      SetBackgroundColor(contentAssembler, readingAssembler, configAssembly);
+      SetBackgroundColor(contentAssembler, _configProvider.GetConfigFor(onDate));
+      SetBackgroundColor(contentAssembler, readingAssembler, _configProvider.GetConfigFor(onDate));
       
-      HeaderConfiguration(under: container, configAssembly);
+      HeaderConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      IconConfiguration(under: container, configAssembly);
+      IconConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      HolidayNameConfiguration(under: container, configAssembly);
+      HolidayNameConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      SuggestionsConfiguration(under: container, configAssembly);
+      SuggestionsConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      ShortContextTextConfiguration(under: container, configAssembly);
+      ShortContextTextConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      ReadingGroupTitleAndCodeConfiguration(under: container, configAssembly);
+      ReadingGroupTitleAndCodeConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      LiturgyConfiguration(under: container, configAssembly);
+      LiturgyConfiguration(under: container, _configProvider.GetConfigFor(onDate));
 
-      ReadingsConfiguration(under: readings, configAssembly);
+      ReadingsConfiguration(under: readings, _configProvider.GetConfigFor(onDate));
       
-      DayIconsConfiguration(under: under.gameObject, configAssembly);
+      DayIconsConfiguration(under: under.gameObject, _configProvider.GetConfigFor(onDate));
 
     }
 
@@ -124,7 +116,7 @@ namespace CodeBase.Infrastructure.Services
         header = Instantiate(_provider.HeaderWithName(), under);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetBackground(extracted.HeaderColor);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekdayName(extracted.WeekdayName);
-        header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(extracted.Month);
+        header.GetComponent<HolidayHeaderPlusWeekName>().SetDateMonth(extracted.Day + extracted.Month);
         header.GetComponent<HolidayHeaderPlusWeekName>().SetWeekName(extracted.WeekName);
       }
 
