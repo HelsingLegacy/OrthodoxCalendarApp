@@ -25,12 +25,9 @@ namespace CodeBase.UI.ContentFillers.NonInteracting
       _mediator.HideCurtain();
     }
     
-    public void SetDate(string date)
-    {
+    public void SetDate(string date) => 
       _date = date;
-      Debug.Log(date);
-    }
-    
+
     public GameObject InfoContainer() => 
       GetComponentInChildren<InformationContainer>().gameObject;
   }
