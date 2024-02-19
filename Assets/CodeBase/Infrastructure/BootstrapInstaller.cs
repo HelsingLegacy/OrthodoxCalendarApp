@@ -6,20 +6,17 @@ using CodeBase.Infrastructure.Services.Assets;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.Infrastructure.States;
 using CodeBase.UI;
-using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Infrastructure
 {
   public class BootstrapInstaller : MonoInstaller, ICoroutineRunner, IInitializable, IStateMover
   {
-    [SerializeField] private GameObject Curtain;
-    
     private CalendarStateMachine _stateMachine;
     
     public override void InstallBindings()
     {
-      BindLoadingCurtain(from: CurtainInstance());
+      BindLoadingCurtain();
       BindBootstrapInstallerInterfaces();
       BindSceneLoader();
       BindSupportServices();
@@ -28,10 +25,8 @@ namespace CodeBase.Infrastructure
       BindCalendarStateMachine();
     }
 
-    public void Initialize()
-    {
+    public void Initialize() => 
       MoveTo<DownloadingState>();
-    }
 
     public void MoveTo<TState>() where TState : IState => 
       Container.Resolve<CalendarStateMachine>().Enter<TState>();
@@ -42,12 +37,8 @@ namespace CodeBase.Infrastructure
     private void BindSceneLoader() => 
       Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
 
-    private LoadingCurtain CurtainInstance() =>
-      Container
-        .InstantiatePrefabForComponent<LoadingCurtain>(Curtain);
-
-    private void BindLoadingCurtain(LoadingCurtain from) => 
-      Container.Bind<LoadingCurtain>().FromInstance(from).AsSingle();
+    private void BindLoadingCurtain() => 
+      Container.Bind<LoadingCurtain>().FromInstance(FindObjectOfType<LoadingCurtain>()).AsSingle();
 
     private void BindDataLoadingServices()
     {

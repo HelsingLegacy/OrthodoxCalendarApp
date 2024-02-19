@@ -8,7 +8,8 @@ namespace CodeBase.UI
     [SerializeField] private CanvasGroup _curtain;
     public float Delay;
 
-    private readonly float _hideSpeed = .0015f;
+    private void Awake() => 
+      DontDestroyOnLoad(gameObject);
 
     public void Show()
     {
@@ -29,8 +30,8 @@ namespace CodeBase.UI
         
       while (_curtain.alpha > 0)
       {
-        _curtain.alpha -= 0.005f;
-        yield return new WaitForSeconds(_hideSpeed);
+        _curtain.alpha -= 0.035f;
+        yield return null;
       }
 
       gameObject.SetActive(false);
