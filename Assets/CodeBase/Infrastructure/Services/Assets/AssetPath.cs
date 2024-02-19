@@ -3,10 +3,9 @@
   public static class AssetPath
   {
     public const string Hud = "Prefabs/HUD";
-
-    public const string MonthContainer = "Prefabs/ContentContainer";
-
-    public const string HolidayDataAssembly = "Prefabs/Holiday/HolidayDataAssembly";
+    
+    public const string FullHolidayAssembly = "Prefabs/Holiday/FullHolidayAssembly";
+    public const string ShortHolidayAssembly = "Prefabs/Holiday/ShortHolidayAssembly";
 
     public const string HeaderNoName = "Prefabs/Holiday/HolidayComponents/HeaderNoName";
     public const string HeaderWithName = "Prefabs/Holiday/HolidayComponents/HeaderWithName";
@@ -25,7 +24,5 @@
     public const string DayIconsContainer = "Prefabs/Holiday/HolidayComponents/DayIconsContainer";
     
     public const string MonthList = "Prefabs/MonthList";
-
-    public const string NoticePopup = "Prefabs/NoticePopup";
   }
 }

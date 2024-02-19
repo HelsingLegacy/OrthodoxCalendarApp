@@ -16,47 +16,37 @@ namespace CodeBase.UI.Presenters
     private IKyivDate _dateService;
     private string _year;
     private IDownloadingService _downloadingService;
-    private IHolidayObserver _holidayObserver;
+    private IHolidayDataObserver _holidayDataObserver;
 
     [Inject]
     public void Construct(HudMediator mediator, CalendarFactory factory, IKyivDate dateService,
-      IDownloadingService downloadingService, IHolidayObserver holidayObserver)
+      IDownloadingService downloadingService, IHolidayDataObserver holidayDataObserver)
     {
       _mediator = mediator;
       _factory = factory;
       _dateService = dateService;
       _year = _mediator.GetCurrentYear();
       _downloadingService = downloadingService;
-      _holidayObserver = holidayObserver;
+      _holidayDataObserver = holidayDataObserver;
     }
 
     public async UniTask ShowOrDownload(Month month)
     {
-      if (_holidayObserver.Has(month, _year))
+      _mediator.ShowCurtainWithContentCleanup();
+
+      if (!_holidayDataObserver.Has(month, _year))
       {
-        _mediator.ShowCurtain();
-        _mediator.ClearContent();
-        
-        ShowShortHolidaysList(month, _year);
-        
-        _mediator.HideCurtain();
-      }
-      else
-      {
-        _mediator.ShowCurtain();
-        _mediator.ClearContent();
-        
         await _downloadingService.DownloadHolidays(month, _year);
-        
-        ShowShortHolidaysList(month, _year);
-        
-        _mediator.HideCurtain();
       }
+
+      ShowShortHolidaysList(month, _year);
+
+      _mediator.HideCurtain();
     }
 
     private void ShowShortHolidaysList(Month month, string year)
     {
-      foreach (string day in _dateService.DaysFor(month, year)) 
+      foreach (string day in _dateService.DaysFor(month, year))
         _factory.CreateHolidayShortInfo(_mediator.ContentContainer, day);
     }
   }

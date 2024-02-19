@@ -9,14 +9,14 @@ namespace CodeBase.Data.Services.DownloadServices
   public class DownloadingService : IDownloadingService
   {
     private readonly IDataLoaderService _dataLoader;
-    private readonly IHolidayObserver _holidayObserver;
+    private readonly IHolidayDataObserver _holidayDataObserver;
     private readonly IKyivDate _dateService;
 
-    public DownloadingService(IDataLoaderService dataLoader, IHolidayObserver holidayObserver, 
+    public DownloadingService(IDataLoaderService dataLoader, IHolidayDataObserver holidayDataObserver, 
       IKyivDate dateService)
     {
       _dataLoader = dataLoader;
-      _holidayObserver = holidayObserver;
+      _holidayDataObserver = holidayDataObserver;
       _dateService = dateService;
     }
 
@@ -25,7 +25,7 @@ namespace CodeBase.Data.Services.DownloadServices
       int progress = 0;
       float progressIcons = 0;
 
-      if (!_holidayObserver.RequestedFileExistFor(date))
+      if (!_holidayDataObserver.RequestedFileExistFor(date))
       {
         int process = await _dataLoader.LoadRawHoliday(date);
         float processIcons = await _dataLoader.LoadIcons(date);
@@ -34,7 +34,7 @@ namespace CodeBase.Data.Services.DownloadServices
         progressIcons += processIcons;
       }
 
-      if ((progress > 0 && Mathf.Abs(progressIcons - 1f) < 0.07f) || _holidayObserver.RequestedFileExistFor(date))
+      if ((progress > 0 && Mathf.Abs(progressIcons - 1f) < 0.07f) || _holidayDataObserver.RequestedFileExistFor(date))
         onLoaded?.Invoke();
       else
       {

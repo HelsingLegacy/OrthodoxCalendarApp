@@ -19,9 +19,9 @@ namespace CodeBase.Infrastructure
     
     public override void InstallBindings()
     {
+      BindLoadingCurtain(from: CurtainInstance());
       BindBootstrapInstallerInterfaces();
       BindSceneLoader();
-      BindLoadingCurtain(from: CurtainInstance());
       BindSupportServices();
       BindDataLoadingServices();
       BindFactory();
@@ -62,7 +62,7 @@ namespace CodeBase.Infrastructure
       Container.BindInterfacesTo<HolidaysStorageFolder>().AsSingle();
       
       Container.Bind<IConfigProvider>().To<ConfigProvider>().AsSingle();
-      Container.BindInterfacesTo<HolidayObserver>().AsSingle();
+      Container.Bind<IHolidayDataObserver>().To<HolidayDataObserver>().AsSingle();
     }
 
     private void BindFactory()

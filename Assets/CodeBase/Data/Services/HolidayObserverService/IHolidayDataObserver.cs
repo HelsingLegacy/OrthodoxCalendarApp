@@ -2,7 +2,7 @@
 
 namespace CodeBase.Data.Services.HolidayObserverService
 {
-  public interface IHolidayObserver
+  public interface IHolidayDataObserver
   {
     bool Has(Month month, string year);
     bool RequestedFileExistFor(string date);

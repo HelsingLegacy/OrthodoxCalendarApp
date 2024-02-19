@@ -30,7 +30,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       _curtain.Show();
-      _downloadingService.DownloadHoliday(_today.TodayKyivDate().ToStringDateFormat(), onLoaded: MoveToNextState);
+      _downloadingService.DownloadHoliday(_today.TodayKyivText(), onLoaded: MoveToNextState);
     }
 
     public void Exit()

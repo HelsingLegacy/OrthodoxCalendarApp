@@ -41,9 +41,9 @@ namespace CodeBase.Infrastructure.Services
 
     public void CreateHolidayShortInfo(GameObject under, string onDate)
     {
-      GameObject objectAssembly = Instantiate(_provider.HolidayDataAssembly(), under);
+      GameObject objectAssembly = Instantiate(_provider.ShortHolidayAssembly(), under);
       
-      HolidayAssembler assembler = objectAssembly.GetComponent<HolidayAssembler>();
+      ShortHolidayAssembler assembler = objectAssembly.GetComponent<ShortHolidayAssembler>();
       
       GameObject container = assembler.InfoContainer();
 
@@ -58,14 +58,15 @@ namespace CodeBase.Infrastructure.Services
       ShortContextTextConfiguration(under: container, _configProvider.GetConfigFor(onDate));
       
       assembler.UpdateSize();
+      assembler.SetDate(onDate);
     }
 
     public void CreateHolidayFullInfo(GameObject under, string onDate)
     {
-      GameObject content = Instantiate(_provider.HolidayDataAssembly(), under);
+      GameObject content = Instantiate(_provider.FullHolidayAssembly(), under);
       GameObject readings = Instantiate(_provider.HolidayReadings(), under);
 
-      HolidayAssembler contentAssembler = content.GetComponent<HolidayAssembler>();
+      FullHolidayAssembler contentAssembler = content.GetComponent<FullHolidayAssembler>();
       ReadingAssembler readingAssembler = readings.GetComponent<ReadingAssembler>();
       
       GameObject container = contentAssembler.InfoContainer();
@@ -95,10 +96,10 @@ namespace CodeBase.Infrastructure.Services
       readingAssembler.UpdateSize();
     }
 
-    private void SetBackgroundColor(HolidayAssembler content, ConfigAssembly configAssembly) => 
+    private void SetBackgroundColor(IHolidayAssembler content, ConfigAssembly configAssembly) => 
       content.SetBackgroundColor(configAssembly.TextBackgroundColor);
 
-    private void SetBackgroundColor(HolidayAssembler content, ReadingAssembler reading, ConfigAssembly configAssembly)
+    private void SetBackgroundColor(IHolidayAssembler content, ReadingAssembler reading, ConfigAssembly configAssembly)
     {
       content.SetBackgroundColor(configAssembly.TextBackgroundColor);
       reading.SetBackgroundColor(configAssembly.TextBackgroundColor);

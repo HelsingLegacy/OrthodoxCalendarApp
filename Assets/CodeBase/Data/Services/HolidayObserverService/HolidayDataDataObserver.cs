@@ -5,12 +5,12 @@ using CodeBase.Infrastructure.Services.TimeDate;
 
 namespace CodeBase.Data.Services.HolidayObserverService
 {
-  class HolidayObserver : IHolidayObserver
+  class HolidayDataObserver : IHolidayDataObserver
   {
     private readonly IHolidaysStorage _holidaysStorage;
     private readonly IKyivDate _dateService;
 
-    public HolidayObserver(IHolidaysStorage holidaysStorage, IKyivDate dateService)
+    public HolidayDataObserver(IHolidaysStorage holidaysStorage, IKyivDate dateService)
     {
       _holidaysStorage = holidaysStorage;
       _dateService = dateService;

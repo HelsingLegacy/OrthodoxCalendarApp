@@ -9,11 +9,11 @@ namespace CodeBase.UI.Presenters
 {
   public class MainNavigation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
   {
-    private const string TodayText = "Сьогодні";
-    private bool _isTodayDisplay;
-
     public TextMeshProUGUI Text;
     public HudMediator Mediator;
+    
+    private const string TodayText = "Сьогодні";
+    private bool _isTodayDisplay;
 
     private CalendarFactory _factory;
     private IConfigProvider _configProvider;
@@ -25,28 +25,25 @@ namespace CodeBase.UI.Presenters
       _configProvider = configProvider;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-      if (_isTodayDisplay)
-      {
-        ShowTodayFullInfo();
-      }
-      else
-      {
-        ShowMonthList();
-      }
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     { }
 
-    public void SetMonthName(string month) =>
+    public void OnPointerUp(PointerEventData eventData)
+    {
+      if (_isTodayDisplay)
+        ShowTodayFullInfo();
+      else
+        ShowMonthList();
+    }
+
+    public void SetMainNavigationName(string month) =>
       Text.text = month;
 
     private void ShowTodayFullInfo()
     {
-      ShowCurtain();
-      SetMonthName(_configProvider.GetConfigForToday().Month);
+      Mediator.ShowCurtainWithContentCleanup();
+      
+      SetMainNavigationName(_configProvider.GetConfigForToday().Month);
 
       _factory.CreateHolidayFullInfo(Mediator.ContentContainer, Mediator.GetTodayDate);
       _isTodayDisplay = false;
@@ -56,20 +53,14 @@ namespace CodeBase.UI.Presenters
 
     private void ShowMonthList()
     {
-      ShowCurtain();
+      Mediator.ShowCurtainWithContentCleanup();
 
-      SetMonthName(TodayText);
+      SetMainNavigationName(TodayText);
       
       _factory.CreateMonthList(parent: Mediator.ContentContainer);
       _isTodayDisplay = true;
       
       Mediator.HideCurtain();
-    }
-
-    private void ShowCurtain()
-    {
-      Mediator.ShowCurtain();
-      Mediator.ClearContent();
     }
   }
 }

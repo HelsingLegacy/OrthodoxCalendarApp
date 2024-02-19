@@ -33,11 +33,8 @@ namespace CodeBase.UI.Mediator
     public void ShowTodayHoliday()
     {
       ShowHolidayForToday();
-      navigation.SetMonthName(_configProvider.GetConfigForToday().Month);
+      navigation.SetMainNavigationName(_configProvider.GetConfigForToday().Month);
     }
-
-    public void ClearContent() => 
-      CleanUpContainer();
 
     public void ShowHolidayForToday() => 
       _factory.CreateHolidayFullInfo(under: ContentContainer, _today);
@@ -48,8 +45,11 @@ namespace CodeBase.UI.Mediator
     public string GetCurrentYear() => 
       year.YearText.text;
 
-    public void ShowCurtain() => 
+    public void ShowCurtainWithContentCleanup()
+    {
       _curtain.Show();
+      CleanUpContainer();
+    }
 
     public void HideCurtain() => 
       _curtain.HideWithDelay();
