@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Presenters;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace CodeBase.UI.Mediator
@@ -49,7 +50,11 @@ namespace CodeBase.UI.Mediator
     {
       _curtain.Show();
       CleanUpContainer();
+      ResetContentPosition();
     }
+
+    private void ResetContentPosition() => 
+      ContentContainer.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -500f);
 
     public void HideCurtain() => 
       _curtain.HideWithDelay();

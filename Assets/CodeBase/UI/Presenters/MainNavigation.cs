@@ -7,7 +7,7 @@ using Zenject;
 
 namespace CodeBase.UI.Presenters
 {
-  public class MainNavigation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+  public class MainNavigation : MonoBehaviour, IPointerClickHandler
   {
     public TextMeshProUGUI Text;
     public HudMediator Mediator;
@@ -25,10 +25,7 @@ namespace CodeBase.UI.Presenters
       _configProvider = configProvider;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    { }
-
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
       if (_isTodayDisplay)
         ShowTodayFullInfo();

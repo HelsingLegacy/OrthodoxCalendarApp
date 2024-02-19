@@ -5,14 +5,14 @@ namespace CodeBase.UI
 {
   public class LoadingCurtain : MonoBehaviour
   {
-    public CanvasGroup Curtain;
+    [SerializeField] private CanvasGroup _curtain;
     public float Delay;
 
     private readonly float _hideSpeed = .0015f;
 
     public void Show()
     {
-      Curtain.alpha = 1;
+      _curtain.alpha = 1;
       gameObject.SetActive(true);
     }
 
@@ -27,9 +27,9 @@ namespace CodeBase.UI
       if (delay > 0)
         yield return new WaitForSeconds(delay);
         
-      while (Curtain.alpha > 0)
+      while (_curtain.alpha > 0)
       {
-        Curtain.alpha -= 0.005f;
+        _curtain.alpha -= 0.005f;
         yield return new WaitForSeconds(_hideSpeed);
       }
 

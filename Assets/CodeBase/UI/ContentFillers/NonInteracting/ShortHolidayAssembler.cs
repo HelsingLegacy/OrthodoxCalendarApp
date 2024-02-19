@@ -6,19 +6,17 @@ using Zenject;
 
 namespace CodeBase.UI.ContentFillers.NonInteracting
 {
-  public class ShortHolidayAssembler : BaseHolidayAssembler, IPointerDownHandler, IPointerUpHandler
+  public class ShortHolidayAssembler : BaseHolidayAssembler, IPointerClickHandler
   {
     private string _date;
     private HudMediator _mediator;
+    private bool _pointerDown;
 
     [Inject]
     public void Construct(HudMediator mediator) => 
       _mediator = mediator;
-
-    public void OnPointerDown(PointerEventData eventData)
-    { }
-
-    public void OnPointerUp(PointerEventData eventData)
+    
+    public void OnPointerClick(PointerEventData eventData)
     {
       _mediator.ShowCurtainWithContentCleanup();
       _mediator.ShowHolidayFor(_date);

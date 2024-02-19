@@ -256,8 +256,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 999
@@ -294,7 +294,7 @@ CanvasGroup:
   m_GameObject: {fileID: 9211611358230185279}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &3282965310267713677
@@ -309,5 +309,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e93f015174784525834a1027a5a397eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Curtain: {fileID: 154195674086108390}
+  _curtain: {fileID: 154195674086108390}
   Delay: 1
