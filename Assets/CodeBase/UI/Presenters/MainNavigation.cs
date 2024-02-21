@@ -15,12 +15,14 @@ namespace CodeBase.UI.Presenters
     private const string TodayText = "Сьогодні";
     private bool _isTodayDisplay;
 
+    private LoadingCurtain _curtain;
     private CalendarFactory _factory;
     private IConfigProvider _configProvider;
 
     [Inject]
-    public void Construct(CalendarFactory factory, IConfigProvider configProvider)
+    public void Construct(LoadingCurtain curtain, CalendarFactory factory, IConfigProvider configProvider)
     {
+      _curtain = curtain;
       _factory = factory;
       _configProvider = configProvider;
     }
@@ -38,26 +40,28 @@ namespace CodeBase.UI.Presenters
 
     private void ShowTodayFullInfo()
     {
-      Mediator.ShowCurtainWithContentCleanup();
+      _curtain.Show();
+      Mediator.ResetAndCleanupContent();
       
       SetMainNavigationName(_configProvider.GetConfigForToday().Month);
 
       _factory.CreateHolidayFullInfo(Mediator.ContentContainer, Mediator.GetTodayDate);
       _isTodayDisplay = false;
 
-      Mediator.HideCurtain();
+      _curtain.HideWithDelay();
     }
 
     private void ShowMonthList()
     {
-      Mediator.ShowCurtainWithContentCleanup();
+      _curtain.Show();
+      Mediator.ResetAndCleanupContent();
 
       SetMainNavigationName(TodayText);
       
       _factory.CreateMonthList(parent: Mediator.ContentContainer);
       _isTodayDisplay = true;
       
-      Mediator.HideCurtain();
+      _curtain.HideWithDelay();
     }
   }
 }
