@@ -2,7 +2,6 @@
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Presenters;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace CodeBase.UI.Mediator
@@ -33,12 +32,9 @@ namespace CodeBase.UI.Mediator
 
     public void ShowTodayHoliday()
     {
-      ShowHolidayForToday();
+      _factory.CreateHolidayFullInfo(under: ContentContainer, _today);
       navigation.SetMainNavigationName(_configProvider.GetConfigForToday().Month);
     }
-
-    public void ShowHolidayForToday() => 
-      _factory.CreateHolidayFullInfo(under: ContentContainer, _today);
 
     public void ShowHolidayFor(string date) => 
       _factory.CreateHolidayFullInfo(under: ContentContainer, date);
@@ -46,18 +42,14 @@ namespace CodeBase.UI.Mediator
     public string GetCurrentYear() => 
       year.YearText.text;
 
-    public void ShowCurtainWithContentCleanup()
+    public void ResetAndCleanupContent()
     {
-      _curtain.Show();
       CleanUpContainer();
       ResetContentPosition();
     }
-
+    
     private void ResetContentPosition() => 
       ContentContainer.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -500f);
-
-    public void HideCurtain() => 
-      _curtain.HideWithDelay();
 
     private void CleanUpContainer()
     {

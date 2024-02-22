@@ -11,16 +11,23 @@ namespace CodeBase.UI.ContentFillers.NonInteracting
     private string _date;
     private HudMediator _mediator;
     private bool _pointerDown;
+    private LoadingCurtain _curtain;
 
     [Inject]
-    public void Construct(HudMediator mediator) => 
+    public void Construct(HudMediator mediator, LoadingCurtain curtain)
+    {
       _mediator = mediator;
-    
+      _curtain = curtain;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-      _mediator.ShowCurtainWithContentCleanup();
+      _curtain.Show();
+      _mediator.ResetAndCleanupContent();
+
       _mediator.ShowHolidayFor(_date);
-      _mediator.HideCurtain();
+      
+      _curtain.HideWithDelay();
     }
     
     public void SetDate(string date) => 
