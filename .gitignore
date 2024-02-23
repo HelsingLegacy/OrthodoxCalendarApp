@@ -80,5 +80,7 @@ crashlytics-build.properties
 
 
 # Exceptions:
+!Assets/Plugins/Zenject/Source/Zenject.csproj
+!Assets/Plugins/Zenject/Source/Usage/Zenject-usage.dll
 !/[Aa]ssets/Plugins/Zenject/*
 !/[Aa]ssets/Plugins/Newtonsoft.Json/*
