@@ -10,9 +10,9 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 /[Aa]ssets/JsonData/
-/[Aa]ssets/JsonData/*.meta
+/[Aa]ssets/JsonData.meta
 /[Aa]ssets/Icons/
-/[Aa]ssets/Icons/*.meta
+/[Aa]ssets/Icons.meta
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -80,4 +80,5 @@ crashlytics-build.properties
 
 
 # Exceptions:
+!/[Aa]ssets/Plugins/Zenject/*
 !/[Aa]ssets/Plugins/Newtonsoft.Json/*
