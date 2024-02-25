@@ -25,15 +25,13 @@ namespace CodeBase.Infrastructure.Services
 
     public void CreateHudWithBinding()
     {
-      GameObject hud = _container.InstantiatePrefab(_provider.HudPrefab());
-      
-      HudMediator mediator = hud.GetComponent<HudMediator>();
+      HudMediator hud = _container.InstantiatePrefabForComponent<HudMediator>(_provider.HudPrefab());
       
       hud.GetComponent<Shifting>().ShiftMediatorParent();
       
-      mediator.ShowTodayHoliday();
+      hud.ShowTodayHoliday();
 
-      _container.Bind<HudMediator>().FromInstance(mediator);
+      _container.Bind<HudMediator>().FromInstance(hud);
     }
 
     public void CreateMonthList(GameObject parent) => 

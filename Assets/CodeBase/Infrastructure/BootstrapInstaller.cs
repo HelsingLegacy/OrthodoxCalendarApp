@@ -38,7 +38,9 @@ namespace CodeBase.Infrastructure
       Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
 
     private void BindLoadingCurtain() => 
-      Container.Bind<LoadingCurtain>().FromInstance(FindObjectOfType<LoadingCurtain>()).AsSingle();
+      Container.Bind<LoadingCurtain>()
+        .FromInstance(FindAnyObjectByType<LoadingCurtain>())
+        .AsSingle();
 
     private void BindDataLoadingServices()
     {

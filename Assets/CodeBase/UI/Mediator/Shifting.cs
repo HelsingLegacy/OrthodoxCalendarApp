@@ -6,7 +6,7 @@ namespace CodeBase.UI.Mediator
   {
     public void ShiftMediatorParent()
     {
-      HudParent parent = FindObjectOfType<HudParent>();
+      HudParent parent = FindAnyObjectByType<HudParent>();
       
       gameObject.GetComponent<RectTransform>().SetParent(parent.RectParent());
       gameObject.GetComponent<RectTransform>().SetParent(new RectTransform());
