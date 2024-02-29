@@ -4,8 +4,8 @@
   {
     public const string Hud = "Prefabs/HUD";
     
-    public const string FullHolidayAssembly = "Prefabs/Holiday/FullHolidayAssembly";
-    public const string ShortHolidayAssembly = "Prefabs/Holiday/ShortHolidayAssembly";
+    public const string FullHolidayAssembly = "Prefabs/Holiday/InfoContainerDetailed";
+    public const string ShortHolidayAssembly = "Prefabs/Holiday/InfoContainerPreview";
 
     public const string HeaderNoName = "Prefabs/Holiday/HolidayComponents/HeaderNoName";
     public const string HeaderWithName = "Prefabs/Holiday/HolidayComponents/HeaderWithName";

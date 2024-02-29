@@ -55,7 +55,6 @@ namespace CodeBase.Infrastructure.Services
 
       ShortContextTextConfiguration(under: container, _configProvider.GetConfigFor(onDate));
       
-      assembler.UpdateSize();
       assembler.SetDate(onDate);
     }
 
@@ -89,9 +88,6 @@ namespace CodeBase.Infrastructure.Services
       ReadingsConfiguration(under: readings, _configProvider.GetConfigFor(onDate));
       
       DayIconsConfiguration(under: under.gameObject, _configProvider.GetConfigFor(onDate));
-
-      contentAssembler.UpdateSize();
-      readingAssembler.UpdateSize();
     }
 
     private void SetBackgroundColor(IHolidayAssembler content, ConfigAssembly configAssembly) => 
