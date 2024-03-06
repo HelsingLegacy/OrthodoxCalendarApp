@@ -23,7 +23,7 @@ namespace CodeBase.Data.Services.AssetProviding
     public string HolidayIconFor(string date)
     {
       CreateFolder(FolderIcons);
-      return IconSaved(to: _appropriateDataPath, at: FolderIcons, date.WithoutYear());
+      return IconSaved(to: _appropriateDataPath, at: FolderIcons, date);
     }
 
     private void CreateFolder(string name)

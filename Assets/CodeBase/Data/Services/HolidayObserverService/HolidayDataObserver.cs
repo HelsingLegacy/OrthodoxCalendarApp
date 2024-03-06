@@ -39,14 +39,17 @@ namespace CodeBase.Data.Services.HolidayObserverService
 
     public bool IconsExistFor(string date)
     {
-      int iconsForDate = 1;
+      int iconsForDate = 0;
       
       var icons = new ClearIconsLinks(_holidaysStorage, date);
 
+      if (File.Exists(_holidaysStorage.HolidayIconFor(date)))
+        iconsForDate++;
+      
       for(int i = 1; i<= icons.DayIcons.Count; i++)
       {
-        if(string.IsNullOrEmpty(_holidaysStorage.HolidayIconFor(date.WithIndex(i))))
-          continue;
+        if(!File.Exists(_holidaysStorage.HolidayIconFor(date.WithIndex(i))))
+          continue;        
         
         iconsForDate++;
       }

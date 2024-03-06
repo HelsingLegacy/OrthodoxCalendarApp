@@ -25,15 +25,13 @@ namespace CodeBase.Data.Services.DownloadServices
 
     public async UniTask DownloadHoliday(string date, Action onLoaded = null)
     {
-      bool jsonExistFor = _holidayDataObserver.JsonExistFor(date);
-      if (!jsonExistFor) 
+      if (!_holidayDataObserver.JsonExistFor(date)) 
         await _loadingData.LoadRawHoliday(date);
 
-      bool iconsExistFor = _holidayDataObserver.IconsExistFor(date);
-      if(!iconsExistFor) 
+      if(!_holidayDataObserver.IconsExistFor(date)) 
         await _loadingData.LoadIcons(date); 
       
-      if (jsonExistFor && iconsExistFor)
+      if (_holidayDataObserver.JsonExistFor(date) && _holidayDataObserver.IconsExistFor(date))
         onLoaded?.Invoke();
       else
       {
