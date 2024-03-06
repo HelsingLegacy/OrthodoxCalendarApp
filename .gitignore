@@ -84,3 +84,4 @@ crashlytics-build.properties
 !Assets/Plugins/Zenject/Source/Usage/Zenject-usage.dll
 !/[Aa]ssets/Plugins/Zenject/*
 !/[Aa]ssets/Plugins/Newtonsoft.Json/*
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset

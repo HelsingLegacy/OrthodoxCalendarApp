@@ -328,7 +328,7 @@ namespace CodeBase.Data.Services.AssetProviding
 
         for (int i = 1; i <= info.DayIcons.Count; i++)
         {
-          DayIcons.Add(SpriteProvider(storage, date + $" ({i})"));
+          DayIcons.Add(SpriteProvider(storage, date.WithIndex(i)));
         }
       }
     }

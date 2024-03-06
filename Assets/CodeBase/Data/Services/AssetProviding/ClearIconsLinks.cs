@@ -20,14 +20,12 @@ namespace CodeBase.Data.Services.AssetProviding
       string jsonText = File.ReadAllText(storage.HolidayConfigFor(date));
 
       var info = jsonText.ToDeserialize<RawHolidayInfo>();
-      
+
       MainIcon += info.MainImage;
 
-      if(info.DayIcons is { Count: > 0 })
-        foreach (string icon in info.DayIcons.Values) 
+      if (info.DayIcons is { Count: > 0 })
+        foreach (string icon in info.DayIcons.Values)
           DayIcons.Add(icon);
     }
-    
-    
   }
 }

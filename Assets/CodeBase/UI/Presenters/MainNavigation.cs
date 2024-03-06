@@ -10,7 +10,7 @@ namespace CodeBase.UI.Presenters
   public class MainNavigation : MonoBehaviour, IPointerClickHandler
   {
     public TextMeshProUGUI Text;
-    public HudMediator Mediator;
+    public MainWindow Mediator;
     
     private const string TodayText = "Сьогодні";
     private bool _isTodayDisplay;

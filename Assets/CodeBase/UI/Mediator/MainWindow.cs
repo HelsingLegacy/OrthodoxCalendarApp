@@ -6,13 +6,12 @@ using Zenject;
 
 namespace CodeBase.UI.Mediator
 {
-  public class HudMediator : MonoBehaviour
+  public class MainWindow : MonoBehaviour
   {
     public YearNavigation year;
     public MainNavigation navigation;
     public GameObject ContentContainer;
 
-    private LoadingCurtain _curtain;
     private CalendarFactory _factory;
     private string _today;
     private IConfigProvider _configProvider;
@@ -21,10 +20,8 @@ namespace CodeBase.UI.Mediator
 
 
     [Inject]
-    public void Construct(CalendarFactory factory, IToday today, IConfigProvider configProvider, 
-      LoadingCurtain curtain)
-    {
-      _curtain = curtain;
+    public void Construct(CalendarFactory factory, IToday today, IConfigProvider configProvider)
+    { 
       _factory = factory;
       _today = today.TodayKyivText();
       _configProvider = configProvider;

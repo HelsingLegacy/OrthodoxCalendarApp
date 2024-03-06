@@ -45,7 +45,7 @@ namespace CodeBase.Infrastructure
     private void BindDataLoadingServices()
     {
       Container.Bind<ILinkProvider>().To<LinkProvider>().AsSingle();
-      Container.Bind<IDataLoaderService>().To<DataLoaderService>().AsSingle();
+      Container.Bind<ILoadingDataService>().To<LoadingDataService>().AsSingle();
       Container.Bind<IDownloadingService>().To<DownloadingService>().AsSingle();
     }
 
@@ -67,7 +67,7 @@ namespace CodeBase.Infrastructure
     private void BindCalendarStateMachine()
     {
       Container.Bind<UserObservationState>().AsSingle();
-      Container.Bind<AssemblyCalendarState>().AsSingle();
+      Container.Bind<CalendarAssemblyState>().AsSingle();
       Container.Bind<DownloadingState>().AsSingle();
       Container.Bind<CalendarStateMachine>().AsSingle();
     }

@@ -1,15 +1,17 @@
 using CodeBase.Infrastructure.Services;
 using CodeBase.UI;
+using CodeBase.UI.Mediator;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
-  public class AssemblyCalendarState : IState
+  public class CalendarAssemblyState : IState
   {
     private readonly LoadingCurtain _curtain;
     private readonly CalendarFactory _factory;
     private readonly IStateMover _stateMover;
 
-    public AssemblyCalendarState(LoadingCurtain curtain, CalendarFactory factory, IStateMover stateMover)
+    public CalendarAssemblyState(LoadingCurtain curtain, CalendarFactory factory, IStateMover stateMover)
     {
       _curtain = curtain;
       _factory = factory;
@@ -29,10 +31,16 @@ namespace CodeBase.Infrastructure.States
     {
     }
 
-    private void InitCalendar() => 
-      HudInitialization();
+    private void InitCalendar()
+    {
+     GameObject hud = HudInitialization();
+     
+     hud.GetComponent<Shifting>().ShiftMediatorParent();
+     
+     hud.GetComponent<MainWindow>().ShowTodayHoliday();
+    }
 
-    private void HudInitialization() => 
+    private GameObject HudInitialization() => 
       _factory.CreateHudWithBinding();
   }
 }

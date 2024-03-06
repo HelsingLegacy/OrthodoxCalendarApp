@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using CodeBase.Data.Services.AssetProviding;
+using CodeBase.Extensions;
 using CodeBase.Infrastructure.Services.TimeDate;
 
 namespace CodeBase.Data.Services.HolidayObserverService
@@ -23,7 +24,7 @@ namespace CodeBase.Data.Services.HolidayObserverService
 
       foreach (string day in days)
       {
-        if (RequestedFileExistFor(day))
+        if (JsonExistFor(day) && IconsExistFor(day))
           missingHolidays--;
       }
 
@@ -33,8 +34,26 @@ namespace CodeBase.Data.Services.HolidayObserverService
       return true;
     }
     
-    public bool RequestedFileExistFor(string date) =>
+    public bool JsonExistFor(string date) =>
       File.Exists(_holidaysStorage.HolidayConfigFor(date));
 
+    public bool IconsExistFor(string date)
+    {
+      int iconsForDate = 1;
+      
+      var icons = new ClearIconsLinks(_holidaysStorage, date);
+
+      for(int i = 1; i<= icons.DayIcons.Count; i++)
+      {
+        if(string.IsNullOrEmpty(_holidaysStorage.HolidayIconFor(date.WithIndex(i))))
+          continue;
+        
+        iconsForDate++;
+      }
+      
+      if (iconsForDate == icons.DayIcons.Count + 1)
+        return true;
+      return false;
+    }
   }
 }

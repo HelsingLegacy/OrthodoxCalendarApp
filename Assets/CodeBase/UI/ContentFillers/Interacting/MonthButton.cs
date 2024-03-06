@@ -8,10 +8,10 @@ namespace CodeBase.UI.ContentFillers.Interacting
 {
   public class MonthButton : MonoBehaviour, IPointerClickHandler
   {
-    public MonthListPresenter Presenter;
+    public MonthListController controller;
     public Month Month;
     
     public void OnPointerClick(PointerEventData eventData) => 
-      Presenter.ShowOrDownload(Month).Forget();
+      controller.ShowOrDownload(Month).Forget();
   }
 }

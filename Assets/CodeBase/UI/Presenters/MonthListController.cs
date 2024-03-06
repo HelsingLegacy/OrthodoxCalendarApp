@@ -9,9 +9,9 @@ using Zenject;
 
 namespace CodeBase.UI.Presenters
 {
-  public class MonthListPresenter : MonoBehaviour
+  public class MonthListController : MonoBehaviour
   {
-    private HudMediator _mediator;
+    private MainWindow _mediator;
     private LoadingCurtain _curtain;
     private CalendarFactory _factory;
     private IKyivDate _dateService;
@@ -20,7 +20,7 @@ namespace CodeBase.UI.Presenters
     private IHolidayDataObserver _holidayDataObserver;
 
     [Inject]
-    public void Construct(HudMediator mediator, LoadingCurtain curtain, CalendarFactory factory, IKyivDate dateService,
+    public void Construct(MainWindow mediator, LoadingCurtain curtain, CalendarFactory factory, IKyivDate dateService,
       IDownloadingService downloadingService, IHolidayDataObserver holidayDataObserver)
     {
       _mediator = mediator;
@@ -37,10 +37,8 @@ namespace CodeBase.UI.Presenters
       _curtain.Show();
       _mediator.ResetAndCleanupContent();
 
-      if (!_holidayDataObserver.Has(month, _year))
-      {
+      if (!_holidayDataObserver.Has(month, _year)) 
         await _downloadingService.DownloadHolidays(month, _year);
-      }
 
       ShowShortHolidaysList(month, _year);
 

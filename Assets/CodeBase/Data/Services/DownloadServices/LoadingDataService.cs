@@ -7,18 +7,18 @@ using UnityEngine.Networking;
 
 namespace CodeBase.Data.Services.DownloadServices
 {
-  public class DataLoaderService : IDataLoaderService
+  public class LoadingDataService : ILoadingDataService
   {
     private readonly IHolidaysStorage _holidaysStorage;
     private readonly ILinkProvider _linkProvider;
 
-    public DataLoaderService(IHolidaysStorage holidaysStorage, ILinkProvider linkProvider)
+    public LoadingDataService(IHolidaysStorage holidaysStorage, ILinkProvider linkProvider)
     {
       _holidaysStorage = holidaysStorage;
       _linkProvider = linkProvider;
     }
 
-    public async UniTask<int> LoadRawHoliday(string dates)
+    public async UniTask LoadRawHoliday(string dates)
     {
       string link = _linkProvider.HolidayLink();
       string parameters = _linkProvider.ReadingParameter();
@@ -29,15 +29,11 @@ namespace CodeBase.Data.Services.DownloadServices
       {
         await webLink.SendWebRequest();
 
-        if (IsSuccess(webLink))
-        {
-          return await CreateDataConfig(forDate: dates, from: webLink);
-        }
-
-        return 0;
+        if (IsSuccess(webLink)) 
+          await CreateDataConfig(forDate: dates, from: webLink);
       }
 
-      async UniTask<int> CreateDataConfig(string forDate, UnityWebRequest from)
+      async UniTask CreateDataConfig(string forDate, UnityWebRequest from)
       {
         string jsonText = from.downloadHandler.text;
         jsonText = jsonText
@@ -48,20 +44,15 @@ namespace CodeBase.Data.Services.DownloadServices
           await File.WriteAllTextAsync(
             _holidaysStorage.HolidayConfigFor(forDate),
             jsonText));
-
-        return 1;
       }
 
       bool IsSuccess(UnityWebRequest www) =>
         www.result == UnityWebRequest.Result.Success;
     }
 
-    public async UniTask<float> LoadIcons(string date)
+    public async UniTask LoadIcons(string date)
     {
       ClearIconsLinks links = new ClearIconsLinks(_holidaysStorage, date);
-
-      float value = 0f;
-      int completedValue = links.DayIcons.Count + 1;
 
       string pathAndName = Path.Combine(_holidaysStorage.HolidayIconFor(date));
 
@@ -69,11 +60,11 @@ namespace CodeBase.Data.Services.DownloadServices
 
       await LoadIconFor(mainIcon, with: pathAndName);
       
-      if (links.DayIcons is { Count: > 0 }) 
-        for (int i = 1; i <= links.DayIcons.Count; i++) 
-          await LoadIconFor(links.DayIcons[i - 1], pathAndName + $" ({i})");
-
-      return value;
+      if (links.DayIcons is { Count: > 0 })
+      {
+        for (int i = 0; i < links.DayIcons.Count; i++)
+          await LoadIconFor(links.DayIcons[i], pathAndName.WithIndex(i + 1));
+      }
       
       async UniTask LoadIconFor(string iconLink, string with)
       {
@@ -86,16 +77,12 @@ namespace CodeBase.Data.Services.DownloadServices
             byte[] texture = webLink.downloadHandler.data;
 
             await File.WriteAllBytesAsync(with, texture);
-            
-            if(completedValue > 0)
-              value += completedValue / completedValue;
           }
           else
           {
             Debug.LogError("Can't load main icon. Added to List for next Downloading (still not done)");
           }
-
-
+          
           bool IsSuccess(UnityWebRequest www) =>
             www.result == UnityWebRequest.Result.Success;
         }

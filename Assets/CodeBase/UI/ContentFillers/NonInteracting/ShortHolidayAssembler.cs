@@ -9,12 +9,12 @@ namespace CodeBase.UI.ContentFillers.NonInteracting
   public class ShortHolidayAssembler : BaseHolidayAssembler, IPointerClickHandler
   {
     private string _date;
-    private HudMediator _mediator;
+    private MainWindow _mediator;
     private bool _pointerDown;
     private LoadingCurtain _curtain;
 
     [Inject]
-    public void Construct(HudMediator mediator, LoadingCurtain curtain)
+    public void Construct(MainWindow mediator, LoadingCurtain curtain)
     {
       _mediator = mediator;
       _curtain = curtain;

@@ -45,6 +45,6 @@ namespace CodeBase.Infrastructure.States
 
 
     private void EnterLoadCalendarState() => 
-      _stateMover.MoveTo<AssemblyCalendarState>();
+      _stateMover.MoveTo<CalendarAssemblyState>();
   }
 }

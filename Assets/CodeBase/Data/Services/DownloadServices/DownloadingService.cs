@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeBase.Data.Services.HolidayObserverService;
 using CodeBase.Infrastructure.Services.TimeDate;
+using CodeBase.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -8,37 +9,37 @@ namespace CodeBase.Data.Services.DownloadServices
 {
   public class DownloadingService : IDownloadingService
   {
-    private readonly IDataLoaderService _dataLoader;
+    private readonly ILoadingDataService _loadingData;
     private readonly IHolidayDataObserver _holidayDataObserver;
     private readonly IKyivDate _dateService;
+    private readonly LoadingCurtain _curtain;
 
-    public DownloadingService(IDataLoaderService dataLoader, IHolidayDataObserver holidayDataObserver, 
-      IKyivDate dateService)
+    public DownloadingService(ILoadingDataService loadingData, IHolidayDataObserver holidayDataObserver, 
+      IKyivDate dateService, LoadingCurtain curtain)
     {
-      _dataLoader = dataLoader;
+      _loadingData = loadingData;
       _holidayDataObserver = holidayDataObserver;
       _dateService = dateService;
+      _curtain = curtain;
     }
 
     public async UniTask DownloadHoliday(string date, Action onLoaded = null)
     {
-      int progress = 0;
-      float progressIcons = 0;
+      bool jsonExistFor = _holidayDataObserver.JsonExistFor(date);
+      bool iconsExistFor = _holidayDataObserver.IconsExistFor(date);
 
-      if (!_holidayDataObserver.RequestedFileExistFor(date))
-      {
-        int process = await _dataLoader.LoadRawHoliday(date);
-        float processIcons = await _dataLoader.LoadIcons(date);
-
-        progress += process;
-        progressIcons += processIcons;
-      }
-
-      if ((progress > 0 && Mathf.Abs(progressIcons - 1f) < 0.07f) || _holidayDataObserver.RequestedFileExistFor(date))
+      if (!jsonExistFor) 
+        await _loadingData.LoadRawHoliday(date);
+      
+      if(!iconsExistFor) 
+        await _loadingData.LoadIcons(date); 
+      
+      if (jsonExistFor && iconsExistFor)
         onLoaded?.Invoke();
       else
       {
         Debug.LogError($"Cannot download config and/or icons for {date}.");
+        _curtain.PopupError();
       }
     }
 

@@ -23,20 +23,24 @@ namespace CodeBase.Infrastructure.Services
       _configProvider = configProvider;
     }
 
-    public void CreateHudWithBinding()
+    public GameObject CreateHudWithBinding()
     {
-      HudMediator hud = _container.InstantiatePrefabForComponent<HudMediator>(_provider.HudPrefab());
+      MainWindow hud = _container.InstantiatePrefabForComponent<MainWindow>(_provider.HudPrefab());
       
-      hud.GetComponent<Shifting>().ShiftMediatorParent();
-      
-      hud.ShowTodayHoliday();
+      _container.Bind<MainWindow>().FromInstance(hud);
 
-      _container.Bind<HudMediator>().FromInstance(hud);
+      return hud.gameObject;
     }
 
     public void CreateMonthList(GameObject parent) => 
       Instantiate(_provider.MonthList(), parent);
 
+    public void CreateShortInfo(GameObject under, string onDate)
+    {
+      GameObject objectAssembly = Instantiate(_provider.ShortHolidayAssembly(), under);
+
+    }
+    
     public void CreateHolidayShortInfo(GameObject under, string onDate)
     {
       GameObject objectAssembly = Instantiate(_provider.ShortHolidayAssembly(), under);
