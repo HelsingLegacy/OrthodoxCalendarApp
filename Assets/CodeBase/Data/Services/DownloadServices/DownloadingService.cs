@@ -26,11 +26,10 @@ namespace CodeBase.Data.Services.DownloadServices
     public async UniTask DownloadHoliday(string date, Action onLoaded = null)
     {
       bool jsonExistFor = _holidayDataObserver.JsonExistFor(date);
-      bool iconsExistFor = _holidayDataObserver.IconsExistFor(date);
-
       if (!jsonExistFor) 
         await _loadingData.LoadRawHoliday(date);
-      
+
+      bool iconsExistFor = _holidayDataObserver.IconsExistFor(date);
       if(!iconsExistFor) 
         await _loadingData.LoadIcons(date); 
       
