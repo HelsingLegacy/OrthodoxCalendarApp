@@ -23,6 +23,8 @@
     
     public const string DayIconsContainer = "Prefabs/Holiday/HolidayComponents/DayIconsContainer";
     
+    public const string ErrorWindow = "Prefabs/Curtain/ErrorPopup";
+    
     public const string MonthList = "Prefabs/MonthList";
   }
 }

@@ -8,17 +8,9 @@ namespace CodeBase.UI
     [SerializeField] private CanvasGroup _curtain;
     public float Delay;
 
-    [SerializeField] private GameObject _errorPopup;
-
     private void Awake() => 
       DontDestroyOnLoad(gameObject);
-
-    public void PopupError() => 
-      _errorPopup.SetActive(true);
-
-    public void ErrorHide() => 
-      _errorPopup.SetActive(false);
-
+    
     public void Show()
     {
       _curtain.alpha = 1;
@@ -44,5 +36,8 @@ namespace CodeBase.UI
 
       gameObject.SetActive(false);
     }
+
+    public void SetBlockerRaycasts(bool state) => 
+      _curtain.blocksRaycasts = state;
   }
 }

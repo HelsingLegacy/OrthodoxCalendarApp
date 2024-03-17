@@ -1,50 +1,59 @@
 ﻿using System;
 using CodeBase.Data.Services.HolidayObserverService;
+using CodeBase.Infrastructure.Services.ErrorHandling;
 using CodeBase.Infrastructure.Services.TimeDate;
-using CodeBase.UI;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CodeBase.Data.Services.DownloadServices
 {
   public class DownloadingService : IDownloadingService
   {
     private readonly ILoadingDataService _loadingData;
-    private readonly IHolidayDataObserver _holidayDataObserver;
+    private readonly IHolidayDataObserver _dataObserver;
     private readonly IKyivDate _dateService;
-    private readonly LoadingCurtain _curtain;
+    private readonly IErrorSaver _errorSaver;
+    private readonly IErrorStateProvider _errorProvider;
 
-    public DownloadingService(ILoadingDataService loadingData, IHolidayDataObserver holidayDataObserver, 
-      IKyivDate dateService, LoadingCurtain curtain)
+    public DownloadingService(ILoadingDataService loadingData, IHolidayDataObserver dataObserver,
+      IKyivDate dateService, IErrorSaver errorSaver, IErrorStateProvider errorProvider)
     {
       _loadingData = loadingData;
-      _holidayDataObserver = holidayDataObserver;
+      _dataObserver = dataObserver;
       _dateService = dateService;
-      _curtain = curtain;
+      _errorSaver = errorSaver;
+      _errorProvider = errorProvider;
     }
 
     public async UniTask DownloadHoliday(string date, Action onLoaded = null)
     {
-      if (!_holidayDataObserver.JsonExistFor(date)) 
+      if (_errorProvider.IsAnError())
+        return;
+      
+      if (!_dataObserver.JsonExistFor(date) && _errorProvider.IsNoError())
         await _loadingData.LoadRawHoliday(date);
 
-      if(!_holidayDataObserver.IconsExistFor(date)) 
-        await _loadingData.LoadIcons(date); 
-      
-      if (_holidayDataObserver.JsonExistFor(date) && _holidayDataObserver.IconsExistFor(date))
-        onLoaded?.Invoke();
-      else
-      {
-        Debug.LogError($"Cannot download config and/or icons for {date}.");
-        _curtain.PopupError();
-      }
+      if (_dataObserver.JsonExistFor(date)
+          && !_dataObserver.IconsExistFor(date) && _errorProvider.IsNoError())
+        await _loadingData.LoadIcons(date);
+
+      if (!_dataObserver.JsonExistFor(date) || !_dataObserver.IconsExistFor(date))
+        _errorSaver.SetErrorCode(ErrorID.ReadingFailure);
+
+      onLoaded?.Invoke();
     }
 
     public async UniTask DownloadHolidays(Month month, string year)
     {
+      if (_errorProvider.IsAnError())
+        return;
+      
       foreach (string day in _dateService.DaysFor(month, year))
-        await DownloadHoliday(day);
+      {
+        if (_errorProvider.IsAnError())
+          return;
 
+        await DownloadHoliday(day);
+      }
     }
   }
 }

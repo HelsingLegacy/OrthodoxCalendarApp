@@ -1,8 +1,12 @@
-﻿using CodeBase.Data.Services.AssetProviding;
+﻿using CodeBase.Data.Services;
+using CodeBase.Data.Services.AssetProviding;
 using CodeBase.Data.Services.DownloadServices;
 using CodeBase.Data.Services.HolidayObserverService;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Assets;
+using CodeBase.Infrastructure.Services.ErrorHandling;
+using CodeBase.Infrastructure.Services.Factory;
+using CodeBase.Infrastructure.Services.SceneLoader;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.Infrastructure.States;
 using CodeBase.UI;
@@ -22,14 +26,20 @@ namespace CodeBase.Infrastructure
       BindSupportServices();
       BindDataLoadingServices();
       BindFactory();
+      BindErrorHandleServices();
       BindCalendarStateMachine();
     }
 
     public void Initialize() => 
-      MoveTo<DownloadingState>();
+      MoveTo<WarmUpState>();
 
     public void MoveTo<TState>() where TState : IState => 
       Container.Resolve<CalendarStateMachine>().Enter<TState>();
+
+    private void BindLoadingCurtain() => 
+      Container.Bind<LoadingCurtain>()
+        .FromInstance(FindAnyObjectByType<LoadingCurtain>())
+        .AsSingle();
 
     private void BindBootstrapInstallerInterfaces() => 
       Container.BindInterfacesTo<BootstrapInstaller>().FromInstance(this).AsSingle();
@@ -37,10 +47,14 @@ namespace CodeBase.Infrastructure
     private void BindSceneLoader() => 
       Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
 
-    private void BindLoadingCurtain() => 
-      Container.Bind<LoadingCurtain>()
-        .FromInstance(FindAnyObjectByType<LoadingCurtain>())
-        .AsSingle();
+    private void BindSupportServices()
+    {
+      Container.BindInterfacesTo<KyivDate>().AsSingle();
+      Container.BindInterfacesTo<HolidaysDataStorage>().AsSingle();
+      
+      Container.Bind<IConfigProvider>().To<ConfigProvider>().AsSingle();
+      Container.Bind<IHolidayDataObserver>().To<HolidayDataObserver>().AsSingle();
+    }
 
     private void BindDataLoadingServices()
     {
@@ -49,26 +63,25 @@ namespace CodeBase.Infrastructure
       Container.Bind<IDownloadingService>().To<DownloadingService>().AsSingle();
     }
 
-    private void BindSupportServices()
-    {
-      Container.BindInterfacesTo<KyivDate>().AsSingle();
-      Container.BindInterfacesTo<HolidaysStorageFolder>().AsSingle();
-      
-      Container.Bind<IConfigProvider>().To<ConfigProvider>().AsSingle();
-      Container.Bind<IHolidayDataObserver>().To<HolidayDataObserver>().AsSingle();
-    }
-
     private void BindFactory()
     {
-      Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
+      Container.BindInterfacesTo<AssetProvider>().AsSingle();
       Container.Bind<CalendarFactory>().AsSingle();
+      Container.Bind<IErrorFactory>().To<ErrorFactory>().AsSingle();
+    }
+
+    private void BindErrorHandleServices()
+    {
+      Container.Bind<IRestartService>().To<RestartService>().AsSingle();
+      Container.BindInterfacesTo<ErrorService>().AsSingle();
     }
 
     private void BindCalendarStateMachine()
     {
-      Container.Bind<UserObservationState>().AsSingle();
-      Container.Bind<CalendarAssemblyState>().AsSingle();
+      Container.Bind<ObservationState>().AsSingle();
+      Container.Bind<CalendarConfigurationState>().AsSingle();
       Container.Bind<DownloadingState>().AsSingle();
+      Container.Bind<WarmUpState>().AsSingle();
       Container.Bind<CalendarStateMachine>().AsSingle();
     }
   }

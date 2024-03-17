@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.Services.Assets
 {
-  public class AssetProvider : IAssetProvider
+  public class AssetProvider : IAssetProvider, IErrorWindowProvider
   {
     public GameObject HudPrefab() => Load(AssetPath.Hud);
     
@@ -25,6 +25,8 @@ namespace CodeBase.Infrastructure.Services.Assets
     public GameObject DayIconsContainer() => Load(AssetPath.DayIconsContainer);
     
     public GameObject MonthList() => Load(AssetPath.MonthList);
+    
+    public GameObject ErrorWindow() => Load(AssetPath.ErrorWindow);
     
     private GameObject Load(string path) => Resources.Load<GameObject>(path);
   }

@@ -8,12 +8,12 @@ namespace CodeBase.Data.Services.HolidayObserverService
 {
   class HolidayDataObserver : IHolidayDataObserver
   {
-    private readonly IHolidaysStorage _holidaysStorage;
+    private readonly IHolidaysDataStorage _holidaysDataStorage;
     private readonly IKyivDate _dateService;
 
-    public HolidayDataObserver(IHolidaysStorage holidaysStorage, IKyivDate dateService)
+    public HolidayDataObserver(IHolidaysDataStorage holidaysDataStorage, IKyivDate dateService)
     {
-      _holidaysStorage = holidaysStorage;
+      _holidaysDataStorage = holidaysDataStorage;
       _dateService = dateService;
     }
 
@@ -35,20 +35,23 @@ namespace CodeBase.Data.Services.HolidayObserverService
     }
     
     public bool JsonExistFor(string date) =>
-      File.Exists(_holidaysStorage.HolidayConfigFor(date));
+      File.Exists(_holidaysDataStorage.HolidayConfigFor(date));
 
     public bool IconsExistFor(string date)
     {
+      if (!JsonExistFor(date))
+        return false;
+      
       int iconsForDate = 0;
       
-      var icons = new ClearIconsLinks(_holidaysStorage, date);
+      var icons = new ClearIconsLinks(_holidaysDataStorage, date);
 
-      if (File.Exists(_holidaysStorage.HolidayIconFor(date)))
+      if (File.Exists(_holidaysDataStorage.HolidayIconFor(date)))
         iconsForDate++;
       
       for(int i = 1; i<= icons.DayIcons.Count; i++)
       {
-        if(!File.Exists(_holidaysStorage.HolidayIconFor(date.WithIndex(i))))
+        if(!File.Exists(_holidaysDataStorage.HolidayIconFor(date.WithIndex(i))))
           continue;        
         
         iconsForDate++;

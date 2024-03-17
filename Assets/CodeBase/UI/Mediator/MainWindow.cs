@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Data.Services;
+using CodeBase.Infrastructure.Services.Factory;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Presenters;
 using UnityEngine;
@@ -51,7 +52,7 @@ namespace CodeBase.UI.Mediator
     private void CleanUpContainer()
     {
       int childCount = ContentContainer.transform.childCount;
-
+      
       for (int i = 0; i < childCount; i++)
       {
         GameObject child = ContentContainer.transform.GetChild(i).gameObject;

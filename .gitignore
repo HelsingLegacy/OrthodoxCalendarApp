@@ -29,6 +29,7 @@
 /.idea/*
 /.idea/.idea.OrthodoxCalendarApp/*
 /.idea/.idea.OrthodoxCalendarApp/.idea/*
+/.utmp/*
 
 # Visual Studio cache directory
 .vs/
