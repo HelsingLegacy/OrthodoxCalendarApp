@@ -31,9 +31,9 @@ namespace CodeBase.Infrastructure.States
       _errorHandler = errorHandler;
     }
 
-    public async void Enter()
+    public void Enter()
     {
-      await DownloadTodayHoliday(onLoaded: LoadNextState);
+      DownloadTodayHoliday(onLoaded: LoadNextState);
     }
 
     public void Exit()
@@ -49,8 +49,8 @@ namespace CodeBase.Infrastructure.States
         _errorHandler.PopupError();
     }
 
-    private async UniTask DownloadTodayHoliday(Action onLoaded) =>
-      await _downloadingService
+    private void DownloadTodayHoliday(Action onLoaded) =>
+      _downloadingService
         .DownloadHoliday(_today.TodayKyivText(),
           onLoaded);
 

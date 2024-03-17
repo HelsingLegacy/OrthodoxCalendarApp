@@ -27,7 +27,10 @@ namespace CodeBase.Data.Services.DownloadServices
     public async UniTask DownloadHoliday(string date, Action onLoaded = null)
     {
       if (_errorProvider.IsAnError())
+      {
+        onLoaded?.Invoke();
         return;
+      }      
       
       if (!_dataObserver.JsonExistFor(date) && _errorProvider.IsNoError())
         await _loadingData.LoadRawHoliday(date);
