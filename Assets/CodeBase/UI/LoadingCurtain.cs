@@ -10,7 +10,7 @@ namespace CodeBase.UI
 
     private void Awake() => 
       DontDestroyOnLoad(gameObject);
-
+    
     public void Show()
     {
       _curtain.alpha = 1;
@@ -19,7 +19,7 @@ namespace CodeBase.UI
 
     public void Hide() => 
       StartCoroutine(Fading());
-    
+
     public void HideWithDelay() => 
       StartCoroutine(Fading(Delay));
 
@@ -36,5 +36,8 @@ namespace CodeBase.UI
 
       gameObject.SetActive(false);
     }
+
+    public void SetBlockerRaycasts(bool state) => 
+      _curtain.blocksRaycasts = state;
   }
 }

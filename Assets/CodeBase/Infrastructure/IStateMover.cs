@@ -1,10 +1,9 @@
 ﻿using CodeBase.Data.Services;
-using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.States;
 
 namespace CodeBase.Infrastructure
 {
-  public interface IStateMover : IService
+  public interface IStateMover
   {
     void MoveTo<TState>() where TState : IState;
   }

@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 namespace CodeBase.ScriptableData
 {
-  [CreateAssetMenu(fileName = "HolidayBuildingData", menuName = "HolidayData", order = 0)]
+  [CreateAssetMenu(fileName = "HolidayBuildingData", menuName = "ScriptableData/HolidayData", order = 0)]
   public class HolidaysBuildingData : ScriptableObject
   {
     [Header("Red Holiday Color")]
@@ -68,11 +68,5 @@ namespace CodeBase.ScriptableData
     public Sprite DressBlue;
     public Sprite DressWhite;
     public Sprite DressViolet;
-
-
-
-
-    
-    
   }
 }

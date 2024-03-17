@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.Services.TimeDate
 {
-  public interface IToday : IService
+  public interface IToday
   {
     DateTime TodayKyivDate();
 

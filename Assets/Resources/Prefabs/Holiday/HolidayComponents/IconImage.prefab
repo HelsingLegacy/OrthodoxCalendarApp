@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2036000810672990541}
   - component: {fileID: 1729320495076738719}
   - component: {fileID: 4042484081568026495}
-  - component: {fileID: 967183121059165986}
+  - component: {fileID: -4094133331020439697}
   m_Layer: 5
   m_Name: IconImage
   m_TagString: Untagged
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7c2bcc167244f187f250bf2539fdc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &967183121059165986
+--- !u!114 &-4094133331020439697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5194681419719662486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b9cfa00dee7410ca6bc8452c6c0cbcb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2

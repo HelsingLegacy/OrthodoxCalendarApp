@@ -37,34 +37,34 @@ namespace CodeBase.Data.Services.AssetProviding
 
     public List<Sprite> DayIcons { get; private set; }
 
-    public ConfigAssembly(IHolidaysStorage storage, string date)
+    public ConfigAssembly(IHolidaysDataStorage dataStorage, string date)
     {
-      ExtractedData(storage, date);
+      ExtractedData(dataStorage, date);
     }
 
-    private void ExtractedData(IHolidaysStorage storage, string date)
+    private void ExtractedData(IHolidaysDataStorage dataStorage, string date)
     {
-      string jsonText = File.ReadAllText(storage.HolidayConfigFor(date));
+      string jsonText = File.ReadAllText(dataStorage.HolidayConfigFor(date));
 
       RawHolidayInfo info = jsonText.ToDeserialize<RawHolidayInfo>();
 
-      SetCleanDataForToday(info, date, storage);
+      SetCleanDataForToday(info, date, dataStorage);
     }
 
-    private void SetCleanDataForToday(RawHolidayInfo info, string date, IHolidaysStorage storage)
+    private void SetCleanDataForToday(RawHolidayInfo info, string date, IHolidaysDataStorage dataStorage)
     {
       SetHolidayColor(info);
       SetWeekdayName(info);
       SetDateMonth(info);
       SetWeekName(info);
-      SetMainIcon(storage, date);
+      SetMainIcon(dataStorage, date);
       SetHolidayName(info);
       SetSuggestions(info);
       SetShortContent(info);
       SetLiturgy(info);
       SetReadingsShortLinks(info);
       SetReadingsContent(info);
-      SetDayIcons(info, storage, date);
+      SetDayIcons(info, dataStorage, date);
     }
 
     private void SetHolidayColor(RawHolidayInfo info)
@@ -167,8 +167,8 @@ namespace CodeBase.Data.Services.AssetProviding
     private void SetWeekName(RawHolidayInfo info) =>
       WeekName = info.WeekName;
 
-    private void SetMainIcon(IHolidaysStorage storage, string date) =>
-      MainIcon = SpriteProvider(storage, date);
+    private void SetMainIcon(IHolidaysDataStorage dataStorage, string date) =>
+      MainIcon = SpriteProvider(dataStorage, date);
 
     private void SetHolidayName(RawHolidayInfo info) =>
       HolidayName = info.HolidayName;
@@ -320,7 +320,7 @@ namespace CodeBase.Data.Services.AssetProviding
       EvangelionReadingsText = readings;
     }
 
-    private void SetDayIcons(RawHolidayInfo info, IHolidaysStorage storage, string date)
+    private void SetDayIcons(RawHolidayInfo info, IHolidaysDataStorage dataStorage, string date)
     {
       if (info.DayIcons is { Count: > 0 })
       {
@@ -328,17 +328,14 @@ namespace CodeBase.Data.Services.AssetProviding
 
         for (int i = 1; i <= info.DayIcons.Count; i++)
         {
-          DayIcons.Add(SpriteProvider(storage, date + $" ({i})"));
+          DayIcons.Add(SpriteProvider(dataStorage, date.WithIndex(i)));
         }
       }
     }
 
-    private HolidaysBuildingData BuildingData() =>
-      Resources.Load<HolidaysBuildingData>(MobileBuildingData);
-
-    private static Sprite SpriteProvider(IHolidaysStorage storage, string date)
+    private static Sprite SpriteProvider(IHolidaysDataStorage dataStorage, string date)
     {
-      var icon = File.ReadAllBytes(storage.HolidayIconFor(date));
+      var icon = File.ReadAllBytes(dataStorage.HolidayIconFor(date));
 
       Texture2D texture = new Texture2D(340, 377);
       texture.LoadImage(icon);
@@ -347,5 +344,8 @@ namespace CodeBase.Data.Services.AssetProviding
 
       return sprite;
     }
+
+    private HolidaysBuildingData BuildingData() =>
+      Resources.Load<HolidaysBuildingData>(MobileBuildingData);
   }
 }

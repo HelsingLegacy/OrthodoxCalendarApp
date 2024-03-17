@@ -5,6 +5,7 @@ namespace CodeBase.Data.Services.HolidayObserverService
   public interface IHolidayDataObserver
   {
     bool Has(Month month, string year);
-    bool RequestedFileExistFor(string date);
+    bool JsonExistFor(string date);
+    bool IconsExistFor(string date);
   }
 }

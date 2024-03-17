@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.Services
 {
-  public interface ICoroutineRunner : IService
+  public interface ICoroutineRunner
   {
     Coroutine StartCoroutine(IEnumerator load);
   }

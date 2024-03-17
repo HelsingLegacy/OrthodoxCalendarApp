@@ -18,5 +18,8 @@ namespace CodeBase.Extensions
 
     public static int ToInteger(this string year) => 
       int.Parse(year);
+
+    public static string WithIndex(this string date, int index) => 
+      date + $" ({index})";
   }
 }

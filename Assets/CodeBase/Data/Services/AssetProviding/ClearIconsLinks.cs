@@ -10,24 +10,22 @@ namespace CodeBase.Data.Services.AssetProviding
     public string MainIcon = "";
     public List<string> DayIcons = new();
 
-    public ClearIconsLinks(IHolidaysStorage storage, string date)
+    public ClearIconsLinks(IHolidaysDataStorage dataStorage, string date)
     {
-      LoadIcons(storage, date);
+      LoadIcons(dataStorage, date);
     }
 
-    private void LoadIcons(IHolidaysStorage storage, string date)
+    private void LoadIcons(IHolidaysDataStorage dataStorage, string date)
     {
-      string jsonText = File.ReadAllText(storage.HolidayConfigFor(date));
+      string jsonText = File.ReadAllText(dataStorage.HolidayConfigFor(date));
 
       var info = jsonText.ToDeserialize<RawHolidayInfo>();
-      
+
       MainIcon += info.MainImage;
 
-      if(info.DayIcons is { Count: > 0 })
-        foreach (string icon in info.DayIcons.Values) 
+      if (info.DayIcons is { Count: > 0 })
+        foreach (string icon in info.DayIcons.Values)
           DayIcons.Add(icon);
     }
-    
-    
   }
 }

@@ -4,8 +4,8 @@
   {
     public const string Hud = "Prefabs/HUD";
     
-    public const string FullHolidayAssembly = "Prefabs/Holiday/FullHolidayAssembly";
-    public const string ShortHolidayAssembly = "Prefabs/Holiday/ShortHolidayAssembly";
+    public const string FullHolidayAssembly = "Prefabs/Holiday/InfoContainerDetailed";
+    public const string ShortHolidayAssembly = "Prefabs/Holiday/InfoContainerPreview";
 
     public const string HeaderNoName = "Prefabs/Holiday/HolidayComponents/HeaderNoName";
     public const string HeaderWithName = "Prefabs/Holiday/HolidayComponents/HeaderWithName";
@@ -22,6 +22,8 @@
     public const string HolidayReadings = "Prefabs/Holiday/HolidayReadings";
     
     public const string DayIconsContainer = "Prefabs/Holiday/HolidayComponents/DayIconsContainer";
+    
+    public const string ErrorWindow = "Prefabs/Curtain/ErrorPopup";
     
     public const string MonthList = "Prefabs/MonthList";
   }

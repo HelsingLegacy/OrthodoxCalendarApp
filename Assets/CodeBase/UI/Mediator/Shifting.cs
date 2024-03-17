@@ -12,7 +12,7 @@ namespace CodeBase.UI.Mediator
       gameObject.GetComponent<RectTransform>().SetParent(new RectTransform());
 
       Destroy(parent.gameObject);
-      Destroy(gameObject.GetComponent<Shifting>());
+      Destroy(this);
     }
   }
 }

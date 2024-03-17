@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Data.Services;
+using CodeBase.Infrastructure.Services.Factory;
 using CodeBase.UI.Mediator;
 using TMPro;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace CodeBase.UI.Presenters
   public class MainNavigation : MonoBehaviour, IPointerClickHandler
   {
     public TextMeshProUGUI Text;
-    public HudMediator Mediator;
+    public MainWindow Mediator;
     
     private const string TodayText = "Сьогодні";
     private bool _isTodayDisplay;
@@ -58,10 +59,17 @@ namespace CodeBase.UI.Presenters
 
       SetMainNavigationName(TodayText);
       
-      _factory.CreateMonthList(parent: Mediator.ContentContainer);
+      InitMonthList();
+
       _isTodayDisplay = true;
       
       _curtain.HideWithDelay();
+    }
+
+    private void InitMonthList()
+    {
+      var monthList = _factory.CreateMonthList(parent: Mediator.ContentContainer);
+      monthList.GetComponent<MonthListController>().ActivateButtons();
     }
   }
 }
