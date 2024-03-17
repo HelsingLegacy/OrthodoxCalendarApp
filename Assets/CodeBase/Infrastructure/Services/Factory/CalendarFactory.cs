@@ -7,6 +7,7 @@ using CodeBase.UI.ContentHandlers.NonInteracting;
 using CodeBase.UI.ContentHandlers.NonInteracting.HolidayComponents;
 using CodeBase.UI.ContentHandlers.NonInteracting.HolidayComponents.Header;
 using CodeBase.UI.Mediator;
+using CodeBase.UI.Presenters;
 using UnityEngine;
 using Zenject;
 
@@ -36,7 +37,7 @@ namespace CodeBase.Infrastructure.Services.Factory
       return hud.gameObject;
     }
 
-    public void CreateMonthList(GameObject parent) =>
+    public GameObject CreateMonthList(GameObject parent) => 
       Instantiate(_provider.MonthList(), parent);
 
     public void CreateShortInfo(GameObject under, string onDate)

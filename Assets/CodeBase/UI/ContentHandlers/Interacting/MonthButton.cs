@@ -12,7 +12,10 @@ namespace CodeBase.UI.ContentHandlers.Interacting
   {
     public MonthListController controller;
     public Month Month;
+    
     private LoadingCurtain _curtain;
+
+    private bool _isNotActive; 
 
     [Inject]
     public void Construct(LoadingCurtain curtain) => 
@@ -20,12 +23,18 @@ namespace CodeBase.UI.ContentHandlers.Interacting
 
     public void OnPointerClick(PointerEventData eventData)
     {
+      if(_isNotActive)
+        return;
+      
       _curtain.Show();
 
       controller.ShowOrDownload(Month).Forget();
     }
 
-    public void SetColor(Color color) => 
+    public void SetState(bool state, Color color)
+    {
+      _isNotActive = state;
       GetComponent<Image>().color = color;
+    }
   }
 }

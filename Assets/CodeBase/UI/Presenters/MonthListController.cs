@@ -51,10 +51,16 @@ namespace CodeBase.UI.Presenters
       
       foreach (MonthButton button in buttons)
       {
-        button.SetColor(_today.IsTwentyOf(button.Month) 
-          ? colorData.Available 
-          : colorData.Unavailable);
+        if (SelectedMonthHaveDataOnServer(button))
+          button.SetState(false, colorData.Available);
+        else
+          button.SetState(true, colorData.Unavailable);
       }
+    }
+
+    private bool SelectedMonthHaveDataOnServer(MonthButton button)
+    {
+      return button.Month.GetHashCode()+1 <= _today.TodayKyivDate().Month;
     }
 
     public async UniTask ShowOrDownload(Month month)

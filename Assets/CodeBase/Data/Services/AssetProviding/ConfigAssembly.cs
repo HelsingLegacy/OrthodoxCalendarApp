@@ -333,9 +333,6 @@ namespace CodeBase.Data.Services.AssetProviding
       }
     }
 
-    private HolidaysBuildingData BuildingData() =>
-      Resources.Load<HolidaysBuildingData>(MobileBuildingData);
-
     private static Sprite SpriteProvider(IHolidaysDataStorage dataStorage, string date)
     {
       var icon = File.ReadAllBytes(dataStorage.HolidayIconFor(date));
@@ -347,5 +344,8 @@ namespace CodeBase.Data.Services.AssetProviding
 
       return sprite;
     }
+
+    private HolidaysBuildingData BuildingData() =>
+      Resources.Load<HolidaysBuildingData>(MobileBuildingData);
   }
 }

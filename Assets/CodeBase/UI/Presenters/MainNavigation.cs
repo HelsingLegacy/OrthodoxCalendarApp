@@ -59,10 +59,17 @@ namespace CodeBase.UI.Presenters
 
       SetMainNavigationName(TodayText);
       
-      _factory.CreateMonthList(parent: Mediator.ContentContainer);
+      InitMonthList();
+
       _isTodayDisplay = true;
       
       _curtain.HideWithDelay();
+    }
+
+    private void InitMonthList()
+    {
+      var monthList = _factory.CreateMonthList(parent: Mediator.ContentContainer);
+      monthList.GetComponent<MonthListController>().ActivateButtons();
     }
   }
 }
