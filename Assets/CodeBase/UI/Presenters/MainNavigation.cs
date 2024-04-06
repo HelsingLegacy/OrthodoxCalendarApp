@@ -1,5 +1,5 @@
-﻿using CodeBase.Data.Services;
-using CodeBase.Infrastructure.Services.Factory;
+﻿using CodeBase.Infrastructure.Services.Factory;
+using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Mediator;
 using TMPro;
 using UnityEngine;
@@ -18,14 +18,14 @@ namespace CodeBase.UI.Presenters
 
     private LoadingCurtain _curtain;
     private CalendarFactory _factory;
-    private IConfigProvider _configProvider;
+    private IMonthName _label;
 
     [Inject]
-    public void Construct(LoadingCurtain curtain, CalendarFactory factory, IConfigProvider configProvider)
+    public void Construct(LoadingCurtain curtain, CalendarFactory factory, IMonthName month)
     {
       _curtain = curtain;
       _factory = factory;
-      _configProvider = configProvider;
+      _label = month;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -36,15 +36,15 @@ namespace CodeBase.UI.Presenters
         ShowMonthList();
     }
 
-    public void SetMainNavigationName(string month) =>
-      Text.text = month;
+    public void SetMainNavigationName(string label = null) =>
+      Text.text = label ?? _label.CurrentMonth();
 
     private void ShowTodayFullInfo()
     {
       _curtain.Show();
       Mediator.ResetAndCleanupContent();
       
-      SetMainNavigationName(_configProvider.GetConfigForToday().Month);
+      SetMainNavigationName();
 
       _factory.CreateHolidayFullInfo(Mediator.ContentContainer, Mediator.GetTodayDate);
       _isTodayDisplay = false;
@@ -68,7 +68,7 @@ namespace CodeBase.UI.Presenters
 
     private void InitMonthList()
     {
-      var monthList = _factory.CreateMonthList(parent: Mediator.ContentContainer);
+      GameObject monthList = _factory.CreateMonthList(parent: Mediator.ContentContainer);
       monthList.GetComponent<MonthListController>().ActivateButtons();
     }
   }

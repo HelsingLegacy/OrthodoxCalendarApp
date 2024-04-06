@@ -1,5 +1,4 @@
-﻿using CodeBase.Data.Services;
-using CodeBase.Infrastructure.Services.Factory;
+﻿using CodeBase.Infrastructure.Services.Factory;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.UI.Presenters;
 using UnityEngine;
@@ -15,23 +14,21 @@ namespace CodeBase.UI.Mediator
 
     private CalendarFactory _factory;
     private string _today;
-    private IConfigProvider _configProvider;
 
     public string GetTodayDate => _today;
 
 
     [Inject]
-    public void Construct(CalendarFactory factory, IToday today, IConfigProvider configProvider)
+    public void Construct(CalendarFactory factory, IToday today)
     { 
       _factory = factory;
       _today = today.TodayKyivText();
-      _configProvider = configProvider;
     }
 
     public void ShowTodayHoliday()
     {
       _factory.CreateHolidayFullInfo(under: ContentContainer, _today);
-      navigation.SetMainNavigationName(_configProvider.GetConfigForToday().Month);
+      navigation.SetMainNavigationName();
     }
 
     public void ShowHolidayFor(string date) => 

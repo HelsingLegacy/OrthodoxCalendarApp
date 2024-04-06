@@ -15,7 +15,7 @@ namespace CodeBase.UI.ContentHandlers.Interacting
     
     private LoadingCurtain _curtain;
 
-    private bool _isNotActive; 
+    private bool _isActive; 
 
     [Inject]
     public void Construct(LoadingCurtain curtain) => 
@@ -23,7 +23,7 @@ namespace CodeBase.UI.ContentHandlers.Interacting
 
     public void OnPointerClick(PointerEventData eventData)
     {
-      if(_isNotActive)
+      if(!_isActive)
         return;
       
       _curtain.Show();
@@ -33,7 +33,7 @@ namespace CodeBase.UI.ContentHandlers.Interacting
 
     public void SetState(bool state, Color color)
     {
-      _isNotActive = state;
+      _isActive = state;
       GetComponent<Image>().color = color;
     }
   }

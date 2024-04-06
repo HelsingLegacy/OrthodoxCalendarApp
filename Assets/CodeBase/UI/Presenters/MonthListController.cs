@@ -47,20 +47,15 @@ namespace CodeBase.UI.Presenters
     {
       MonthButton[] buttons = GetComponentsInChildren<MonthButton>();
 
-      var colorData = LoadScriptableData();
+      MonthListColorsData colorData = LoadScriptableData();
       
       foreach (MonthButton button in buttons)
       {
         if (SelectedMonthHaveDataOnServer(button))
-          button.SetState(false, colorData.Available);
+          button.SetState(true, colorData.Available);
         else
-          button.SetState(true, colorData.Unavailable);
+          button.SetState(false, colorData.Unavailable);
       }
-    }
-
-    private bool SelectedMonthHaveDataOnServer(MonthButton button)
-    {
-      return button.Month.GetHashCode()+1 <= _today.TodayKyivDate().Month;
     }
 
     public async UniTask ShowOrDownload(Month month)
@@ -75,10 +70,21 @@ namespace CodeBase.UI.Presenters
         _errorHandler.PopupError();
         return;
       }
-      
+
       ShowShortHolidaysList(month, _year);
 
       _curtain.HideWithDelay();
+    }
+
+    private bool SelectedMonthHaveDataOnServer(MonthButton button)
+    {
+      int currentButtonMonth = button.Month.GetHashCode();
+      int nextMonth = _today.TodayKyivDate().Month + 1;
+
+      if (_today.TodayKyivDate().Day < 20)
+        return currentButtonMonth < nextMonth;
+      
+      return currentButtonMonth <= nextMonth;
     }
 
     private void ShowShortHolidaysList(Month month, string year)
