@@ -10,14 +10,17 @@ using CodeBase.Infrastructure.Services.SceneLoader;
 using CodeBase.Infrastructure.Services.TimeDate;
 using CodeBase.Infrastructure.States;
 using CodeBase.UI;
+using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Infrastructure
 {
   public class BootstrapInstaller : MonoInstaller, ICoroutineRunner, IInitializable, IStateMover
   {
-    private CalendarStateMachine _stateMachine;
+    public LoadingCurtain _curtain;
     
+    private CalendarStateMachine _stateMachine;
+
     public override void InstallBindings()
     {
       BindLoadingCurtain();
@@ -36,10 +39,13 @@ namespace CodeBase.Infrastructure
     public void MoveTo<TState>() where TState : IState => 
       Container.Resolve<CalendarStateMachine>().Enter<TState>();
 
-    private void BindLoadingCurtain() => 
+    private void BindLoadingCurtain()
+    {
+      LoadingCurtain curtain = Instantiate(_curtain);
       Container.Bind<LoadingCurtain>()
-        .FromInstance(FindAnyObjectByType<LoadingCurtain>())
+        .FromInstance(curtain)
         .AsSingle();
+    }
 
     private void BindBootstrapInstallerInterfaces() => 
       Container.BindInterfacesTo<BootstrapInstaller>().FromInstance(this).AsSingle();
