@@ -23,9 +23,11 @@ namespace CodeBase.Infrastructure.Services.Assets
     public GameObject HolidayReadings() => Load(AssetPath.HolidayReadings);
 
     public GameObject DayIconsContainer() => Load(AssetPath.DayIconsContainer);
-    
+
+    public GameObject ProgressBar() => Load(AssetPath.ProgressBar);
+
     public GameObject MonthList() => Load(AssetPath.MonthList);
-    
+
     public GameObject ErrorWindow() => Load(AssetPath.ErrorWindow);
     
     private GameObject Load(string path) => Resources.Load<GameObject>(path);

@@ -7,7 +7,6 @@ using CodeBase.UI.ContentHandlers.NonInteracting;
 using CodeBase.UI.ContentHandlers.NonInteracting.HolidayComponents;
 using CodeBase.UI.ContentHandlers.NonInteracting.HolidayComponents.Header;
 using CodeBase.UI.Mediator;
-using CodeBase.UI.Presenters;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +15,9 @@ namespace CodeBase.Infrastructure.Services.Factory
   public class CalendarFactory
   {
     private readonly DiContainer _container;
+
     private readonly IAssetProvider _provider;
+
     private readonly IConfigProvider _configProvider;
 
     public CalendarFactory(DiContainer container, IAssetProvider provider, IConfigProvider configProvider)
@@ -25,7 +26,7 @@ namespace CodeBase.Infrastructure.Services.Factory
       _provider = provider;
       _configProvider = configProvider;
     }
-
+    
     public GameObject CreateHudWithBinding()
     {
       UnbindDestroyedMainWindow();

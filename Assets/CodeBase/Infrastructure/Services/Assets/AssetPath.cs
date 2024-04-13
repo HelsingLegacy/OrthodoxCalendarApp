@@ -26,5 +26,7 @@
     public const string ErrorWindow = "Prefabs/Curtain/ErrorPopup";
     
     public const string MonthList = "Prefabs/MonthList";
+
+    public const string ProgressBar = "Prefabs/Curtain/ProgressBar";
   }
 }

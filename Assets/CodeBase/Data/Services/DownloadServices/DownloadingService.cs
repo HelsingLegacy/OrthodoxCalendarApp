@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeBase.Data.Services.HolidayObserverService;
 using CodeBase.Infrastructure.Services.ErrorHandling;
+using CodeBase.Infrastructure.Services.Factory;
 using CodeBase.Infrastructure.Services.TimeDate;
 using Cysharp.Threading.Tasks;
 
@@ -13,15 +15,17 @@ namespace CodeBase.Data.Services.DownloadServices
     private readonly IKyivDate _dateService;
     private readonly IErrorSaver _errorSaver;
     private readonly IErrorStateProvider _errorProvider;
+    private readonly IProgressFactory _progressFactory;
 
     public DownloadingService(ILoadingDataService loadingData, IHolidayDataObserver dataObserver,
-      IKyivDate dateService, IErrorSaver errorSaver, IErrorStateProvider errorProvider)
+      IKyivDate dateService, IErrorSaver errorSaver, IErrorStateProvider errorProvider, IProgressFactory progressFactory)
     {
       _loadingData = loadingData;
       _dataObserver = dataObserver;
       _dateService = dateService;
       _errorSaver = errorSaver;
       _errorProvider = errorProvider;
+      _progressFactory = progressFactory;
     }
 
     public async UniTask DownloadHoliday(string date, Action onLoaded = null)
@@ -49,14 +53,21 @@ namespace CodeBase.Data.Services.DownloadServices
     {
       if (_errorProvider.IsAnError())
         return;
-      
-      foreach (string day in _dateService.DaysFor(month, year))
+
+      List<string> daysFor = _dateService.DaysFor(month, year);
+
+      var bar = _progressFactory.CreateProgress(daysFor.Count);
+
+      foreach (string day in daysFor)
       {
         if (_errorProvider.IsAnError())
           return;
 
         await DownloadHoliday(day);
+        bar.UpdateProgress();
       }
+
+      bar.SelfDestruction();
     }
   }
 }
